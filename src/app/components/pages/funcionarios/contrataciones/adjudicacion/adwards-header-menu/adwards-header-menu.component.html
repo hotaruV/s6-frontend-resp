@@ -1,0 +1,13 @@
+<div class="hero__menu">
+  <div class="hero__container__menu">
+      <div class="menu__toggle">
+          <i class="fas fa-bars" (click)="cambiarFlag()"></i>
+      </div>
+
+  </div>
+  <ul class="hero__content__item" [ngClass]="{'hero__content__item--active': flag}">
+    <li *ngFor="let item of templateMenu" [routerLink]="[item.ruta]" [routerLinkActiveOptions]="{exact:true}"
+    routerLinkActive="hero__item--active" class="hero__item" (click)="flag = false">{{item.texto}}</li>
+  </ul>
+
+</div>

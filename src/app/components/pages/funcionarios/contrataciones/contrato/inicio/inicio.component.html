@@ -1,0 +1,997 @@
+<section class="contenido__general">
+
+  <form (ngSubmit)="guardarContrato()" autocomplete="off" [formGroup]="ContratoForm">
+    <h2>I. CONTRATO</h2>
+    <p>Información sobre el contrato firmado entre el comprador y el/los proveedor/es.</p>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-form p50p">
+          <mat-label>TÍTULO</mat-label>
+          <input type="text" matInput formControlName="contractstitle">
+          <mat-error *ngIf="campoNoValido('contractstitle')">EL CAMPO TÍTULO ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-form p50p">
+          <mat-label>DESCRIPCIÓN</mat-label>
+          <input type="text" matInput formControlName="contractsdescription">
+          <mat-error *ngIf="campoNoValido('contractsdescription')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form p50p">
+            <mat-label>ESTATUS DE ADJUDICACIÓN</mat-label>
+            <mat-select matNativeControl formControlName="contractsstatus">
+              <mat-option *ngFor="let format of awardsStatus" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('contractsstatus')">EL CAMPO ESTATUS ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </div>
+    </div>
+    <hr>
+    <h2>I.1 PERIODO DEL CONTRATO</h2>
+    <div class="row  completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de inicio</mat-label>
+          <input matInput [matDatepicker]="picker4" formControlName="startDate" (dateChange)="duracionEnDias($event)">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker4">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker4></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('startDate')">EL CAMPO FECHA DE INICIO ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de término</mat-label>
+          <input matInput [matDatepicker]="picker5" formControlName="endDate" (dateChange)="duracionEnDias($event)">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker5">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker5></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('endDate')">EL CAMPO FECHA DE TÉRMINO ES OBLIGATORIO
+        </mat-error>
+
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Extensión máxima</mat-label>
+          <input matInput [matDatepicker]="picker6" formControlName="maxExtentDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker6">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker6></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('maxExtentDate')">EL CAMPO EXTENSIÓN MÁXIMA ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+      <div class="col-md-6">
+        <!-- <mat-form-field class="example-full-width" appearance="fill" *ngIf="btnActualizar"> -->
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Número En días</mat-label>
+          <input matInput formControlName="durationInDays">
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('durationInDays')">EL CAMPO NÚMERO DE DÍAS ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+    </div>
+    <hr>
+    <h2>I.2 VALOR</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="amount" placeholder="MONTO*" />
+            <mat-error *ngIf="campoNoValido('amount')">EL CAMPO UNIDAD DE MEDIDA ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="amountNet" placeholder="MONTO SIN IMPUESTOS*" />
+            <mat-error *ngIf="campoNoValido('amountNet')">EL CAMPO MONTO DE MEDIDA ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>MONEDA</mat-label>
+            <mat-select matNativeControl formControlName="currency">
+              <mat-option *ngFor="let item of monedas" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('currency')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <h2>I.2.1 TASA DE CAMBIO</h2>
+    <p>La tasa de cambio utilizada para convertir un monto a una moneda alternativa.</p>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="exchangeRatesrate" placeholder="TASA DE CONVERSIÓN DE MONERDA*" />
+            <mat-error *ngIf="campoNoValido('exchangeRatesrate')">EL CAMPO MONTO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>MONEDA</mat-label>
+            <mat-select matNativeControl formControlName="exchangeRatescurrency">
+              <mat-option *ngFor="let item of monedas" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('exchangeRatescurrency')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>FECHA TASA DE CAMBIO</mat-label>
+          <input matInput [matDatepicker]="picker7" formControlName="exchangeRatesdate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker7">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker7></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('exchangeRatesdate')">EL CAMPO EXTENSIÓN MÁXIMA ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="exchangeRatessource" placeholder="FUENTE DE LA TASA DE CAMBIO*" />
+            <mat-error *ngIf="campoNoValido('exchangeRatessource')">EL CAMPO MONTO SIN IMPUESTOS ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <h2>I.3 ÍTEMS CONTRATADOS</h2>
+    <p>LOS ITEMS NO SE DEBEN DE DUPLICAR, EN SU LUGAR SE DEBERÁN ESPECIFICAR LA CANTIDAD, EJEMPLO: 2.</p>
+
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>ITEM</mat-label>
+            <mat-select matNativeControl formControlName="title">
+              <mat-option *ngFor="let item of itemsDesc" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('title')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="description" placeholder="DESCRIPCION LIBRE DEL ITEM* " />
+            <mat-error *ngIf="campoNoValido('description')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <h2>I.3.1 CLASIFICACIÓN</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>CÓDIGO</mat-label>
+          <input type="text" matInput matNativeControl formControlName="clasifscheme" [matAutocomplete]="auto8"
+            (keyup)="onChangeCucop(txtInputCod.value)" #txtInputCod />
+          <mat-autocomplete autoActiveFirstOption #auto8="matAutocomplete">
+            <mat-option *ngFor="let item of ArrayCucop" [value]="item.CLAVECUCoP"
+              (onSelectionChange)="onSelectCucop(item)">
+              {{ item.CLAVECUCoP }} - {{ item.DESCRIPCION }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" readonly="readonly" matInput formControlName="clasifdescription"
+              placeholder="DESCRIPCIÓN* " />
+            <mat-error *ngIf="campoNoValido('clasifdescription')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="clasifuri" placeholder="URI*" />
+            <mat-error *ngIf="campoNoValido('clasifuri')">EL CAMPO URI ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="clasifquantity" placeholder="NÚMERO DE ESQUEMA* " />
+            <mat-error *ngIf="campoNoValido('clasifquantity')">EL CAMPO NÚMERO DE ESQUEMA ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <h2>I.3.2 CANTIDAD</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="uintscant" placeholder="NÚMERO DE UNIDADES REQUERIDAS" (input)="calcularMonto()" />
+
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row completo mayuscula">
+
+          <mat-form-field class="example-full-width">
+            <mat-label>ESQUEMA</mat-label>
+            <input type="text" matInput matNativeControl formControlName="uintscheme" [matAutocomplete]="auto66"
+              (input)="onChangeEsquemaBuscar()" />
+            <mat-autocomplete autoActiveFirstOption #auto66="matAutocomplete">
+              <mat-option *ngFor="let item of ArrayEsquema" [value]="item.esquema">
+                {{ item.esquema}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="unitname" placeholder="NOMBRE DE LA UNIDAD DE MEDIDA*" />
+            <mat-error *ngIf="campoNoValido('unitname')">EL CAMPO NOMBRE DE LA UNIDAD DE MEDIDA ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="uintvalor" placeholder="VALOR*" (input)="calcularMonto()" />
+            <mat-error *ngIf="campoNoValido('uintvalor')">EL CAMPO VALOR ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <!-- Este es URI -->
+            <input type="text" matInput formControlName="uintamount" placeholder="MONTO*" />
+            <mat-error *ngIf="campoNoValido('uintamount')">EL CAMPO MONTO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <!-- aqui es moneda -->
+            <mat-label>MONEDA</mat-label>
+            <mat-select matNativeControl formControlName="uintcurrency">
+              <mat-option *ngFor="let item of monedas" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('uintcurrency')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="uinturi" placeholder="URI*" />
+            <mat-error *ngIf="campoNoValido('uinturi')">EL CAMPO URI ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <h2>I.3.2.1 UBICACIÓN DE LA ENTREGA</h2>
+    <p>LA UBICACIÓN DONDE SE REALIZARÁ O TENDRÁ LUGAR LA ACTIVIDAD RELACIONADA CON ESTA LICITACIÓN, CONTRATO O LICENCIA.
+      UNA UBICACIÓN PUEDE DESCRIBIRSE YA
+      SEA POR UNA GEOMETRÍA (UBICACIÓN DEL PUNTO, LÍNEA O POLÍGONO), O UNA ENTRADA DEL DICCIONARIO GEOGRÁFICO, O AMBOS.
+    </p>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="DeliveryLocationgeometrytype" placeholder="TIPO*" />
+            <mat-error *ngIf="campoNoValido('DeliveryLocationgeometrytype')">EL CAMPO TIPO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="deliveryLocationgeometrycoordinates"
+              placeholder="COORDENADAS*" />
+            <mat-error *ngIf="campoNoValido('deliveryLocationgeometrycoordinates')">EL CAMPO COORDENADAS ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="deliveryLocationgazetteerscheme" placeholder="ESQUEMA*" />
+            <mat-error *ngIf="campoNoValido('deliveryLocationgazetteerscheme')">EL CAMPO ESQUEMA ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="gazetteeridentifiers" placeholder="INDICADORES*" />
+            <mat-error *ngIf="campoNoValido('gazetteeridentifiers')">EL CAMPO INDICADORES ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="gazetteerdescription" placeholder="DESCRIPCIÓN*" />
+            <mat-error *ngIf="campoNoValido('gazetteerdescription')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="gazetteeruri" placeholder="HIPERVÍNCULO*" />
+            <mat-error *ngIf="campoNoValido('gazetteeruri')">EL CAMPO HIPERVÍNCULO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <h2>I.3.2.2 DIRECCIÓN DE ENTREGA</h2>
+    <h2>¿LUGAR EN EL QUE SE ENCUENTRA?</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-radio-group aria-label="SELECCIONE UNA OPCIÓN" formControlName="lugar">
+          <mat-radio-button class="example-form" value="MÉXICO">MÉXICO</mat-radio-button>
+          &nbsp; &nbsp;
+          <mat-radio-button class="example-form" value="EXTRANJERO">EXTRANJERO</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>PAIS</mat-label>
+          <input type="text" matInput matNativeControl formControlName="countryName" [matAutocomplete]="auto"
+            (input)="getPais()" />
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let item of arrayPais" [value]="item.nombre">
+              {{ item.nombre}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-form">
+          <mat-label>CODIGO POSTAL</mat-label>
+          <input type="text" matInput formControlName="postalCode" (keyup)="cargaColonias(txtInput.value)" #txtInput />
+          <mat-error *ngIf="campoNoValido('postalCode')">EL CAMPO CODIGO POSTAL ES OBLIGATORIO</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-form">
+          <mat-select placeholder="COLONIA" formControlName="colonia">
+            <mat-option *ngFor="let op of _codigosEnte" [value]="op.colonia">
+              {{ op.colonia | uppercase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>ESTADO</mat-label>
+          <input type="text" matInput matNativeControl formControlName="deliveryAddressregion" [matAutocomplete]="auto3"
+            (input)="getEstados()" (ngModelChange)="onChangeEstado()" />
+          <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
+            <mat-option *ngFor="let item of arrayEstado" [value]="item.nombre">
+              {{ item.nombre}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>MUNICIPIO</mat-label>
+          <input type="text" matInput matNativeControl formControlName="deliveryAddresslocality"
+            [matAutocomplete]="auto2" />
+          <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+            <mat-option *ngFor="let item of arrayMunicipio" [value]="item.nombre_municipio">
+              {{ item.nombre_municipio }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div></div>
+    </div>
+
+
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-form">
+          <mat-label>CALLE </mat-label>
+          <input type="text" matInput formControlName="street" />
+          <mat-error *ngIf="campoNoValido('street')">EL CAMPO CALLE ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-form">
+          <mat-label>NÚMERO </mat-label>
+          <input type="text" matInput formControlName="numero" />
+          <mat-error *ngIf="campoNoValido('numero')">EL CAMPO NÚMERO ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr>
+    <hr>
+    <h2>II. FECHA DE FIRMA DE CONTRATO</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Extensión máxima</mat-label>
+          <input matInput [matDatepicker]="picker8" formControlName="dateSigned">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker8">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker8></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('dateSigned')">EL CAMPO EXTENSIÓN ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+
+
+    </div>
+    <hr>
+    <h2>III. MECANISMOS DE VIGILANCIA</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Criterio de adjudicación</mat-label>
+            <mat-select matNativeControl formControlName="surveillanceMechanisms">
+              <mat-option *ngFor="let format of awardsStatus" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('surveillanceMechanisms')">EL CAMPO CRITERIO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <h2>III.1 GARANTÍAS</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>FORMA DE GARANTÍA</mat-label>
+            <mat-select matNativeControl formControlName="guaranteestype">
+              <mat-option *ngFor="let format of awardsStatus" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('guaranteestype')">EL CAMPO FORMA DE GARANTÍA ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>FECHA DE EXPEDICIÓN</mat-label>
+          <input matInput [matDatepicker]="picker10" formControlName="guaranteesDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker10">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker10></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('guaranteesDate')">EL CAMPO FECHA DE EXPEDICIÓN ES OBLIGATORIO
+        </mat-error>
+
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>OBLIGACIONES GARANTIZADAS</mat-label>
+            <mat-select matNativeControl formControlName="guaranteesobligations">
+              <mat-option *ngFor="let format of awardsStatus" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('guaranteesobligations')">EL CAMPO OBLIGACIONES ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <h2>III.1.1 VALOR</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="guaranteesamount" placeholder="MONTO*" />
+            <mat-error *ngIf="campoNoValido('guaranteesamount')">EL CAMPO UNIDAD DE MEDIDA ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>MONEDA</mat-label>
+            <mat-select matNativeControl formControlName="guaranteescurrency">
+              <mat-option *ngFor="let item of monedas" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('guaranteescurrency')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <h2>III.1.2 INSTITUCIÓN QUE EXPIDE LA GARANTÍA</h2>
+    <!--guarantorname-->
+    <div class="row completo mayuscula">
+      <mat-form-field class="example-form p100p">
+
+        <div class="mb-3">
+
+          <mat-select placeholder="NOMBRE DEL ACTOR*" formControlName="guarantorname">
+            <mat-option *ngFor="let op of proveedoresguarantor" [value]="op.uid">
+              {{ op.razonsocialProv| uppercase }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoNoValido('guarantorname')">EL CAMPO ACTOR ES OBLIGATORIO
+
+          </mat-error>
+
+        </div>
+
+      </mat-form-field>
+    </div>
+    <hr>
+    <h2>III.1.3 PERIODO DE LA GARANTÍA</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de inicio</mat-label>
+          <input matInput [matDatepicker]="picker11" formControlName="guarantorstartDate" (dateChange)="duracionEnDias2($event)">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker11">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker11></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('guarantorstartDate')">EL CAMPO FECHA INICIO ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de término</mat-label>
+          <input matInput [matDatepicker]="picker12" formControlName="guarantorendDate" (dateChange)="duracionEnDias2($event)">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker12">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker12></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('guarantorendDate')">EL CAMPO FECHA DE TERMINO ES OBLIGATORIO
+        </mat-error>
+
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Extensión máxima</mat-label>
+          <input matInput [matDatepicker]="picker13" formControlName="guarantormaxExtentDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker13">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker13></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('guarantormaxExtentDate')">EL CAMPO EXTENSIÓN MÁXIMA ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+      <div class="col-md-6">
+        <!-- <mat-form-field class="example-full-width" appearance="fill" *ngIf="btnActualizar"> -->
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Número En días</mat-label>
+          <input matInput formControlName="guarantordurationInDays">
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('guarantordurationInDays')">EL CAMPO NÚMERO DÍAS ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+    </div>
+    <hr>
+    <hr>
+    <h2>XI. DOCUMENTOS</h2>
+    <app-documentos-contrato></app-documentos-contrato>
+
+    <hr>
+    <h2>III.3 EJECUCIÓN</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Formato de documento</mat-label>
+            <mat-select matNativeControl formControlName="implementationsstatus">
+              <mat-option *ngFor="let format of implementations" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('implementationsstatus')">El Campo es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <h2>III.3.1 TRANSACCIONES</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-form">
+          <mat-label>FUENTE DE DATOS </mat-label>
+          <input type="text" matInput formControlName="transactionssource" />
+          <mat-error *ngIf="campoNoValido('transactionssource')">EL CAMPO FUENTE DE DATOS ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>MÉTODO DE PAGO</mat-label>
+            <mat-select matNativeControl formControlName="transactionspaymentMethod">
+              <mat-option *ngFor="let format of implementations" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('transactionspaymentMethod')">EL CAMPO MÉTODO DE PAGO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>FECHA DE TRANSACCIÓN</mat-label>
+          <input matInput [matDatepicker]="picker41" formControlName="transactionsdate">
+          <mat-hint>YY/MM/DD</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker41">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker41></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="transactionsamount" placeholder="MONTO*" />
+            <mat-error *ngIf="campoNoValido('transactionsamount')">EL CAMPO UNIDAD DE MEDIDA ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>MONEDA</mat-label>
+            <mat-select matNativeControl formControlName="transactionscurrency">
+              <mat-option *ngFor="let item of monedas" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('transactionscurrency')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <h2>III.3.1.1 PAGADOR</h2>
+    <div class="row completo mayuscula">
+      <mat-form-field class="example-form p100p">
+
+        <mat-select placeholder="NOMBRE DEL ACTOR*" formControlName="payername">
+          <mat-option *ngFor="let op of servpayer" [value]="op.uid">
+            {{ op.nombres_servidor| uppercase }}
+            {{ op.primer_apellido_servidor| uppercase }}
+            {{ op.segundo_apellido_servidor | uppercase }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoNoValido('payername')">EL CAMPO NOMBRE ACTOR ES OBLIGATORIO
+
+        </mat-error>
+
+      </mat-form-field>
+    </div>
+    <h2>III.3.1.2 BENEFICIARIO</h2>
+    <div class="row completo mayuscula">
+      <mat-form-field class="example-form p100p">
+
+        <mat-select placeholder="NOMBRE DEL ACTOR*" formControlName="payeename">
+          <mat-option *ngFor="let op of proveedorespayee" [value]="op.uid">
+            {{ op.razonsocialProv| uppercase }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoNoValido('payeename')">EL CAMPO NOMBRE DE ACTOR ES OBLIGATORIO
+
+        </mat-error>
+
+      </mat-form-field>
+    </div>
+    <hr>
+    <h2>III.3.2 INFORMACIÓN VINCULADA DEL GASTO</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="transactionsuri" placeholder="URI*" />
+            <mat-error *ngIf="campoNoValido('transactionsuri')">EL CAMPO URI ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <h2> III.3.3 HITOS</h2>
+    <app-hitos-contrato></app-hitos-contrato>
+
+    <hr>
+    <h2>III.3.4 DOCUMENTOS</h2>
+    <app-doc-contrato></app-doc-contrato>
+
+    <hr>
+    <h2>III.4 PROCESOS RELACIONADOS</h2>
+    <p>Los detalles de procesos relacionados: por ejemplo, si este proceso es seguido por uno o más procesos de
+      contratación, representados por un Identificador de Contrataciones Abiertas (ocid).
+      Esto se utiliza comúnmente par hacer referencia a subcontratos y para procesos de renovación o reemplazo de este
+      contrato.</p>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>RELACIÓN</mat-label>
+            <mat-select matNativeControl formControlName="relatedProcessesrelationship">
+              <mat-option *ngFor="let format of relationship" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('relatedProcessesrelationship')">EL CAMPO RELACIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="relatedProcessestitle" placeholder="TÍTULO*" />
+            <mat-error *ngIf="campoNoValido('relatedProcessestitle')">EL CAMPO TÍTULO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="relatedProcessesuri" placeholder="URI*" />
+            <mat-error *ngIf="campoNoValido('relatedProcessesuri')">EL CAMPO URI ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <hr>
+    <h2> III.5 HITOS DEL CONTRATO</h2>
+    <app-hitos-del-contrato></app-hitos-del-contrato>
+
+    <hr>
+    <h2>III.6 ÚLTIMAS MODIFICACIONES</h2>
+    <p>UNA MODIFICACIÓN DEL CONTRATO ES UN CAMBIO FORMAL O EXTENSIÓN DE UN CONTRATO, Y GENERALMENTE IMPLICA LA
+      PUBLICACIÓN DE UN NUEVO AVISO DE CONTRATO
+      / LIBERACIÓN, O ALGUNOS OTROS DOCUMENTOS QUE DETALLAN EL CAMBIO. LA JUSTIFICACIÓN Y UNA DESCRIPCIÓN DE LOS CAMBIOS
+      REALIZADOS SE PUEDEN PROPORCIONAR
+      AQUÍ.</p>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-4">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha de Modificación</mat-label>
+            <input matInput [matDatepicker]="picker80" formControlName="amendmentsdate" mat-raised-button
+              #tooltip="matTooltip" matTooltip="Fecha en la que se puede llegar a modificar el Hito">
+
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker80">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker80></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>JUSTIFICACIÓN</mat-label>
+            <input type="text" matInput formControlName="amendmentsrationale">
+            <mat-error *ngIf="campoNoValido('amendmentsrationale')">EL CAMPO JUSTIFICACIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>IDENTIFICADOR</mat-label>
+            <input type="text" matInput formControlName="amendmentsid">
+            <mat-error *ngIf="campoNoValido('amendmentsid')">EL CAMPO IDENTIFICACIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>DESCRIPCIÓN</mat-label>
+            <input type="text" matInput formControlName="amendmentsdescription">
+            <mat-error *ngIf="campoNoValido('amendmentsdescription')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>LIBERACIÓN MODIFICADA ANTES (IDENTIFICADOR)</mat-label>
+            <input type="text" matInput formControlName="amendsReleaseID">
+            <mat-error *ngIf="campoNoValido('amendsReleaseID')">EL CAMPO LIBERACIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>DIFUSIÓN DE LA MODIFICACIÓN DESPUÉS (IDENTIFICADOR)</mat-label>
+            <input type="text" matInput formControlName="releaseID">
+            <mat-error *ngIf="campoNoValido('releaseID')">EL CAMPO DIFUSIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    &nbsp;
+    &nbsp;
+
+    <div class="form-group mt-3 d-flex justify-content-end ">
+      <button type="submit" class="btn btn-warning center-block" style="cursor: pointer;" *ngIf="botonEditarContrato">
+        EDITAR CONTRATO
+      </button>
+      &nbsp;
+      &nbsp;
+      <button type="submit" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonGuardarContrato"
+        [disabled]="ContratoForm.invalid">
+        GUARDAR CONTRATO
+      </button>
+    </div>
+    <hr>
+  </form>

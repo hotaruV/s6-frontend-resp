@@ -1,0 +1,30 @@
+.button{
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 10px 10px 8px 4px rgba($color: #000000, $alpha: 0.15);
+  margin-bottom: 10px;
+  .menu__link{
+    background-color: #fff;
+    text-decoration: none;
+    color: #808BA6;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 14px;
+    width: 30%;
+    height: 100%;
+  }
+  .menu__link:hover{
+    width: 30%;
+    height: 100%;
+    background-color: #125DA9;
+    color: #fff;
+  }
+  .activate{
+    background-color: #125DA9;
+    color: #fff;
+  }
+}

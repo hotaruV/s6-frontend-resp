@@ -1,0 +1,705 @@
+<!-- <app-funcionarios-index></app-funcionarios-index> -->
+<app-actoresinvolucrados-index></app-actoresinvolucrados-index>
+
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="ENTE PÚBLICO">
+    <div class="contenedor">
+      <form (ngSubmit)="actInformacionEnte()" autocomplete="off" [formGroup]="enteForm">
+        <input type="hidden" formControlName="uid" />
+        <div style="font-weight: bold">ENTE PÚBLICO/COMPRADOR</div>
+        &nbsp;
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>NOMBRE COMERCIAL</mat-label>
+              <input type="text" matInput formControlName="nombre_comercial" />
+              <mat-error *ngIf="campoNoValido('nombre_comercial')">EL CAMPO NOMBRE ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>RFC DEL ENTE PÚBLICO </mat-label>
+              <input type="text" matInput formControlName="rfc" />
+              <mat-error *ngIf="campoNoValido('rfc')">EL CAMPO RFC ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-12">
+            <mat-form-field class="example-form">
+              <mat-label>NOMBRE LEGAL DEL COMPRADOR </mat-label>
+              <input type="text" matInput formControlName="nombre_legal" />
+              <mat-error *ngIf="campoNoValido('nombre_legal')">EL CAMPO NOMBRE LEGAL ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        &nbsp; &nbsp;
+        <div style="font-weight: bold">LUGAR EN EL QUE SE ENCUENTRA</div>
+        &nbsp;
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-radio-group aria-label="SELECCIONE UNA OPCIÓN" formControlName="lugar">
+              <mat-radio-button class="example-form" value="MÉXICO">MÉXICO</mat-radio-button>
+              &nbsp; &nbsp;
+              <mat-radio-button class="example-form" value="EXTRANJERO">EXTRANJERO</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="PAIS" formControlName="pais">
+                <mat-option *ngFor="let op of arrayPais" [value]="op.nombre">
+                  {{ op.nombre | uppercase }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>CODIGO POSTAL</mat-label>
+              <input type="text" matInput formControlName="codigoPostal" (keyup)="cargaColonias(txtInput.value)"
+                #txtInput />
+              <mat-error *ngIf="campoNoValido('codigoPostal')">EL CAMPO CODIGO POSTAL ES OBLIGATORIO</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-select placeholder="COLONIA" formControlName="colonia">
+                <mat-option *ngFor="let op of _codigosEnte" [value]="op.colonia">
+                  {{ op.colonia | uppercase }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>LOCALIDAD</mat-label>
+              <input type="text" matInput matNativeControl formControlName="localidad" [matAutocomplete]="auto97"
+                (input)="getEstados()" (ngModelChange)="onChangeEstado()" />
+              <mat-autocomplete autoActiveFirstOption #auto97="matAutocomplete">
+                <mat-option *ngFor="let item of arrayEstado" [value]="item.nombre">
+                  {{ item.nombre }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>REGION</mat-label>
+              <input type="text" matInput matNativeControl formControlName="region" [matAutocomplete]="auto96" />
+              <mat-autocomplete autoActiveFirstOption #auto96="matAutocomplete">
+                <mat-option *ngFor="let item of arrayMunicipio" [value]="item.nombre_municipio">
+                  {{ item.nombre_municipio }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>CALLE </mat-label>
+              <input type="text" matInput formControlName="calle" />
+              <mat-error *ngIf="campoNoValido('calle')">EL CAMPO CALLE ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>NUMERO </mat-label>
+              <input type="text" matInput formControlName="numero" />
+              <mat-error *ngIf="campoNoValido('numero')">EL CAMPO NUMERO ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <div style="font-weight: bold">CONTACTO</div>
+        &nbsp;
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>NOMBRES</mat-label>
+                <input type="text" matInput formControlName="nombres_contacto" />
+                <mat-error *ngIf="campoNoValido('nombres_contacto')">EL CAMPO NOMBRE ES OBLIGATORIO
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>PRIMER APELLIDO</mat-label>
+                <input type="text" matInput formControlName="primer_apellido_contacto" />
+                <mat-error *ngIf="campoNoValido('primer_apellido_contacto')">EL CAMPO PRIMER APELLIDO ES OBLIGATORIO
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>SEGUNDO APELLIDO</mat-label>
+                <input type="text" matInput formControlName="segundo_apellido_contacto" />
+                <mat-error *ngIf="campoNoValido('segundo_apellido_contacto')">EL CAMPO APELLIDO ES OBLIGATORIO
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>CORREO ELECTRONICO INSTITUCIONAL</mat-label>
+                <input type="email" matInput formControlName="email_contacto" placeholder="Ex. pat@example.com" />
+                <mat-error *ngIf="campoNoValido('email_contacto')">
+                  INGRESE UN EMAIL VALIDO
+                </mat-error>
+                <mat-error *ngIf="campoNoValido('email_contacto')">
+                  EL EMAIL ES UN CAMPO <strong>REQUERIDO</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>TELEFONO INSTITUCIONAL</mat-label>
+                <input type="text" matInput formControlName="telefono_contacto" />
+                <mat-error *ngIf="campoNoValido('telefono_contacto')">EN EL TELEFONO SOLO SE PERMITEN NUMEROS
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>NUMERO DE FAX INSTITUCIONAL (OPCIONAL)</mat-label>
+                <input type="text" matInput formControlName="telefonofax_contacto" />
+                <mat-error *ngIf="campoNoValido('telefonofax_contacto')">EN EL TELEFONO SOLO SE PERMITEN NUMEROS
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>URL DEL ENTE PUBLICO</mat-label>
+                <input type="text" matInput formControlName="url_ente_contacto" />
+                <mat-error *ngIf="campoNoValido('url_ente_contacto')">EL CAMPO URL ES OBLIGATORIO
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>IDIOMA</mat-label>
+              <mat-select matNativeControl formControlName="idioma">
+                <mat-option *ngFor="let idioma of idiomas" [value]="idioma.value">
+                  {{ idioma.viewValue }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="campoNoValido('idioma')">SELECCIONE UN IDIOMA
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="submit" class="btn btn-success center-block" style="cursor: pointer" *ngIf="botonEnte"
+            [disabled]="enteForm.invalid">
+            GUARDAR ENTE PUBLICO
+          </button>
+        </div>
+        &nbsp; &nbsp;
+      </form>
+    </div>
+    <div class="contenedor">
+      <form (ngSubmit)="crearServidorEnte()" autocomplete="off" [formGroup]="servidoresEnteForm">
+        <input type="hidden" formControlName="uid" />
+        <input type="hidden" formControlName="_id" />
+        <input type="hidden" formControlName="id_usuario" />
+        <div style="font-weight: bold">
+          SERVIDORES PUBLICOS QUE PARTICIPAN EN LA CONTRATACION
+        </div>
+        &nbsp;
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>NOMBRES</mat-label>
+                <input type="text" matInput formControlName="nombres_servidor" />
+                <mat-error *ngIf="campoNoValidoServidor('nombres_servidor')">EL CAMPO NOMBRE ES OBLIGATORIO
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>PRIMER APELLIDO</mat-label>
+                <input type="text" matInput formControlName="primer_apellido_servidor" />
+                <mat-error *ngIf="campoNoValidoServidor('primer_apellido_servidor')">EL CAMPO PRIMER APELLIDO ES
+                  OBLIGATORIO
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>SEGUNDO APELLIDO</mat-label>
+                <input type="text" matInput formControlName="segundo_apellido_servidor" />
+                <mat-error *ngIf="campoNoValidoServidor('segundo_apellido_servidor')">SOLO PERMITE LETRAS
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>RFC DEL ENTE PUBLICO </mat-label>
+              <input type="text" matInput formControlName="rfc_servidor" />
+              <mat-error *ngIf="campoNoValidoServidor('rfc_servidor')">EL CAMPO RFC ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>CARGO</mat-label>
+                <input type="text" matInput formControlName="cargo_servidor" />
+                <mat-error *ngIf="campoNoValidoServidor('cargo_servidor')">SOLO PERMITE LETRAS
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>CORREO ELECTRONICO INSTITUCIONAL</mat-label>
+                <input type="email" matInput formControlName="email_servidor" placeholder="Ex. pat@example.com" />
+                <mat-error *ngIf="campoNoValidoServidor('email_servidor')">
+                  INGRESE UN EMAIL VALIDO
+                </mat-error>
+                <mat-error *ngIf="campoNoValidoServidor('email_servidor')">
+                  EL EMAIL ES UN CAMPO<strong>REQUERIDO</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>TELEFONO INSTITUCIONAL</mat-label>
+                <input type="text" matInput formControlName="telefono_servidor" />
+                <mat-error *ngIf="campoNoValidoServidor('telefono_servidor')">EN EL TELEFONO SOLO SE PERMITEN NUMEROS
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>NUMERO DE FAX INSTITUCIONAL (OPCIONAL)</mat-label>
+                <input type="text" matInput formControlName="telefonofax_servidor" />
+                <mat-error *ngIf="campoNoValidoServidor('telefonofax_servidor')">EN EL FAX SOLO SE PERMITEN NUMEROS
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-12">
+            <mat-form-field class="example-form">
+              <mat-label>AREA EN LA QUE PARTICIPA EL ACTOR INVOLUCRADO</mat-label>
+              <mat-select matNativeControl formControlName="area">
+                <mat-option *ngFor="let area of areas" [value]="area.value">
+                  {{ area.viewValue }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="campoNoValidoServidor('area')">SELECCIONE UNA AREA
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="submit" class="btn btn-success center-block" style="cursor: pointer"
+            *ngIf="botonGuardarServidor" [disabled]="servidoresEnteForm.invalid">
+            GUARDAR SERVIDOR PUBLICO
+          </button>
+          &nbsp; &nbsp;
+          <button type="button" class="btn btn-primary" style="cursor: pointer" *ngIf="botonVerServidor"
+            (click)="Verserv()">
+            VER SERVIDORES PUBLICOS
+          </button>
+        </div>
+
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="button" class="btn btn-success center-block" style="cursor: pointer" *ngIf="botonUpdateServidor"
+            (click)="UptServidor()">
+            ACTUALIZAR
+          </button>
+          <button type="button" class="btn btn-danger mx-2" style="cursor: pointer" *ngIf="botonUpdateServidor"
+            (click)="cancelarServidor()">
+            CANCELAR
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12"></div>
+    </div>
+  </mat-tab>
+  <mat-tab label="PROVEEDORES">
+    <div class="contenedor">
+      <form (ngSubmit)="creaProveedores()" autocomplete="off" [formGroup]="proveedoresForm">
+        <input type="hidden" formControlName="uid" />
+        <input type="hidden" formControlName="_id" />
+        <input type="hidden" formControlName="id_usuario" />
+        <div style="font-weight: bold">PROVEEDORES</div>
+        &nbsp;
+        <div class="row">
+          <div class="col-md-6">
+            <mat-radio-group aria-label="SELECCIONE UNA OPCIÓN" formControlName="tipo">
+              <mat-radio-button class="example-form" value="Moral" (change)="personaMoral()">PERSONA
+                MORAL</mat-radio-button>
+              &nbsp; &nbsp;
+              <mat-radio-button class="example-form" value="Fisica" (change)="personaFisica()">PERSONA
+                FISICA</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        &nbsp; &nbsp;
+
+        <div class="row completo mayuscula">
+          <mat-form-field class="example-form">
+            <mat-label>NOMBRE O RAZON SOCIAL</mat-label>
+            <input type="text" matInput formControlName="razonsocialProv" />
+            <mat-error *ngIf="campoNoValidoProvedores('razonsocialProv')">EL CAMPO NOMBRE O RAZON SOCIAL ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>RFC </mat-label>
+              <input type="text" matInput formControlName="rfcproveedor" />
+              <mat-error *ngIf="campoNoValidoProvedores('rfcproveedor')">EL RFC ES OBLIGATORIO Y DEBE SER UN RFC VALIDO
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>URL </mat-label>
+              <input type="text" matInput formControlName="uri_proveedor" />
+              <mat-error *ngIf="campoNoValidoProvedores('uri_proveedor')">EL CAMPO URL ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        &nbsp; &nbsp;
+        <div *ngIf="tipopersona">
+          <div style="font-weight: bold">REPRESENTANTE LEGAL</div>
+          &nbsp;
+          <div class="row mayuscula">
+            <div class="col-md-6">
+              <div class="mb-6">
+                <mat-form-field class="example-form">
+                  <mat-label>NOMBRES</mat-label>
+                  <input type="text" matInput formControlName="nombres_rep_legal" />
+                  <mat-error *ngIf="campoNoValidoProvedores('nombres_rep_legal')">EL CAMPO NOMBRE ES OBLIGATORIO
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-6">
+                <mat-form-field class="example-form">
+                  <mat-label>PRIMER APELLIDO</mat-label>
+                  <input type="text" matInput formControlName="primer_apellido_rep_legal" />
+                  <mat-error *ngIf="campoNoValidoProvedores('primer_apellido_rep_legal')">EL CAMPO PRIMER APELLIDO ES
+                    OBLIGATORIO
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mayuscula">
+            <div class="col-md-6">
+              <div class="mb-6">
+                <mat-form-field class="example-form">
+                  <mat-label>SEGUNDO APELLIDO</mat-label>
+                  <input type="text" matInput formControlName="segundo_apellido_rep_legal" />
+                  <mat-error *ngIf="
+                      campoNoValidoProvedores('segundo_apellido_rep_legal')
+                    ">SOLO SE PERMITEN LETRAS
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <mat-form-field class="example-form">
+                  <mat-label>RFC</mat-label>
+                  <input type="text" matInput formControlName="rfc_rep_legal" />
+                  <mat-error *ngIf="campoNoValidoProvedores('rfc_rep_legal')">RFC INVALIDO
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          &nbsp; &nbsp;
+        </div>
+        <div style="font-weight: bold">LUGAR EN EL QUE SE ENCUENTRA</div>
+        &nbsp;
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-radio-group aria-label="SELECCIONE UNA OPCION" formControlName="lugar_proveedor">
+              <mat-radio-button class="example-form" value="MÉXICO">MÉXICO</mat-radio-button>
+              &nbsp; &nbsp;
+              <mat-radio-button class="example-form" value="EXTRANJERO">EXTRANJERO</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-select placeholder="PAIS" formControlName="pais_proveedor">
+                <mat-option *ngFor="let op of arrayPaisProveedor" [value]="op.nombre">
+                  {{ op.nombre | uppercase }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>CODIGO POSTAL </mat-label>
+              <input type="text" matInput formControlName="codigoPostal_proveedor"
+                (blur)="cargaDatosProveedor($event)" />
+              <mat-error *ngIf="campoNoValidoProvedores('codigoPostal_proveedor')">EL CAMPO CODIGO POSTAL ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-select placeholder="COLONIA" formControlName="colonia_proveedor">
+                <mat-option *ngFor="let op of _codigos" [value]="op.colonia">
+                  {{ op.colonia | uppercase }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>LOCALIDAD</mat-label>
+              <input type="text" matInput matNativeControl formControlName="localidad_proveedor"
+                [matAutocomplete]="auto99" (input)="getEstadosProveedor()"
+                (ngModelChange)="onChangeEstadoProveedor()" />
+              <mat-autocomplete autoActiveFirstOption #auto99="matAutocomplete">
+                <mat-option *ngFor="let item of arrayEstadoProveedor" [value]="item.nombre">
+                  {{ item.nombre }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>REGION</mat-label>
+              <input type="text" matInput matNativeControl formControlName="region_proveedor"
+                [matAutocomplete]="auto98" />
+              <mat-autocomplete autoActiveFirstOption #auto98="matAutocomplete">
+                <mat-option *ngFor="let item of arrayMunicipioProveedor" [value]="item.nombre_municipio">
+                  {{ item.nombre_municipio }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>CALLE </mat-label>
+              <input type="text" matInput formControlName="calle_proveedor" />
+              <mat-error *ngIf="campoNoValidoProvedores('calle_proveedor')">EL CAMPO CALLE ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>NUMERO </mat-label>
+              <input type="text" matInput formControlName="numero_proveedor" />
+              <mat-error *ngIf="campoNoValidoProvedores('numero_proveedor')">EL CAMPO NUMERO ES OBLIGATORIO
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div style="font-weight: bold">CONTACTO</div>
+        &nbsp;
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>NOMBRES</mat-label>
+                <input type="text" matInput formControlName="nombres_contacto_prov" />
+                <mat-error *ngIf="campoNoValidoProvedores('nombres_contacto_prov')">EL CAMPO NOMBRE ES OBLIGATORIO
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>PRIMER APELLIDO</mat-label>
+                <input type="text" matInput formControlName="primer_apellido_contacto_prov" />
+                <mat-error *ngIf="
+                    campoNoValidoProvedores('primer_apellido_contacto_prov')
+                  ">EL CAMPO PRIMER APELLIDO ES OBLIGATORIO
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>SEGUNDO APELLIDO</mat-label>
+                <input type="text" matInput formControlName="segundo_apellido_contacto_prov" />
+                <mat-error *ngIf="
+                    campoNoValidoProvedores('segundo_apellido_contacto_prov')
+                  ">SOLO SE PERMITE LETRAS
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>CORREO ELECTRONICO INSTITUCIONAL</mat-label>
+                <input type="email" matInput formControlName="email_contacto_prov" placeholder="Ex. pat@example.com" />
+                <mat-error *ngIf="campoNoValidoProvedores('email_contacto_prov')">
+                  INGRESE UN EMAIL VALIDO
+                </mat-error>
+                <mat-error *ngIf="campoNoValidoProvedores('email_contacto_prov')">
+                  EL EMAIL ES UN CAMPO<strong>REQUERIDO</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>TELEFONO INSTITUCIONAL</mat-label>
+                <input type="text" matInput formControlName="telefono_contacto_prov" />
+                <mat-error *ngIf="campoNoValidoProvedores('telefono_contacto_prov')">EN EL TELEFONO SOLO SE PERMITEN
+                  NUMEROS
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>NUMERO DE FAX INSTITUCIONAL (OPCIONAL)</mat-label>
+                <input type="text" matInput formControlName="telefonofax_contacto_prov" />
+                <mat-error *ngIf="campoNoValidoProvedores('telefonofax_contacto_prov')">EN EL FAX SOLO SE PERMITEN
+                  NUMEROS
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mayuscula">
+          <div class="col-md-6">
+            <div class="mb-6">
+              <mat-form-field class="example-form">
+                <mat-label>URL DEL ENTE PUBLICO</mat-label>
+                <input type="text" matInput formControlName="url_ente_contacto_prov" />
+                <mat-error *ngIf="campoNoValidoProvedores('url_ente_contacto_prov')">EL CAMPO URL ES OBLIGATORIO
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-form">
+              <mat-label>IDIOMA</mat-label>
+              <mat-select matNativeControl formControlName="idioma_prov">
+                <mat-option *ngFor="let idioma of idiomas" [value]="idioma.value">
+                  {{ idioma.viewValue }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="campoNoValidoProvedores('idioma_prov')">SELECCIONE UN IDIOMA
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        &nbsp; &nbsp;
+
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="submit" class="btn btn-success center-block" style="cursor: pointer" *ngIf="botonGuardaProv"
+            [disabled]="proveedoresForm.invalid">
+            GUARDAR PROVEEDOR
+          </button>
+          &nbsp; &nbsp;
+          <button type="button" class="btn btn-primary" style="cursor: pointer" *ngIf="botonVerProv"
+            (click)="Verprov()">
+            VER PROVEEDORES
+          </button>
+        </div>
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="button" class="btn btn-success center-block" style="cursor: pointer" *ngIf="botonUpdateProv"
+            (click)="UptProveedor()">
+            ACTUALIZAR
+          </button>
+          <button type="button" class="btn btn-danger mx-2" style="cursor: pointer" *ngIf="botonUpdateProv"
+            (click)="cancelarProveedor()">
+            CANCELAR
+          </button>
+        </div>
+
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      </form>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<!-- <div class="" *ngIf="modalSwitch == true">
+  <app-proveedores></app-proveedores>
+</div> -->

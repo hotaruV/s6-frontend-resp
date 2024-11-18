@@ -1,0 +1,98 @@
+*{
+  background-color: #F8F8F8;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.clear{
+  width: 100%;
+  height: 20px;
+}
+i{
+  background-color: #DBDBDB;
+  color: #125DA9;
+  padding: 3px 5px 0px;
+  font-size: 1rem;
+}
+.vuelta{
+  padding-top: 15px;
+  padding-bottom: 10px;
+  width: 100%;
+  height: 55px;
+  background-color: #DBDBDB;
+  display: flex;
+  justify-content: right;
+  padding-right: 30px;
+  p{
+    background-color: #DBDBDB;
+    color: #125DA9;
+    font-weight: bold;
+  }
+  a{
+    background-color: #DBDBDB;
+    text-decoration: none;
+    color: #808BA6;
+    font-weight: 600;
+  }
+  a:hover{
+    text-decoration: underline;
+  }
+}
+.button{
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  a{
+    background-color: #fff;
+    text-decoration: none;
+    color: #808BA6;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 14px;
+    width: 30%;
+    height: 100%;
+  }
+  a:hover{
+    width: 50%;
+    height: 100%;
+    background-color: #125DA9;
+    color: #fff;
+  }
+}
+.informacion{
+  display: grid;
+  //grid-gap: 1rem;
+  justify-items: center;
+  align-content: center;
+  grid-template-columns: 25% 50% 25%;
+  width: 100%;
+  height: 220px;
+  .imgCont{
+    width: 100%;
+    height: 100px;
+    display: grid;
+    background-image: url('../../../../assets/images/logo_plataforma-11.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    justify-content: center;
+  }
+  .imgCont2{
+    width: 100px;
+    height: 100px;
+    display: grid;
+    background-image: url('../../../../assets/images/estilo graf-54.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    justify-content: center;
+  }
+  h1{
+    color: #125DA9;
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 5%;
+  }
+}

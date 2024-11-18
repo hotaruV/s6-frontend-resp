@@ -1,0 +1,191 @@
+<section class="contenido__general">
+  <app-adwards-header-menu></app-adwards-header-menu>
+  <h2 class="titulo">CONTRATACIÓN</h2>
+  <p class="instrucciones mb-5">En esta sección se define quiénes van a participar para poder acceder a
+    proveer el material requerido, al igual que se definirá este mismo material junto con sus características
+    y se dará a conocer todos los periodos de la licitación y sus documentos respectivos.</p>
+
+  <div class="datos" *ngIf="datosValue">
+    <!-- <h2 class="mb-3">CONTRATANTE</h2> -->
+    <h3 class="mb-5">VALOR DE LA CONTRATACIÓN</h3>
+
+    <div class="contenedor">
+      <form autocomplete="off" [formGroup]="AdwardForm">
+        <fieldset>
+          <legend>Contratatante</legend>
+          <div class="row completo">
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Título</mat-label>
+                  <input type="text" matInput formControlName="title">
+                  <mat-error *ngIf="campoNoValido('title')">Este Campo Es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Descripción</mat-label>
+                  <input type="text" matInput formControlName="description">
+                  <mat-error *ngIf="campoNoValido('description')">Este Campo Es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row completo">
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Estatus de adjudicación</mat-label>
+                  <mat-select matNativeControl formControlName="status">
+                    <mat-option *ngFor="let format of awardStatus" [value]="format.value">
+                      {{format.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="campoNoValido('status')">Este Campo Es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Fecha de Inicio</mat-label>
+                  <input matInput [matDatepicker]="picker1" formControlName="date">
+                  <mat-hint>YY/MM/DD</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="picker1">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <mat-divider class="my-3"></mat-divider>
+        <fieldset>
+          <legend>Valor de la contratacion</legend>
+          <div class="row completo">
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Monto</mat-label>
+                  <input type="number" matInput class="example-right-align" formControlName="amount">
+                  <span matPrefix>$&nbsp;</span>
+                  <mat-error *ngIf="campoNoValido('amount')">Este Campo Es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 mitad">
+              <div class="mb-3">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Moneda</mat-label>
+                  <mat-select matNativeControl formControlName="currency">
+                    <mat-option *ngFor="let format of moneda" [value]="format.value">
+                      {{format.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="campoNoValido('currency')">El Campo Nombre es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+
+        <mat-divider class="my-3"></mat-divider>
+        <fieldset>
+          <legend>Número de Aclaraciones</legend>
+          <div class="row completo">
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Fecha de Inicio</mat-label>
+                  <input matInput [matDatepicker]="picker2" formControlName="startDate">
+                  <mat-hint>YY/MM/DD</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="picker2">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 mitad">
+              <div class="mb-3">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Fecha de Término</mat-label>
+                  <input matInput [matDatepicker]="picker3" formControlName="endDate">
+                  <mat-hint>YY/MM/DD</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="picker3">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <mat-divider></mat-divider>
+        <fieldset class="my-3">
+          <legend>Provedores
+            <button class="btn btn-primary m-2" (click)="addaward()">+</button>
+          </legend>
+          <ng-container formArrayName="supliers">
+            <ng-container *ngFor="let AdditionalForm of suplierForm.controls; let i = index" [formGroupName]="i">
+              <div class="row" [formGroup]="AdditionalForm">
+                <div class="col-md-5">
+                  <div class="mb-2">
+                    <mat-form-field class="example-form p25p">
+                      <mat-label>Nombre legal</mat-label>
+                      <input type="text" matInput class="example-right-align" formControlName="name">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="mb-2">
+                    <mat-form-field class="example-form p25p">
+                      <mat-label>Identificador de la adjudicación</mat-label>
+                      <input type="text" matInput formControlName="id">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="col-md-3 mitad" *ngIf="btnMenos">
+                    <button class="btn btn-danger" (click)="deleteACs(i)">-</button>
+                  </div>
+                </div>
+              </div>
+
+            </ng-container>
+
+          </ng-container>
+        </fieldset>
+        <mat-divider class="my-5"></mat-divider>
+
+      </form>
+      <div class="form-group mt-3 d-flex justify-content-end">
+        <button class="btn btn-primary" *ngIf="btnAtras" (click)="forward()"> &lt;&lt; </button>
+        <button (click)="crearAdward()" class="btn btn-success center-block mx-1" [disabled]="AdwardForm.invalid"
+          *ngIf="btnGuardar">Guardar</button>
+        <button (click)="cancel()" class="btn btn-danger center-block mx-1" [disabled]="AdwardForm.invalid"
+          *ngIf="btnCancelar">Cancelar</button>
+        <button (click)="updateAward()" class="btn btn-warning center-block mx-1" [disabled]="AdwardForm.invalid"
+          *ngIf="btnActualizar">Actualizar</button>
+        <button class="btn btn-primary" *ngIf="btnSiguiente" (click)="next()"> >> </button>
+
+      </div>
+    </div>
+  </div>
+  <!-- <span>Valid</span>
+  <pre>{{AdwardForm.valid}}</pre>
+  <br>
+  <span>value</span>
+  <pre>{{AdwardForm.value | json}}</pre> -->
+</section>

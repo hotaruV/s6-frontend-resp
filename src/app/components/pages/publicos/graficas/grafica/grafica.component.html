@@ -1,0 +1,19 @@
+<div class="menu_central">
+  <form [formGroup]="guestForm" novalidate class="format">
+      <mat-form-field class="form">
+        <select
+          matNativeControl
+          formControlName="grafica"
+          #txtSh
+          (click)="cambioGrafica(txtSh.value)"
+          (click)="graficaTipo()">
+          <option [ngValue]="null">Montos por tipo de contratación</option>
+          <option value="cant">Cantidad de contrataciones por tipo</option>
+        </select>
+      </mat-form-field>
+  </form>
+</div>
+<div style="display: block">
+    <canvas baseChart [data]="doughnutChartData" [type]="doughnutChartType">
+    </canvas>
+</div>

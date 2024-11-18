@@ -1,0 +1,100 @@
+<div class="contenido__general texto">
+  <a
+    routerLink="oic/notificaciones"
+    class="btn btn-success btn-sm mb-5"
+    data-toggle="tooltip"
+    data-placement="top"
+    title="Volver a notificaciones"
+  >
+    <i class="fa-solid fa-arrow-left"></i
+  ></a>
+  <h2>NOTIFICACIONES</h2>
+  <table class="table table-stripred table-responsive mb-5">
+    <thead>
+      <tr class="left">
+        <th scope="col" class="w50">#</th>
+        <th scope="col" class="w100">FECHA DE CARGA FINAL DE CONTRATO</th>
+        <th scope="col" class="w100">OCID</th>
+        <th scope="col" class="w100">STATUS</th>
+        <th class="w20"></th>
+        <th scope="col" class="w100">TÍTULO DE LICITACIÓN</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of arr_notificaciones; let i = index"
+        [ngStyle]="{ height: '50px' }"
+      >
+        <td class="left">{{ i + 1 }}</td>
+        <td class="left">{{ item.created_at | date }}</td>
+        <td class="left">{{ item.ocid }}</td>
+        <td *ngIf="item.status === 'no visto'" class="left text-danger">
+          <strong>{{ item.status | uppercase }}</strong>
+        </td>
+        <td *ngIf="item.status === 'visto'" class="left text-primary">
+          <strong>{{ item.status | uppercase }}</strong>
+        </td>
+        <td *ngIf="item.status === 'atendido'" class="left text-warning">
+          <strong>{{ item.status | uppercase }}</strong>
+        </td>
+        <td *ngIf="item.status === 'concluido'" class="left text-success">
+          <strong>{{ item.status | uppercase }}</strong>
+        </td>
+        <td>
+          <button
+            *ngIf="item.status === 'atendido'"
+            button
+            (click)="marcarConcluido(item._id)"
+            class="btn btn-success btn-sm"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Marcar como revisado"
+          >
+            <i class="fa-solid fa-check"></i>
+          </button>
+        </td>
+        <td
+          class="left"
+          *ngIf="item.revision_id.contrato_id.tender !== null; else titulo"
+        >
+          <strong>{{
+            item.revision_id.contrato_id.tender.title | uppercase
+          }}</strong>
+        </td>
+
+        <ng-template #titulo>
+          <td class="left">
+            <strong class="text-primary">no asignado</strong>
+          </td>
+        </ng-template>
+      </tr>
+    </tbody>
+  </table>
+  <form
+    (ngSubmit)="crearNotificacion()"
+    autocomplete="off"
+    [formGroup]="noficationForm"
+  >
+    <mat-form-field class="example-full-width">
+      <mat-label>DESCRIPCIÓN</mat-label>
+      <textarea
+        matInput
+        placeholder="Motivo por el cual se envia la alerta"
+        formControlName="notification_text"
+        cols="30"
+        rows="10"
+      ></textarea>
+    </mat-form-field>
+    <mat-error *ngIf="campoNoValido('notification_text')"
+      >Incluye tu texto
+    </mat-error>
+    <button
+      type="submit"
+      class="btn btn-success mt-5"
+      style="cursor: pointer"
+      [disabled]="noficationForm.invalid"
+    >
+      enviar
+    </button>
+  </form>
+</div>

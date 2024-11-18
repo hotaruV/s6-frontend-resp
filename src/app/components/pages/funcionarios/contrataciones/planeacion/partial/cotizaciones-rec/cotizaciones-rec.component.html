@@ -1,0 +1,55 @@
+
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="cotForm"> 
+  <input type="hidden" formControlName="id" />
+  <div class="row completo mayuscula">
+    <div class="col-md-6">
+      <div class="mb-0">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input type="text" matInput formControlName="cotizadescription" placeholder="DESCRIPCIÓN* " />
+          <mat-error *ngIf="campoNoValido('cotizadescription')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-6 ">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>FECHA DE INICIO DE COTIZACIÓN</mat-label>
+        <input matInput [matDatepicker]="picker4" formControlName="cotizadate">
+        <mat-hint>YY/MM/DD</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker4">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker4></mat-datepicker>
+        <mat-error *ngIf="campoNoValido('cotizadate')">CAMPO FECHA DE INICIO ES REQUERIDO</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  &nbsp;
+  &nbsp;
+
+  <div class="form-group mt-3 d-flex justify-content-end ">
+    <button type="submit" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonGuardaCoti"
+      [disabled]="cotForm.invalid" >
+      GUARDAR COTIZACIÓN
+    </button>
+    &nbsp;
+    &nbsp;
+
+    <button type="button" class="btn btn-primary " style="cursor: pointer;" *ngIf="botonVerCoti" (click)="Vercot()" >
+      VER COTIZACIONES
+    </button>
+  </div>
+  <div class="form-group mt-3 d-flex justify-content-end">
+
+   
+    <button type="button" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonUpdateCoti" (click)="UptCotizacion()" >
+      ACTUALIZAR
+    </button>
+    <button type="button" class="btn btn-danger mx-2" style="cursor: pointer;" *ngIf="botonUpdateCoti"  (click)="cancelarCotizacion()">
+      CANCELAR
+    </button>
+  </div>
+</form> 
+
+
+

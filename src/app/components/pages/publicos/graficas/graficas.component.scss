@@ -1,0 +1,29 @@
+.info{
+  width: 100%;
+  height: auto;
+  margin: 50px 0px 0px 50px;
+}
+.format{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  .form{
+    width: 20%;
+  }
+}
+.graph{
+  width: 100%;
+  height: auto;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3,1fr);
+  .data{
+    text-align: center;
+  }
+  .draw{
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#125DA9;}
+	.st1{fill:#6A91BF;}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:#969696;}
+	.st4{fill:#B8B8B8;}
+</style>
+<g id="GUIAS">
+</g>
+<g id="Capa_1">
+	<g>
+		<polygon class="st0" points="152.27,319.76 317.35,415.81 317.35,333.15 152.27,254.65 		"/>
+		<polygon class="st1" points="152.27,187.69 152.27,254.65 317.35,333.15 317.35,94.64 		"/>
+		<path class="st0" d="M6.36,250.19v10.07c0,33.69,27.31,61,61,61h58.38v-79.23l-91.09-43.31C17.65,209.54,6.36,228.54,6.36,250.19z
+			"/>
+		<path class="st1" d="M67.36,189.19c-12.04,0-23.25,3.5-32.71,9.52l91.09,43.31v-52.84H67.36z"/>
+		<path class="st1" d="M382.69,255.23c0-25.24-20.46-45.71-45.71-45.71v91.41C362.23,300.93,382.69,280.47,382.69,255.23z"/>
+		<rect x="422.94" y="241.85" class="st1" width="83.41" height="18.86"/>
+		
+			<rect x="417.4" y="165.63" transform="matrix(0.7071 -0.7071 0.7071 0.7071 10.6816 375.9153)" class="st1" width="83.41" height="18.86"/>
+		
+			<rect x="449.67" y="293.68" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -102.6861 422.8694)" class="st1" width="18.86" height="83.41"/>
+	</g>
+</g>
+</svg>

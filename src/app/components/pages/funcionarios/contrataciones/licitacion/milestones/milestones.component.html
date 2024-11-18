@@ -1,0 +1,17 @@
+<section class="contenido__general">
+  <app-tender-header-menu></app-tender-header-menu>
+  <h2 class="titulo">Hitos</h2>
+  <p class="instrucciones mb-5">Por ultimo describa la razon por la cual se van a comprar o pedir los materiales que se
+    describirán en items, puede tener más información en documentos o en los hitos de planeación <br>
+    Ejem: <span class="texto">"COMPRA DE MUEBLES Y ELECTRONICOS para uso de secretaria de finanzas"</span>
+    <br><br>
+    Pueden representar eventos durante el proceso de contratación, fuera de lo previsto o
+    que son muy importantes.
+    <strong> En esta seccion puede agregar varios Hitos. </strong><br> Estos campos son
+    opcionales si no desea agregar Hitos Presione el boton de
+    <span class="text-primary"><strong>" {{BtnName}}"</strong></span>
+  </p>
+
+  <app-mileston milestoneType="tender" BtnName=">>" (Radelante)="Radelante" (Ratras)="Ratras"  (redireccionAT)="redireccionAT($event)" (redireccionA)="redireccionA($event)">
+  </app-mileston>
+</section>

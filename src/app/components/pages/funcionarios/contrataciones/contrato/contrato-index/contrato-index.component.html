@@ -1,0 +1,112 @@
+<section class="contenido__general">
+  <h2 class="titulo">Contratos</h2>
+  <p class="instrucciones mb-5">Esta es la última sección de llenado de contratos, deberá llenar la información por cada adjudicación que se haya llevado a acabo.
+    <br>
+    A continuación seleccione el la adjudicación a la que le desea generar un contrato para continuar
+    <br>
+    <br>
+    Las adjudicaciones que <strong>NO</strong> contengan datos se mostrarán con (<i class="fa-solid fa-xmark red"></i>)
+    <br>
+    Las adjudicaciones que contengan datos se podrán visualizar con (<i class="fa-solid fa-check green"></i>)
+    <br>
+
+  </p>
+  <div class="alerta" *ngIf="mensajeBOOL">{{mensaje}}</div>
+  <div class="contenedor">
+    <p class="total my-3">Total de items Registrados: <span class="totalNumero">{{total | number}}</span></p>
+    <table class="table table-striped mb-5">
+      <thead>
+        <tr>
+          <th scope="col">Indice</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Items</th>
+          <th scope="col">Estatus</th>
+          <th scope="col">Proveedores Registados</th>
+          <th scope="col">Valor de adjudicación</th>
+          <th scope="col">Validación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let data of adwardArray" >
+          <tr *ngFor="let aw of data.awards; let i = index">
+            <ng-container *ngIf="data.contracts[i] != null && aw._id === data.contracts[i].awardID else verde">
+              <td><span class="link verde" (click)="obtenerAWard(aw._id)">[00{{i + 1}}]</span></td>
+            </ng-container>
+            <ng-template #verde>
+              <td><span class="link naranja" (click)="obtenerAWard(aw._id)">[00{{i + 1}}]</span></td>
+            </ng-template>
+            <td>{{aw.description}}</td>
+            <td>
+              <li *ngFor="let item of aw.items">{{aw.description}}</li>
+            </td>
+            <td>{{data.status}}</td>
+            <td>
+              <li *ngFor="let sup of aw.suppliers">{{sup.name}}</li>
+            </td>
+            <td>${{aw.value.amount}}</td>
+            <ng-container *ngIf="data.contracts[i] != null && aw._id === data.contracts[i].awardID else ok">
+              <td><i class="fa-solid fa-check verde"></i></td>
+            </ng-container>
+            <ng-template #ok>
+              <td><i class="fa-solid fa-xmark red"></i></td>
+            </ng-template>
+          </tr>
+        </ng-container>
+
+      </tbody>
+    </table>
+
+
+  </div>
+
+  <fieldset *ngIf="mostratTabla">
+    <legend>Contrato</legend>
+    <table class="table table-striped mb-5">
+      <thead>
+        <tr>
+          <th scope="col">Fecha Asignada</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Duracion En días</th>
+          <th scope="col">Título</th>
+          <th scope="col">Estatus</th>
+          <th scope="col">Monto</th>
+          <th scope="col">Acciones</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of contractData">
+          <td>{{item.dateSigned | date : 'full' }}</td>
+          <!-- <td><a [routerLink]="['../../contract',  ocid, data._id]">[00{{i + 1}}]</a></td> -->
+          <td>{{item.description}}</td>
+          <td>{{item.period.durationInDays}}</td>
+          <td>{{item.title}}</td>
+          <td>{{item.status}}</td>
+          <td>{{item.value.amount}}</td>
+          <td>
+            <button class="btn btn-danger btn-sm mx-1">
+              <i class="fa fa-trash" (click)="borrarContrato(item._id)"></i>
+            </button>
+            <button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"
+              (click)="editarContrato(item._id)"></i></button>
+
+        </tr>
+
+      </tbody>
+    </table>
+    <div class="form-group mt-3 d-flex justify-content-end">
+
+      <button (click)="NuevoCOntrato(AwardID)" class="btn btn-warning center-block" *ngIf="btnGuardar">Nuevo
+        Contrato</button>
+      <button (click)="crearContrato(AwardID)" class="btn btn-success center-block mx-1" *ngIf="btnGuardar">Crear
+        Contrato</button>
+
+    </div>
+  </fieldset>
+
+
+
+
+
+
+</section>

@@ -1,0 +1,176 @@
+<section class="contenido__general">
+  <app-tender-header-menu></app-tender-header-menu>
+  <h2 class="titulo">Licitación</h2>
+  <p class="instrucciones mb-5">En esta sección se define quienes van a participar para poder acceder a
+    proveer el material requerido, al igual que se definirá este mismo material junto con sus caracteristicas
+    y se dará a conocer todos los periodos de la licitación y sus documentos respectivos.</p>
+
+  <div class="datos" *ngIf="datosTender">
+    <h2 class="mb-3">CONTRATANTE</h2>
+    <h3 class="mb-5">CLASIFICACIÓN DE ITEM</h3>
+
+    <div class="contenedor">
+      <form autocomplete="off" [formGroup]="tenderForm">
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Título</mat-label>
+                <input type="text" matInput formControlName="title">
+                <mat-error *ngIf="campoNoValido('title')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Descripción</mat-label>
+                <input type="text" matInput formControlName="description">
+                <mat-error *ngIf="campoNoValido('description')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Estatus de licitación</mat-label>
+                <mat-select matNativeControl formControlName="status">
+                  <mat-option *ngFor="let format of tenderStatus" [value]="format.value">
+                    {{format.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('status')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Método de contratación</mat-label>
+                <mat-select matNativeControl formControlName="procurementMethod">
+                  <mat-option *ngFor="let format of procurementMethod" [value]="format.value">
+                    {{format.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('procurementMethod')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Detalles del método de contratación</mat-label>
+                <input type="text" matInput formControlName="procurementMethodDetails">
+                <mat-error *ngIf="campoNoValido('procurementMethodDetails')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Justificación del método de contratación</mat-label>
+                <input type="text" matInput formControlName="procurementMethodRationale">
+                <mat-error *ngIf="campoNoValido('procurementMethodRationale')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Criterio de adjudicación</mat-label>
+                <mat-select matNativeControl formControlName="awardCriteria">
+                  <mat-option *ngFor="let format of awardCriteria" [value]="format.value">
+                    {{format.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('awardCriteria')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Detalles del criterio de adjudicación</mat-label>
+                <input type="text" matInput formControlName="awardCriteriaDetails">
+                <mat-error *ngIf="campoNoValido('awardCriteriaDetails')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Método de presentación</mat-label>
+                <mat-select matNativeControl formControlName="submissionMethod" multiple>
+                  <mat-option *ngFor="let format of submissionMethod" [value]="format.value">
+                    {{format.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('submissionMethod')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Detalles del método de presentación</mat-label>
+                <input type="text" matInput formControlName="submissionMethodDetails">
+                <mat-error *ngIf="campoNoValido('submissionMethodDetails')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Número De Licitadores</mat-label>
+                <input type="number" matInput formControlName="numberOfTenderers">
+                <mat-error *ngIf="campoNoValido('numberOfTenderers')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+
+
+      <div class="form-group mt-3 d-flex justify-content-end" *ngIf="ocid != null">
+        <button class="btn btn-primary" (click)="prev()">
+          << </button>
+            <button (click)="crearTender()" class="btn btn-success center-block mx-1" [disabled]="tenderForm.invalid"
+              *ngIf="btnGuardar">Guardar</button>
+            <button (click)="ActualizarTender(tender_id)" class="btn btn-warning center-block mx-1"
+              [disabled]="tenderForm.invalid" *ngIf="btnActualizar">Actualizar</button>
+            <button class="btn btn-primary" *ngIf="btnSiguiente" (click)="next()">>></button>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- <span>Valid</span>
+        <pre>{{tenderForm.valid}}</pre>
+        <br>
+        <span>value</span>
+        <pre>{{tenderForm.value | json}}</pre> -->
+
+</section>

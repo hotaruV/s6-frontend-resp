@@ -1,0 +1,85 @@
+<form (ngSubmit)="actInformacionEnte()" autocomplete="off" [formGroup]="coloniasForm">
+    <div class="row mayuscula">
+        <div class="col-md-6">
+            <mat-radio-group aria-label="SELECCIONE UNA OPCIÓN" formControlName="lugar">
+                <mat-radio-button class="example-form" value="MÉXICO">MÉXICO</mat-radio-button>
+                &nbsp; &nbsp;
+                <mat-radio-button class="example-form" value="EXTRANJERO">EXTRANJERO</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+                <mat-select placeholder="PAIS" formControlName="pais">
+                    <mat-option *ngFor="let op of arrayPais" [value]="op.nombre">
+                        {{ op.nombre | uppercase }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row mayuscula">
+        <div class="col-md-6">
+            <mat-form-field class="example-form">
+                <mat-label>CODIGO POSTAL</mat-label>
+                <input type="text" matInput formControlName="codigoPostal" (keyup)="cargaColonias(txtInput.value)"
+                    #txtInput />
+                <mat-error *ngIf="campoNoValido('codigoPostal')">EL CAMPO CODIGO POSTAL ES OBLIGATORIO</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="example-form">
+                <mat-select placeholder="COLONIA" formControlName="colonia">
+                    <mat-option *ngFor="let op of _codigosEnte" [value]="op.colonia">
+                        {{ op.colonia | uppercase }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mayuscula">
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>LOCALIDAD</mat-label>
+                <input type="text" matInput matNativeControl formControlName="localidad" [matAutocomplete]="auto97"
+                    (input)="getEstados()" (ngModelChange)="onChangeEstado()" />
+                <mat-autocomplete autoActiveFirstOption #auto97="matAutocomplete">
+                    <mat-option *ngFor="let item of arrayEstado" [value]="item.nombre">
+                        {{ item.nombre }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>REGION</mat-label>
+                <input type="text" matInput matNativeControl formControlName="region" [matAutocomplete]="auto96" />
+                <mat-autocomplete autoActiveFirstOption #auto96="matAutocomplete">
+                    <mat-option *ngFor="let item of arrayMunicipio" [value]="item.nombre_municipio">
+                        {{ item.nombre_municipio }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mayuscula">
+        <div class="col-md-6">
+            <mat-form-field class="example-form">
+                <mat-label>CALLE </mat-label>
+                <input type="text" matInput formControlName="calle" />
+                <mat-error *ngIf="campoNoValido('calle')">EL CAMPO CALLE ES OBLIGATORIO
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="example-form">
+                <mat-label>NUMERO </mat-label>
+                <input type="text" matInput formControlName="numero" />
+                <mat-error *ngIf="campoNoValido('numero')">EL CAMPO NUMERO ES OBLIGATORIO
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+</form>

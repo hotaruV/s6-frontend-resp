@@ -1,0 +1,189 @@
+<h2 class="titulo">Items</h2>
+<p class="instrucciones mb-5">En esta sección se define quiénes van a participar para poder acceder a
+  proveer el material requerido, al igual que se definirá este mismo material junto con sus características
+  y se dará a conocer todos los periodos de la licitación y sus documentos respectivos.</p>
+
+
+<div class="contenedor">
+  <form autocomplete="off" [formGroup]="itemsForm">
+    <!-- Item -->
+    <fieldset>
+      <div class="row completo">
+        <div class="col-md-3 mitad">
+          <div class="mb-2">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Descripción</mat-label>
+              <textarea matInput formControlName="description" cols="30" rows="7"></textarea>
+              <mat-error *ngIf="campoNoValido('description')">Este Campo Es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3 mitad">
+          <div class="mb-2">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Cantidad por tipo de bien, servicio u obra pública</mat-label>
+              <input type="number" matInput formControlName="quantity">
+              <mat-error *ngIf="campoNoValido('quantity')">Este Campo Es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <!-- Clasificacion del Item -->
+    <fieldset>
+      <legend>Clasificación del item</legend>
+      <div class="row completo">
+        <div class="col-md-3 mitad">
+          <div class="mb-2">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Descripción</mat-label>
+              <input type="text" matInput formControlName="description_classification">
+              <mat-error *ngIf="campoNoValido('description_classification')">Debe existir una descripcion mas larga que cuenta los detalles de la adjudicación
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-md-1 mitad">
+          <div class="mb-1">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Buscador CuCoP</mat-label>
+              <input #opt type="text" placeholder="Seleccione Un Ente" matInput matNativeControl formControlName="none"
+                [matAutocomplete]="auto" (input)="cargarCodigos(opt.value)">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option #pt *ngFor="let item of texto" [value]="item" (click)="pasarCodigo(pt.value)">
+                  {{item}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-md-3 mitad">
+          <div class="mb-2">
+            <mat-form-field class="example-form p50p">
+              <mat-label>URL</mat-label>
+              <input type=”url” matInput formControlName="uri" >
+              <mat-error *ngIf="campoNoValido('uri')">Inserte una url valida
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-md-1 mitad">
+          <div class="mb-1">
+            <mat-form-field class="example-form p50p">
+              <mat-label>No. de Schema</mat-label>
+              <input type="text" class="textoinput" matInput formControlName="scheme" readonly="true">
+              <mat-error *ngIf="campoNoValido('scheme')">Este Campo Es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+
+      </div>
+    </fieldset>
+    <!-- Unidades del Item -->
+
+    <fieldset>
+      <legend class="my-3">Unidad de medida en la que se específica la cantidad de bienes, servicios u obras públicas</legend>
+      <div class="row completo">
+        <div class="col-md-3 mitad">
+          <div class="mb-2">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Nombre</mat-label>
+              <input type="text" matInput formControlName="name">
+              <mat-error *ngIf="campoNoValido('name')">Este Campo Es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3 mitad">
+          <div class="mb-2">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Monto</mat-label>
+              <input type="number" matInput formControlName="amount">
+              <mat-error *ngIf="campoNoValido('amount')">Este Campo Es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row completo">
+        <div class="col-md-3 mitad">
+          <div class="mb-3">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Moneda</mat-label>
+              <mat-select matNativeControl formControlName="currency">
+                <mat-option *ngFor="let format of moneda" [value]="format.value">
+                  {{format.viewValue}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="campoNoValido('currency')">El Campo Nombre es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+  <div class="form-group mt-3 d-flex justify-content-end" *ngIf="ocid != null">
+    <button class="btn btn-primary" *ngIf="btnAtras" (click)="forward()">
+      << </button>
+
+        <button (click)="crearItem()" class="btn btn-success center-block mx-1" [disabled]="itemsForm.invalid"
+          *ngIf="btnGuardar">Guardar</button>
+
+        <button (click)="actulizarItem()" class="btn btn-warning center-block mx-1" [disabled]="itemsForm.invalid"
+          *ngIf="btnActualizar">Actualizar</button>
+
+        <button (click)="crearItem()" class="btn btn-warning center-block mx-1" [disabled]="itemsForm.invalid"
+          *ngIf="btnNuevo">Nuevo</button>
+        <button class="btn btn-danger" *ngIf="btnCancelar" (click)="cancel()">Cancelar</button>
+
+        <button class="btn btn-primary mx-1" *ngIf="btnSiguiente" (click)="next()">{{BtnName}}</button>
+        <button class="btn btn-primary" *ngIf="btnGenerar" (click)="CreateContract()">Generar Contrato</button>
+  </div>
+</div>
+
+<ng-container *ngIf="ocid != null">
+  <p class="total my-5">Total de items Registrados: <span class="totalNumero">{{total | number}}</span></p>
+  <table class="table table-striped mb-5">
+    <thead>
+      <tr>
+        <th scope="col">Descripción de la clasificación</th>
+        <th scope="col">Descripción del Item</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Tipo de Item</th>
+        <th scope="col">Monto</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td>{{item.classification.description}}</td>
+        <td>{{item.description}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.typeItem}}</td>
+        <td>${{item.quantity * item.unit.values.amount}}</td>
+        <td>
+          <button class="btn btn-danger btn-sm mx-1"><i class="fa fa-trash" (click)="borrarItem(item._id)"></i></button>
+          <button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"
+              (click)="editarItem(item._id)"></i></button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</ng-container>
+
+<!-- <span>Valid</span>
+<pre>{{itemsForm.valid}}</pre>
+<br>
+<span>value</span>
+<pre>{{itemsForm.value | json}}</pre> -->

@@ -1,0 +1,42 @@
+
+  <div class="datos mt-5" *ngIf="datosClass">
+    <div class="contenedor">
+      <form (ngSubmit)="crearClass()" autocomplete="off" [formGroup]="classForm">
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Descripción</mat-label>
+                <input type="text" matInput formControlName="description">
+                <mat-error *ngIf="campoNoValido('description')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+
+              <mat-form-field class="example-form p50p">
+                <mat-label>Buscador CuCoP</mat-label>
+                <input #opt type="text" placeholder="Seleccione Un Ente" matInput matNativeControl
+                  formControlName="none" [matAutocomplete]="auto" (input)="cargarCodigos(opt.value)">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option #pt *ngFor="let item of texto" [value]="item" (click)="pasarCodigo(pt.value)">
+                    {{item}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+<!-- <span>Valid</span>
+        <pre>{{classForm.valid}}</pre>
+        <br>
+        <span>value</span>
+        <pre>{{classForm.value | json}}</pre> -->

@@ -1,0 +1,46 @@
+
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="FormProvInv"> 
+    <input type="hidden" formControlName="id" />
+    <div class="row completo mayuscula">
+        <mat-form-field>
+          <mat-select  placeholder="NOMBRE DEL ACTOR*"  formControlName="invitedSuppliersname">
+            <mat-option *ngFor="let op of proveedoresInvitado" [value]="op.uid">
+              {{ op.razonsocialProv| uppercase }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoNoValido('invitedSuppliersname')">
+          EL CAMPO NOMBRE DEL ACTOR ES REQUERIDO
+          </mat-error>
+        </mat-form-field>
+        
+      </div>
+      &nbsp;
+    &nbsp;
+
+    <div class="form-group mt-3 d-flex justify-content-end ">
+      <button type="submit" class="btn btn-success center-block" style="cursor: pointer;"
+        *ngIf="botonGuardaProvInv" [disabled]="FormProvInv.invalid">
+        GUARDAR PROVEEDOR INVITADO
+      </button>
+      &nbsp;
+      &nbsp;
+      <button type="submit" class="btn btn-primary center-block" style="cursor: pointer;"
+      *ngIf="botonVerProvInv" (click)="VerProv()" >
+        VER PROVEEDORES INVITADOS
+      </button>
+    </div>
+
+          &nbsp;
+        &nbsp;
+
+        <div class="form-group mt-3 d-flex justify-content-end">
+
+         
+          <button type="button" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonUpdateProvInv" (click)="UptProv()" >
+            ACTUALIZAR
+          </button>
+          <button type="button" class="btn btn-danger mx-2" style="cursor: pointer;" *ngIf="botonUpdateProvInv"  (click)="cancelarProv()">
+            CANCELAR
+          </button>
+        </div>
+    </form>

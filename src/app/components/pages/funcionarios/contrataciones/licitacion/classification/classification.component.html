@@ -1,0 +1,55 @@
+<section class="contenido__general">
+    <h2 class="titulo">Licitación</h2>
+    <p class="instrucciones mb-5">En esta sección se define quienes van a participar para poder acceder a
+      proveer el material requerido, al igual que se definirá este mismo material junto con sus caracteristicas
+      y se dará a conocer todos los periodos de la licitación y sus documentos respectivos.</p>
+
+    <div class="datos" *ngIf="datosClass">
+      <h2 class="mb-3">CONTRATANTE</h2>
+      <h3 class="mb-5">CLASIFICACIÓN DE ITEM</h3>
+
+      <div class="contenedor">
+        <form (ngSubmit)="crearClass()" autocomplete="off" [formGroup]="classForm">
+          <div class="row completo">
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Descripción</mat-label>
+                  <input type="text" matInput formControlName="description">
+                  <mat-error *ngIf="campoNoValido('description')">Este Campo Es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Buscador CuCoP</mat-label>
+                  <input #opt type="text" placeholder="Seleccione Un Ente" matInput matNativeControl
+                    formControlName="none" [matAutocomplete]="auto" (input)="cargarCodigos(opt.value)">
+                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option #pt *ngFor="let item of texto" [value]="item" (click)="pasarCodigo(pt.value)">
+                      {{item}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="form-group mt-3 d-flex justify-content-end">
+            <button class="btn btn-success center-block" *ngIf="botonSiguiente">Planeacion</button>
+            <button class="btn btn-success center-block" *ngIf="botonUpdate">Siguiente</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <span>Valid</span>
+          <pre>{{classForm.valid}}</pre>
+          <br>
+          <span>value</span>
+          <pre>{{classForm.value | json}}</pre>
+
+  </section>

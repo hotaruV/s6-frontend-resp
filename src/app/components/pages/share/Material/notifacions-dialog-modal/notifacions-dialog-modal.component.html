@@ -1,0 +1,42 @@
+<h1 mat-dialog-title></h1>
+<div mat-dialog-content>
+  <table class="table">
+    <thead>
+
+      <tr class="left">
+        <th scope="col" class="w50">#</th>
+        <th scope="col" class="w100">FECHA DE CARGA FINAL DE CONTRATO</th>
+        <th scope="col" class="w100">OCID</th>
+        <th scope="col" class="w100">STATUS</th>
+        <th scope="col" class="w100">TÍTULO DE LICITACIÓN</th>
+      </tr>
+
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of this.data.content let i = index">
+        <td class="left">{{i+1}}</td>
+        <td class="left">{{item.created_at | date}}</td>
+        <td class="left">{{item.ocid}}</td>
+        <td *ngIf="item.status === 'no visto' " class="left text-danger"><strong>{{item.status | uppercase}}</strong>
+        </td>
+        <td *ngIf="item.status === 'visto' " class="left text-primary"><strong>{{item.status | uppercase}}</strong></td>
+        <td *ngIf="item.status === 'atendido' " class="left text-warning"><strong>{{item.status | uppercase}}</strong>
+        </td>
+        <td *ngIf="item.status === 'concluido' " class="left text-success"><strong>{{item.status | uppercase}}</strong>
+        </td>
+        <td class="left" *ngIf="item.revision_id.contrato_id.tender !== null else titulo">
+          <strong>{{item.revision_id.contrato_id.tender.title | uppercase}}</strong>
+        </td>
+        <ng-template #titulo>
+          <td class="left"><strong class="text-primary">no asignado</strong></td>
+        </ng-template>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="alinear__boton">
+  <div mat-dialog-actions>
+    <button class="btn btn-success" mat-dialog-close>Cerrar</button>
+  </div>
+</div>

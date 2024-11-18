@@ -1,0 +1,37 @@
+.row{
+  width: 80%;
+  margin-left: 0px;
+}
+.format{
+  display: flex;
+  justify-content: center;
+}
+.tablita{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+.tabl{
+  width: 80%;
+}
+.tr:hover{
+  background-color: rgba($color: #125DA9, $alpha: 0.3);
+}
+th{
+  border-bottom: 2px #000 solid;
+}
+.busqueda{
+  padding-top: 5vh;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  .form{
+    width: 30%;
+    padding: 0px 10px;
+  }
+  .justify-content-end{
+    width: 20vh;
+  }
+}

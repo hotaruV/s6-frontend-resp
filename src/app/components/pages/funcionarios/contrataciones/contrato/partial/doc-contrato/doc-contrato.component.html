@@ -1,0 +1,136 @@
+
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="docForm"> 
+    <input type="hidden" formControlName="id" />
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Título de documento</mat-label>
+            <input type="text" matInput formControlName="title">
+            <mat-error *ngIf="campoNoValido('title')">El Campo título es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>TIPO</mat-label>
+            <mat-select matNativeControl formControlName="Type">
+              <mat-option *ngFor="let item of tipodoc" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('Type')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Descripción</mat-label>
+            <input type="text" matInput formControlName="description">
+            <mat-error *ngIf="campoNoValido('description')">Este Campo Es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>URL AL DOCUMENTO</mat-label>
+            <input type="text" matInput formControlName="url">
+            <mat-error *ngIf="campoNoValido('url')">URL invalida ejem(https://dominio.com/doc.pfd)
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha de Publicación</mat-label>
+            <input matInput [matDatepicker]="picker31" formControlName="datePublished">
+            <mat-hint>YY/MM/DD</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker31">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker31></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha de modificación</mat-label>
+            <input matInput [matDatepicker]="picker32" formControlName="dateModified">
+            <mat-hint>YY/MM/DD</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker32">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker32></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Formato de documento</mat-label>
+            <mat-select matNativeControl formControlName="format">
+              <mat-option *ngFor="let format of format" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('format')">El Campo es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-form p50p">
+          <mat-label>IDIOMA</mat-label>
+          <mat-select matNativeControl formControlName="language">
+            <mat-option *ngFor="let format of lenguajes" [value]="format.value">
+              {{format.viewValue}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoNoValido('language')">El Campo Nombre es Obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    &nbsp;
+    &nbsp;
+          &nbsp;
+        &nbsp;
+
+        <div class="form-group mt-3 d-flex justify-content-end ">
+          <button type="submit" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonGuardaDoc"
+            [disabled]="docForm.invalid" >
+            GUARDAR DOCUMENTO
+          </button>
+          &nbsp;
+          &nbsp;
+
+          <button type="button" class="btn btn-primary " style="cursor: pointer;" *ngIf="botonVerDoc" (click)="VerDoc()" >
+            VER DOCUMENTOS
+          </button>
+        </div>
+        <div class="form-group mt-3 d-flex justify-content-end">
+
+         
+          <button type="button" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonUpdateDoc" (click)="UptDocumento()" >
+            ACTUALIZAR
+          </button>
+          <button type="button" class="btn btn-danger mx-2" style="cursor: pointer;" *ngIf="botonUpdateDoc"  (click)="cancelarDocumento()">
+            CANCELAR
+          </button>
+        </div>
+    </form>

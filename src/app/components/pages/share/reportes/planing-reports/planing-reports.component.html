@@ -1,0 +1,172 @@
+<div class="mt-4">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+    <mat-tab label="Documentos">
+      <div class="mt-4">
+        <div class="partie__content" *ngIf="documents">
+          <div class="document__item">
+            <p class="document__title ">Título:</p>
+            <p class="document__paraf"> {{docObject.title}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Tipo:</p>
+            <p class="document__paraf"> {{docObject.documentType}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Formato:</p>
+            <p class="document__paraf"> {{docObject.format}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Idioma:</p>
+            <p class="document__paraf"> {{docObject.language}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Fecha De publicación:</p>
+            <p class="document__paraf"> {{docObject.datePublished | date}}</p>
+          </div>
+          <div class="document__item link">
+            <p class="document__title"> Link del documento:</p>
+            <a href="{{docObject.url}}" target="_blank" class="document__paraf especial"> {{docObject.url}}</a>
+          </div>
+
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Título</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Formato</th>
+              <th scope="col">Idioma</th>
+              <th scope="col">Fecha de Publicación</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of documents_planning">
+              <td>{{item.title}}</td>
+              <td>{{item.documentType}}</td>
+              <td>{{item.format}}</td>
+              <td>{{item.language}}</td>
+              <td>{{item.datePublished | date}}</td>
+              <td><button class="btn btn-primary" (click)="viewDocument(item._id)"><i
+                    class="fa-regular fa-eye"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Hitos">
+      <div class="mt-4">
+
+        <div class="partie__content" *ngIf="miles">
+          <div class="document__item">
+            <p class="document__title ">Título Del Hito:</p>
+            <p class="document__paraf"> {{MilObject.title}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Estatus:</p>
+            <p class="document__paraf" *ngIf="MilObject.status == 'scheduled'">Programado</p>
+            <p class="document__paraf" *ngIf="MilObject.status == 'met'">Completado</p>
+            <p class="document__paraf" *ngIf="MilObject.status == 'notMet'">No Completado</p>
+            <p class="document__paraf" *ngIf="MilObject.status == 'partiallyMet'">Parcialmente Completado</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Tipo de hito:</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'publicNotices'">Avisos a la población</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'approval'">De aprobación</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'delivery'">De entrega</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'assessment'">De evaluación</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'financing'">De financiamiento</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'engagement'">De involucramiento</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'reporting'">De reporte</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'preProcurement'">Previos a la contratación</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Fecha Limite:</p>
+            <p class="document__paraf"> {{MilObject.dateMet | date}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Fecha de Cumplimiento:</p>
+            <p class="document__paraf"> {{MilObject.dueDate | date}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Fecha de modificaciones:</p>
+            <p class="document__paraf"> {{MilObject.dateModified | date}}</p>
+          </div>
+
+
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Título del Hito</th>
+              <th scope="col">Estatus</th>
+              <th scope="col">Tipo de Hito</th>
+              <th scope="col">Fecha Límite</th>
+              <th scope="col">Fecha de Cumplimiento</th>
+              <th scope="col">Fecha de Modificación</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let miles of documents_hitos">
+              <td>{{miles.title}}</td>
+              <td *ngIf="miles.status == 'scheduled'">Programado</td>
+              <td *ngIf="miles.status == 'met'">Completado</td>
+              <td *ngIf="miles.status == 'notMet'">No Completado</td>
+              <td *ngIf="miles.status == 'partiallyMet'">Parcialmente Completado</td>
+
+              <td *ngIf="miles.type == 'publicNotices'">Avisos a la población</td>
+              <td *ngIf="miles.type == 'approval'">De aprobación</td>
+              <td *ngIf="miles.type == 'delivery'">De entrega</td>
+              <td *ngIf="miles.type == 'assessment'">De evaluación</td>
+              <td *ngIf="miles.type == 'financing'">De financiamiento</td>
+              <td *ngIf="miles.type == 'engagement'">De involucramiento</td>
+              <td *ngIf="miles.type == 'reporting'">De reporte</td>
+              <td *ngIf="miles.type == 'preProcurement'">Previos a la contratación</td>
+
+              <td>{{miles.dateMet | date}}</td>
+              <td>{{miles.dueDate | date}}</td>
+              <td>{{miles.dateModified | date}}</td>
+              <td><button class="btn btn-primary" (click)="viewMiles(miles._id)"><i
+                    class="fa-regular fa-eye"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-tab>
+
+
+    <mat-tab label="Desglose del presupuesto">
+      <div class="mt-4">
+        <div class="partie__content">
+          <div class="document__item link">
+            <p class="document__title ">Justificación:
+              <p class="document__paraf"> {{rationale}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title ">Descripción</p>
+            <p class="document__paraf"> {{planning_data.description}}</p>
+          </div>
+
+
+          <div class="document__item">
+            <p class="document__title extend"> Valor </p>
+            <p class="document__paraf"> ${{PlanningAmountData.amount}} {{PlanningAmountData.currency}}</p>
+          </div>
+
+          <div class="document__item link">
+            <p class="document__title "> URL a la clave presupuestal:</p>
+            <a href="{{planning_data.uri}}" target="_blank" class="document__paraf especial"> {{planning_data.uri}}</a>
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,264 @@
+<fieldset class="fieldset mt-5 guardado" *ngIf="award">
+  <legend class="titulo">Adjudicación</legend>
+  <fieldset class="fieldset mb-2">
+    <div class="partie__content">
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <fieldset class="fieldset">
+            <legend class="legend"> Título</legend>
+            <div class="input-group mb-6">
+              {{adwardObject.title}}
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-md-6">
+          <fieldset class="fieldset">
+            <legend class="legend">
+              Descripción</legend>
+            <div class="input-group mb-6">
+              {{adwardObject.description}}
+            </div>
+          </fieldset>
+        </div>
+
+
+        <div class="col-md-6 mb-2">
+          <fieldset class="fieldset">
+            <legend class="legend"> Estatus </legend>
+            <div class="input-group mb-6">
+              {{adwardObject.status}}
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-md-6">
+          <fieldset class="fieldset">
+            <legend class="legend">
+              Fecha de Inicio</legend>
+            <div class="input-group mb-6">
+              {{adwardObject.date | date}}
+            </div>
+          </fieldset>
+        </div>
+
+
+        <fieldset class="fieldset mb-2">
+          <legend class="legend">Número de contrato</legend>
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <fieldset class="fieldset">
+                <legend class="legend"> Fecha de Inicio</legend>
+                <div class="input-group mb-6">
+                  {{contractPeriod.startDate | date}}
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-6">
+              <fieldset class="fieldset">
+                <legend class="legend">
+                  Fecha Fin</legend>
+                <div class="input-group mb-6">
+                  {{contractPeriod.endDate | date}}
+                </div>
+              </fieldset>
+            </div>
+
+
+            <div class="col-md-6 mb-2">
+              <fieldset class="fieldset">
+                <legend class="legend"> Valor</legend>
+                <div class="input-group mb-6">
+                  {{AwardValue.amount}}
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-6">
+              <fieldset class="fieldset">
+                <legend class="legend">
+                  Moneda</legend>
+                <div class="input-group mb-6">
+                  {{AwardValue.currency}}
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+        </fieldset>
+
+        <fieldset class="fieldset mb-2">
+          <legend class="legend">Provedores</legend>
+          <div class="row" *ngFor="let item of supliers">
+            <div class="col-md-6 mb-2">
+              <fieldset class="fieldset">
+                <legend class="legend"> Nombre del Provedor</legend>
+                <div class="input-group mb-6">
+                  {{item.name}}
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-6">
+              <fieldset class="fieldset">
+                <legend class="legend">
+                  IDentificador RFC</legend>
+                <div class="input-group mb-6">
+                  {{item.id}}
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+
+        </fieldset>
+
+
+      </div>
+    </div>
+
+  </fieldset>
+
+  <!-- ITEMS -->
+  <fieldset class="fieldset mb-2" *ngFor="let item of items_tender , let index = index">
+    <legend class="titulo">Item {{index + 1}}</legend>
+    <div class="partie__content">
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <fieldset class="fieldset">
+            <legend class="legend"> Clave CUCOP</legend>
+            <div class="input-group mb-6">
+              {{item.classification.scheme}}
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-md-6">
+          <fieldset class="fieldset">
+            <legend class="legend">
+              Descripción</legend>
+            <div class="input-group mb-6">
+              {{item.description}}
+            </div>
+          </fieldset>
+        </div>
+      </div>
+      <fieldset class="fieldset">
+        <legend class="legend">
+          Cantidad por tipo de bien, servicio u obra pública
+        </legend>
+        <div class="input-group mb-6">
+          {{item.quantity}}
+        </div>
+      </fieldset>
+
+      <fieldset class="fieldset mb-3 mt-3">
+        <h2>Unidad de medida en la que se especifíca la cantidad de bienes, servicios u obras públicas</h2>
+
+
+        <div class="row">
+          <div class="form-group col-md-12">
+            <fieldset class="fieldset">
+              <legend class="legend">
+                Nombre
+              </legend>
+              <div class="input-group mb-6">
+                {{item.unit.name}}
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <fieldset class="fieldset mt-4">
+          <legend class="legend">Valor</legend>
+
+
+          <div class="row ">
+            <div class="col-sm-6">
+              <fieldset class="fieldset">
+                <legend class="legend">Monto total</legend>
+                {{item.unit.values.amount}}
+              </fieldset>
+            </div>
+            <div class="col-sm-6">
+              <fieldset class="fieldset">
+                <legend class="legend">Moneda</legend>
+                {{item.unit.values.currency}}
+              </fieldset>
+            </div>
+          </div>
+        </fieldset>
+      </fieldset>
+
+
+    </div>
+  </fieldset>
+
+  <fieldset class="fieldset mb-2" *ngFor="let item of docs_tender , let index = index">
+    <legend class="titulo">Documento {{index + 1}}</legend>
+    <div class="mt-4">
+      <div class="partie__content" *ngIf="documents">
+        <div class="document__item">
+          <p class="document__title ">Título:</p>
+          <p class="document__paraf"> {{item.title}}</p>
+        </div>
+        <div class="document__item">
+          <p class="document__title"> Tipo:</p>
+          <p class="document__paraf"> {{item.documentType}}</p>
+        </div>
+        <div class="document__item">
+          <p class="document__title"> Formato:</p>
+          <p class="document__paraf"> {{item.format}}</p>
+        </div>
+        <div class="document__item">
+          <p class="document__title"> Idioma:</p>
+          <p class="document__paraf"> {{item.language}}</p>
+        </div>
+        <div class="document__item">
+          <p class="document__title"> Fecha De publicación:</p>
+          <p class="document__paraf"> {{item.datePublished | date}}</p>
+        </div>
+        <div class="document__item link">
+          <p class="document__title"> Link del documento:</p>
+          <a href="{{item.url}}" target="_blank" class="document__paraf especial"> {{item.url}}</a>
+        </div>
+
+      </div>
+
+    </div>
+  </fieldset>
+
+
+
+
+</fieldset>
+
+<table class="table mb-5">
+  <thead>
+    <tr>
+      <th scope="col" >Indice</th>
+      <th scope="col" class="w-20">Descripción</th>
+      <th scope="col" class="w-25">Items</th>
+      <th scope="col" class="w-10">Estatus</th>
+      <th scope="col" class="w-25">Proveedores registados</th>
+      <th scope="col" class="w-10">Valor de adjudicación</th>
+      <th scope="col" class="w-10">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of adwardArray; let i = index  ">
+      <td><strong> {{i + 1}} </strong></td>
+      <td>{{data.description}}</td>
+
+      <td>
+        <li *ngFor="let item of data.items">{{item.description}}</li>
+      </td>
+
+      <td>{{data.status}}</td>
+      <td>
+        <li *ngFor="let sup of data.suppliers">{{sup.name}}</li>
+      </td>
+
+
+      <td>${{data.value.amount}}</td>
+      <td><button class="btn btn-primary" (click)="viewAwd(data._id)"><i class="fa-regular fa-eye"></i></button>
+      </td>
+    </tr>
+
+  </tbody>
+</table>

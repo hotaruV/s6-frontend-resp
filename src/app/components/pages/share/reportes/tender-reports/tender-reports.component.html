@@ -1,0 +1,721 @@
+<div class="mt-2">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+    <mat-tab label="Licitación">
+      <div class="partie__content">
+
+        <div *ngIf="tender.status === 'planning'">Estatus: En planeación</div>
+        <div *ngIf="tender.status === 'planned'">Estatus: Planeada</div>
+        <div *ngIf="tender.status === 'active'">Estatus: Activa</div>
+        <div *ngIf="tender.status === 'cancelled'">Estatus: Cancelada</div>
+        <div *ngIf="tender.status === 'unsuccessful'">Estatus: No exitosa</div>
+        <div *ngIf="tender.status === 'complete'">Estatus: Concluida</div>
+        <div *ngIf="tender.status === 'withdrawn'">Estatus: Retirada</div>
+
+        <div class="row mb-2">
+          <div class="col-md-6 mb-2">
+            <fieldset class="fieldset">
+              <legend class="legend"> Identificador de la contratación pública</legend>
+              <div class="input-group mb-6">
+                {{tender.id}}
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-6">
+            <fieldset class="fieldset">
+              <legend class="legend">
+                Denominación de la contratación pública</legend>
+              <div class="input-group mb-6">
+                {{tender.title}}
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+
+
+        <fieldset class="fieldset mb-2">
+          <div class="row pt-2">
+            <div class="col-sm-12">
+              <label class="document__title">
+                Objeto de la contratación pública
+              </label>
+              <p class="parrafo">{{tender.description}}</p>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset mb-2">
+          <legend class="legend">Valor</legend>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <label class="document__title">Monto</label>
+              <p class="parrafo">{{tenderValue.amount}}</p>
+            </div>
+            <div class="col-sm-6">
+              <label class="document__title">Moneda</label>
+              <p class="parrafo">{{tenderValue.currency}}</p>
+            </div>
+          </div>
+        </fieldset>
+
+
+        <fieldset class="fieldset mb-2">
+          <legend class="legend">Valor mínimo del procedimiento de contratación pública</legend>
+          <div class="row">
+            <div class="col-sm-3">
+              <label class="document__title" data-original-title="Monto como número.">Monto</label>
+              <p class="parrafo">{{tenderMinValue.amount}}</p>
+            </div>
+            <div class="col-sm-2">
+              <label class="document__title"
+                data-original-title="La moneda en el formato ISO 4217 de 3 letras.">Moneda</label>
+
+              <p class="parrafo">{{tenderMinValue.currency}}</p>
+
+            </div>
+            <div class="col-sm-3">
+              <label class="document__title">
+                Método de contratación
+              </label>
+              <p value="selective">{{tender.procurementMethod}}</p>
+            </div>
+            <div class="col-sm-4">
+              <label class="document__title">
+                Detalles del método de contratación
+              </label>
+              <p class="parrafo">{{tender.procurementMethodDetails}}</p>
+            </div>
+          </div>
+
+          <div class="row pt-2">
+
+            <div class="col-sm-12">
+              <label class="document__title"
+                data-original-title="Denominación del ente público que realiza el procedimiento de contratación.">
+                Entidad que realiza la contratación
+              </label>
+              <p class="parrafo">{{procuringEntity.name}}</p>
+            </div>
+          </div>
+          <label class="document__title pt-2">
+            Justificación del método de contratación
+          </label>
+          <p class="parrafo">
+            {{tender.procurementMethodRationale}}
+          </p>
+        </fieldset>
+
+        <fieldset class="fieldset mb-2">
+          <label class="document__title pt-2">
+            Detalles sobre el criterio de evaluación de proposiciones
+          </label>
+          <p class="parrafo">
+            {{tender.awardCriteriaDetails}}
+          </p>
+        </fieldset>
+
+        <fieldset class="fieldset mb-2">
+          <div class="row pt-2">
+            <div class="col-sm-5">
+              <label class="document__title">
+                Medios para la recepción de las proposiciones
+              </label>
+              <ul>
+                <div *ngFor="let item of submissionMethod">
+                  <li *ngIf="item === 'inPerson'">En Persona</li>
+                  <li *ngIf="item === 'electronicSubmission'">Electrónica</li>
+                  <li *ngIf="item === 'written'">Mixto</li>
+                  <li *ngIf="item === 'electronicAuction'">Subasta eletrónica</li>
+                </div>
+              </ul>
+
+            </div>
+            <div class="col-sm-7">
+              <label class="document__title">
+                Descripción de los medios para la recepción de las proposiciones
+              </label>
+              <p class="parrafo">{{tender.submissionMethodDetails}}</p>
+            </div>
+          </div>
+        </fieldset>
+
+
+        <fieldset class="fieldset mb-2">
+          <legend class="legend">Período de entrega de proposiciones</legend>
+
+
+          <div class="row">
+            <div class="col-sm-4">
+              <label class="document__title" data-original-title="Fecha de inicio del periodo.">Fecha
+                de inicio</label>
+              <p class="parrafo">{{tenderPeriod.startDate | date}}</p>
+            </div>
+            <div class="col-sm-4">
+              <label class="document__title" data-original-title="Fecha de conclusión del periodo.">Fecha fin</label>
+              <p class="parrafo">{{tenderPeriod.startDate | date}}</p>
+            </div>
+            <div class="col-sm-4">
+              <label class="document__title" data-original-title="Fecha de conclusión del periodo.">Duración en
+                dias</label>
+              <p class="parrafo">{{tenderPeriod.durationInDays }}</p>
+            </div>
+          </div>
+        </fieldset>
+
+
+        <fieldset class="fieldset mb-2">
+          <legend class="legend">Período de entrega de aclaraciones</legend>
+
+
+          <div class="row">
+            <div class="col-sm-4">
+              <label class="document__title" data-original-title="Fecha de inicio del periodo.">Fecha
+                de inicio</label>
+              <p class="parrafo">{{enquiryPeriod.startDate | date}}</p>
+            </div>
+            <div class="col-sm-4">
+              <label class="document__title" data-original-title="Fecha de conclusión del periodo.">Fecha fin</label>
+              <p class="parrafo">{{enquiryPeriod.endDate | date}}</p>
+            </div>
+            <div class="col-sm-4">
+              <label class="document__title" data-original-title="Fecha de conclusión del periodo.">Duración en
+                días</label>
+              <p class="parrafo">{{enquiryPeriod.durationInDays }}</p>
+            </div>
+          </div>
+        </fieldset>
+
+
+
+        <fieldset class="fieldset mb-2">
+          <legend class="legend">Período de evaluación y adjudicación</legend>
+          <div class="row">
+            <div class="col-sm-4">
+              <label class="document__title" data-original-title="Fecha de inicio del periodo.">Fecha
+                de inicio</label>
+              <p class="parrafo">{{awardPeriod.startDate | date}}</p>
+            </div>
+            <div class="col-sm-4">
+              <label class="document__title" data-original-title="Fecha de conclusión del periodo.">Fecha fin</label>
+              <p class="parrafo">{{awardPeriod.startDate | date}}</p>
+            </div>
+            <div class="col-sm-4">
+              <label class="document__title" data-original-title="Fecha de conclusión del periodo.">Fecha fin</label>
+              <p class="parrafo">{{awardPeriod.durationInDays }}</p>
+            </div>
+
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend class="legend">Número de licitantes</legend>
+          <p class="parrafo">{{tender.numberOfTenderers}}</p>
+        </fieldset>
+      </div>
+    </mat-tab>
+    <mat-tab label="Partes Involucradas">
+      <div class="mt-4">
+        <fieldset class="fieldset mb-4">
+          <legend class="legend">Partes involucradas</legend>
+          <div class="partie__content" *ngIf="partie">
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <fieldset class="fieldset">
+                  <legend class="legend">Nombre común</legend>
+                  <div class="input-group mb-6">
+                    {{part.name}}
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-md-6">
+                <fieldset class="fieldset">
+                  <legend class="legend">
+                    ID</legend>
+                  <div class="input-group mb-6">
+                    {{part.id}}
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-md-4">
+                <fieldset class="fieldset">
+                  <legend class="legend">Esquema</legend>
+                  {{identifier.scheme}}
+                </fieldset>
+              </div>
+              <div class="col-sm-4">
+                <fieldset class="fieldset">
+                  <legend class="legend">Identificador</legend>
+                  {{identifier.id}}
+                </fieldset>
+              </div>
+              <div class="col-sm-4">
+                <fieldset class="fieldset">
+                  <legend class="legend">URI</legend>
+                  <div *ngIf="identifier.uri == ''">Dato no proporcionado </div>
+                  <div *ngIf="identifier.uri != ''">{{identifier.uri}} </div>
+                </fieldset>
+              </div>
+            </div>
+            <fieldset class="fieldset mb-2">
+              <legend class="legend">Nombre Legal</legend>
+              {{identifier.legalName}}
+            </fieldset>
+
+            <fieldset class="fieldset mb-2">
+              <legend class="legend">Dirección</legend>
+              <div class="row">
+                <div class="col-sm-12">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Calle</legend>
+                    <div *ngIf="address.streetAddress == ''">Dato no proporcionado </div>
+                    <div *ngIf="address.streetAddress != ''">{{address.streetAddress}} </div>
+                  </fieldset>
+                </div>
+                <div class="col-sm-6 mt-3">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Localidad</legend>
+                    <div *ngIf="address.locality == ''">Dato no proporcionado </div>
+                    <div *ngIf="address.locality != ''">{{address.locality}} </div>
+                  </fieldset>
+                </div>
+                <div class="col-sm-6 mt-3">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Región</legend>
+                    <div *ngIf="address.region == ''">Dato no proporcionado </div>
+                    <div *ngIf="address.region != ''">{{address.region}} </div>
+                  </fieldset>
+                </div>
+                <div class="col-sm-6 mt-3">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Código Postal</legend>
+                    <div *ngIf="address.postalCode == ''">Dato no proporcionado </div>
+                    <div *ngIf="address.postalCode != ''">{{address.postalCode}} </div>
+                  </fieldset>
+                </div>
+                <div class="col-sm-6 mt-3">
+                  <fieldset class="fieldset">
+                    <legend class="legend">País</legend>
+                    <div *ngIf="address.region == ''">Dato no proporcionado </div>
+                    <div *ngIf="address.region != ''">{{address.region}} </div>
+                  </fieldset>
+                </div>
+
+
+
+              </div>
+            </fieldset>
+
+
+            <fieldset class="fieldset mb-2">
+              <legend class="legend">Punto de contacto</legend>
+              <div class="row">
+                <div class="col-sm-12">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Nombre</legend>
+                    <div *ngIf="contactPoint.name == ''">Dato no proporcionado </div>
+                    <div *ngIf="contactPoint.name != ''">{{contactPoint.name}} </div>
+                  </fieldset>
+                </div>
+                <div class="col-sm-6 mt-3">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Correo electrónico</legend>
+                    <div *ngIf="contactPoint.email == ''">Dato no proporcionado </div>
+                    <div *ngIf="contactPoint.email != ''">{{contactPoint.email | lowercase}} </div>
+                  </fieldset>
+                </div>
+                <div class="col-sm-6 mt-3">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Teléfono</legend>
+                    <div *ngIf="contactPoint.telephone == ''">Dato no proporcionado </div>
+                    <div *ngIf="contactPoint.telephone != ''">{{contactPoint.telephone}} </div>
+                  </fieldset>
+                </div>
+                <div class="col-sm-6 mt-3">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Número de fax</legend>
+                    <div *ngIf="contactPoint.faxNumber == ''">Dato no proporcionado </div>
+                    <div *ngIf="contactPoint.faxNumber != ''">{{contactPoint.faxNumber}} </div>
+                  </fieldset>
+                </div>
+                <div class="col-sm-6 mt-3">
+                  <fieldset class="fieldset">
+                    <legend class="legend">URL</legend>
+                    <div *ngIf="contactPoint.url == ''">Dato no proporcionado </div>
+                    <div *ngIf="contactPoint.url != ''">{{contactPoint.url}} </div>
+                  </fieldset>
+                </div>
+
+              </div>
+            </fieldset>
+
+
+            <fieldset class="fieldset">
+              <legend class="legend">Roles de las partes</legend>
+              <div class="row">
+                <div class="col-sm-12">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Roles</legend>
+                    <div *ngFor="let rol of partiRol">
+                      <li *ngIf="rol === 'buyer'" class="item">Comprador</li>
+                      <li *ngIf="rol === 'procuringEntity'" class="item">Entidad Contratante</li>
+                      <li *ngIf="rol === 'supplier'" class="item">Proveedor</li>
+                      <li *ngIf="rol === 'tenderer'" class="item">Licitador</li>
+                      <li *ngIf="rol === 'funder'" class="item">Financiador</li>
+                      <li *ngIf="rol === 'enquirer'" class="item">Investigador</li>
+                      <li *ngIf="rol === 'payer'" class="item">Pagador</li>
+                      <li *ngIf="rol === 'payee'" class="item">Beneficiario</li>
+                      <li *ngIf="rol === 'reviewBody'" class="item">Cuerpo de Revisión</li>
+                      <li *ngIf="rol === 'interestedParty'" class="item">Parte interesada</li>
+                    </div>
+
+                  </fieldset>
+                </div>
+
+
+              </div>
+            </fieldset>
+
+
+
+
+
+
+
+
+          </div>
+        </fieldset>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nombre del participante</th>
+              <th scope="col" class="w300">Roles</th>
+              <th scope="col">Nombre Legal</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of parties">
+              <td>{{item.address.key}}</td>
+              <td>{{item.name | slice:0:55}}..</td>
+              <td>
+                <ng-container *ngFor="let rol of item.roles">
+                  <li *ngIf="rol === 'buyer'" class="item">Comprador</li>
+                  <li *ngIf="rol === 'procuringEntity'" class="item">Entidad Contratante</li>
+                  <li *ngIf="rol === 'supplier'" class="item">Proveedor</li>
+                  <li *ngIf="rol === 'tenderer'" class="item">Licitador</li>
+                  <li *ngIf="rol === 'funder'" class="item">Financiador</li>
+                  <li *ngIf="rol === 'enquirer'" class="item">Investigador</li>
+                  <li *ngIf="rol === 'payer'" class="item">Pagador</li>
+                  <li *ngIf="rol === 'payee'" class="item">Beneficiario</li>
+                  <li *ngIf="rol === 'reviewBody'" class="item">Cuerpo de Revisión</li>
+                  <li *ngIf="rol === 'interestedParty'" class="item">Parte interesada</li>
+                </ng-container>
+              </td>
+              <td>{{item.identifier.legalName | slice:0:55 }}...</td>
+              <td><button class="btn btn-primary" (click)="viewPartie(item._id)"><i
+                    class="fa-regular fa-eye"></i></button></td>
+
+
+
+
+            </tr>
+
+          </tbody>
+
+        </table>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Documentos">
+      <div class="mt-4">
+        <div class="partie__content" *ngIf="documents">
+          <div class="document__item">
+            <p class="document__title ">Título:</p>
+            <p class="document__paraf"> {{docObject.title}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Tipo:</p>
+            <p class="document__paraf"> {{docObject.documentType}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Formato:</p>
+            <p class="document__paraf"> {{docObject.format}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Idioma:</p>
+            <p class="document__paraf"> {{docObject.language}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Fecha de publicación:</p>
+            <p class="document__paraf"> {{docObject.datePublished | date}}</p>
+          </div>
+          <div class="document__item link">
+            <p class="document__title"> Link del documento:</p>
+            <a href="{{docObject.url}}" target="_blank" class="document__paraf especial"> {{docObject.url}}</a>
+          </div>
+
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Título</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Formato</th>
+              <th scope="col">Idioma</th>
+              <th scope="col">Fecha de Publicación</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of documents_planning">
+              <td>{{item.title}}</td>
+              <td>{{item.documentType}}</td>
+              <td>{{item.format}}</td>
+              <td>{{item.language}}</td>
+              <td>{{item.datePublished | date}}</td>
+              <td><button class="btn btn-primary" (click)="viewDocument(item._id)"><i
+                    class="fa-regular fa-eye"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Hitos">
+      <div class="mt-4">
+
+        <div class="partie__content" *ngIf="miles">
+          <div class="document__item">
+            <p class="document__title ">Título Del Hito:</p>
+            <p class="document__paraf"> {{MilObject.title}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Estatus:</p>
+            <p class="document__paraf" *ngIf="MilObject.status == 'scheduled'">Programado</p>
+            <p class="document__paraf" *ngIf="MilObject.status == 'met'">Completado</p>
+            <p class="document__paraf" *ngIf="MilObject.status == 'notMet'">No Completado</p>
+            <p class="document__paraf" *ngIf="MilObject.status == 'partiallyMet'">Parcialmente Completado</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Tipo de hito:</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'publicNotices'">Avisos a la población</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'approval'">De aprobación</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'delivery'">De entrega</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'assessment'">De evaluación</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'financing'">De financiamiento</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'engagement'">De involucramiento</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'reporting'">De reporte</p>
+            <p class="document__paraf" *ngIf="MilObject.type == 'preProcurement'">Previos a la contratación</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Fecha Límite:</p>
+            <p class="document__paraf"> {{MilObject.dateMet | date}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Fecha de Cumplimiento:</p>
+            <p class="document__paraf"> {{MilObject.dueDate | date}}</p>
+          </div>
+          <div class="document__item">
+            <p class="document__title"> Fecha de Modificaciones:</p>
+            <p class="document__paraf"> {{MilObject.dateModified | date}}</p>
+          </div>
+
+
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Título del Hito</th>
+              <th scope="col">Estatus</th>
+              <th scope="col">Tipo de Hito</th>
+              <th scope="col">Fecha Límite</th>
+              <th scope="col">Fecha de Cumplimiento</th>
+              <th scope="col">Fecha de Modificación</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let miles of documents_hitos">
+              <td>{{miles.title}}</td>
+              <td>{{miles.status}}</td>
+              <td>{{miles.type}}</td>
+              <td>{{miles.dateMet | date}}</td>
+              <td>{{miles.dueDate | date}}</td>
+              <td>{{miles.dateModified | date}}</td>
+              <td><button class="btn btn-primary" (click)="viewMiles(miles._id)"><i
+                    class="fa-regular fa-eye"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Items">
+      <div class="mt-12">
+        <div class="partie__content" *ngIf="items">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <fieldset class="fieldset">
+                <legend class="legend"> Clave CUCOP</legend>
+                <div class="input-group mb-6">
+                  {{itemAditonialclassification.scheme}}
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-6">
+              <fieldset class="fieldset">
+                <legend class="legend">
+                  Descripción</legend>
+                <div class="input-group mb-6">
+                  {{itemAditonialclassification.description}}
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <fieldset class="fieldset">
+            <legend class="legend">
+              Cantidad por tipo de bien, servicio u obra pública
+            </legend>
+            <div class="input-group mb-6">
+              {{ItemObject.quantity}}
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset mb-3 mt-3">
+            <h2>Unidad de medida en la que se especifíca la cantidad de bienes, servicios u obras públicas</h2>
+
+
+            <div class="row">
+              <div class="form-group col-md-12">
+                <fieldset class="fieldset">
+                  <legend class="legend">
+                    Nombre
+                  </legend>
+                  <div class="input-group mb-6">
+                    {{itemUnit.name}}
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+            <fieldset class="fieldset mt-4">
+              <legend class="legend">Valor</legend>
+
+
+              <div class="row ">
+                <div class="col-sm-6">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Monto total</legend>
+                    {{itemValues.amount}}
+                  </fieldset>
+                </div>
+                <div class="col-sm-6">
+                  <fieldset class="fieldset">
+                    <legend class="legend">Moneda</legend>
+                    {{itemValues.currency}}
+                  </fieldset>
+                </div>
+              </div>
+            </fieldset>
+          </fieldset>
+
+
+        </div>
+        <table class="table table-striped mb-5">
+          <thead>
+            <tr>
+              <th scope="col">Descripcion de la clasificación</th>
+              <th scope="col">Descripción del Item</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Tipo de Item</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Acciones</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items_tender">
+              <td>{{item.classification.description}}</td>
+              <td>{{item.description}}</td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.typeItem}}</td>
+              <td>${{item.quantity * item.unit.values.amount}}</td>
+              <td><button class="btn btn-primary" (click)="viewItems(item._id)"><i
+                    class="fa-regular fa-eye"></i></button></td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </mat-tab>
+    <mat-tab label="Modificaciones">
+      <div class="mt-4">
+        <fieldset class="fieldset mb-4">
+          <legend class="legend">Modificaciones</legend>
+          <div class="partie__content">
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <fieldset class="fieldset">
+                  <legend class="legend">Fecha De Modificación</legend>
+                  <div class="input-group mb-6">
+                    {{amendment.date | date}}
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-md-6">
+                <fieldset class="fieldset">
+                  <legend class="legend">
+                    Justificación</legend>
+                  <div class="input-group mb-6">
+                    {{amendment.rationale}}
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <fieldset class="fieldset">
+                  <legend class="legend">Descripción</legend>
+                  {{amendment.description}}
+                </fieldset>
+              </div>
+
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <table class="table mt-5" *ngIf="ocid != null">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Justificación</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let amed of amendments">
+            <td>{{amed.date | date}}</td>
+            <td>{{amed.rationale}}</td>
+            <td>{{amed.description}}</td>
+            <td>
+              <button class="btn btn-primary" (click)="viewamed(amed._id)">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </td>
+
+          </tr>
+
+        </tbody>
+      </table>
+    </mat-tab>
+
+  </mat-tab-group>
+
+
+</div>

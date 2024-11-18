@@ -1,0 +1,53 @@
+
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="cotForm"> 
+    <input type="hidden" formControlName="id" />
+        <div class="row completo mayuscula">
+            <mat-form-field class="example-form p100p">
+      
+              <div class="mb-3">
+                <label for="" class="form-label"></label>
+                <input type="text" matInput formControlName="title" placeholder="TITULO*" appearance="fill">
+              </div>
+              <mat-error *ngIf="campoNoValido('title')">
+      
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row completo mayuscula">
+            <mat-form-field class="example-form p100p">
+      
+              <div class="mb-3">
+                <label for="" class="form-label"></label>
+                <input type="text" matInput formControlName="description" placeholder="DESCRIPCIÓN *" appearance="fill">
+              </div>
+              <mat-error *ngIf="campoNoValido('description')">
+      
+              </mat-error>
+            </mat-form-field>
+          </div>
+          &nbsp;
+        &nbsp;
+
+        <div class="form-group mt-3 d-flex justify-content-end ">
+          <button type="submit" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonGuardaCoti"
+            [disabled]="cotForm.invalid" >
+            GUARDAR COTIZACIÓN
+          </button>
+          &nbsp;
+          &nbsp;
+
+          <button type="button" class="btn btn-primary " style="cursor: pointer;" *ngIf="botonVerCoti" (click)="Vercot()" >
+            VER COTIZACIONES
+          </button>
+        </div>
+        <div class="form-group mt-3 d-flex justify-content-end">
+
+         
+          <button type="button" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonUpdateCoti" (click)="UptCotizacion()" >
+            ACTUALIZAR
+          </button>
+          <button type="button" class="btn btn-danger mx-2" style="cursor: pointer;" *ngIf="botonUpdateCoti"  (click)="cancelarCotizacion()">
+            CANCELAR
+          </button>
+        </div>
+    </form>

@@ -1,0 +1,65 @@
+<section class="contenido__general">
+  <app-adwards-header-menu></app-adwards-header-menu>
+  <h2 class="titulo">Adjudicaciones Registradas</h2>
+  <p class="instrucciones mb-5">Aquí puede ver todas las adjudicaciones registradas, se pueden agregar varias
+    adjudicaciones y todas estarán asociadas a un <strong> AwardID</strong> único.
+    <br>
+    Una vez cargadas todas adjudicaciones la sección generará la etapa de adjudicación y será reenviado a la página
+    principal de contratos
+  </p>
+
+
+  <div class="alerta" *ngIf="mensajeBOOL">{{mensaje}}</div>
+  <div class="contenedor">
+    <p class="total my-3">Total de items registrados: <span class="totalNumero">{{total | number}}</span></p>
+    <table class="table table-striped mb-5">
+      <thead>
+        <tr>
+          <th scope="col">indice</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">ItemS</th>
+          <th scope="col">Estatus</th>
+          <th scope="col">Proveedores Registados</th>
+          <th scope="col">Valor de Adjudicación</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of adwardArray; let i = index  ">
+          <td><strong> {{i + 1}} </strong></td>
+          <td>{{data.description}}</td>
+
+          <td>
+            <li *ngFor="let item of data.items">{{item.description}}</li>
+          </td>
+
+          <td>{{data.status}}</td>
+
+
+          <td>
+            <li *ngFor="let sup of data.suppliers">{{sup.name}}</li>
+          </td>
+
+
+          <td>${{data.value.amount}}</td>
+          <td>
+            <button class="btn btn-danger btn-sm mx-1"><i class="fa fa-trash"
+                (click)="borrarAdw(data._id)"></i></button>
+            <button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"
+                (click)="editarAward(data._id)"></i></button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="form-group mt-3 d-flex justify-content-end" *ngIf="ocid != null">
+    <button class="btn btn-primary mx-1" (click)="forward()">
+      << </button>
+        <a [routerLink]="['../../supplier',  ocid]" class="btn btn-warning center-block " *ngIf="btnNuevo">Nuevo</a>
+        <button (click)="crearAward()" class="btn btn-success center-block mx-1" *ngIf="btnGuardar">Guardar
+          Adjudicaciones</button>
+  </div>
+
+
+</section>

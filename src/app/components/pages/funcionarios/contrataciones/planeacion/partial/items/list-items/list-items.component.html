@@ -1,0 +1,84 @@
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" (click)="cerrar()"><img src="../assets/images/mal.png" class="img-fluid"
+      style="display: block; width: 25px; cursor: pointer; background-color: none !important;"></button>
+  </mat-dialog-actions>
+   <mat-dialog-content *ngIf="bandera == true" class="mat-typography" >
+    
+    <div class="row mt-3">
+      <div class="col-12">
+      
+        <table class="table table-hover mt-5 table-sm table-Secondary table-responsive  tabla__formato">
+          <thead>
+            <tr>
+              <th scope="col" class="w300">DESCRIPCIÓN DE LA CLASIFICACIÓN</th>
+              <th scope="col">DESCRIPCIÓN DEL ITEM</th>
+              <th scope="col">CANTIDAD</th>
+              <th scope="col">TIPO DE ITEM</th>
+              <th scope="col">MONTO</th>
+                        </tr>
+          </thead>
+          <tbody *ngIf="!loading">
+  
+          
+            <tr *ngFor="let item of items">
+          
+              <td>{{ item.classification.description }}</td>
+              <td>{{ item.description }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.unit.scheme }}</td>
+              <td>{{ item.unit.value.amount }}</td>
+              <td>
+                <button type="submit"
+                  style="padding: 1px; padding-right: 1px; padding-left: 1px; border:none; cursor: pointer;" (click)="deleteItem(item.id)" >
+                  <img src="../assets/images/eliminar.svg" class="img-fluid"
+                    style="display: block; width: 25px; cursor: pointer;"></button>
+               
+                
+                <span style="padding: 5px;"></span>
+                <button type="button"
+                style="padding: 1px; padding-right: 1px; border:none; padding-left: 1px; cursor: pointer; " (click)="updateItem(item.id)">
+                <img src="../assets/images/editar.png" class="img-fluid"
+                  style="display: block; width: 25px; cursor: pointer;" ></button>
+  
+              
+              </td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <div class="row" *ngIf="loading">
+          <div class="col-12">
+            <div class="alert alert-info text-center" role="alert">
+              <h4 class="alert-heading">Cargando..</h4>
+              <i class="fa fa-spin fa-refresh fa-2x"></i>
+              <p class="mb-0">porfavor espere</p>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <button type="button"
+            style="padding: 1px; padding-right: 1px; border:none; padding-left: 1px; cursor: pointer;">
+            <img src="../assets/images/izquierda.svg" class="img-fluid"
+              style="display: block; width: 25px; cursor: pointer;"></button>
+  
+          &nbsp; &nbsp;
+          <button type="button"
+            style="padding: 1px; padding-right: 1px; border:none; padding-left: 1px; cursor: pointer;"
+            disabled="(usuario | filtro : pages : search).length  <= 0">
+            <img src="../assets/images/derecha.svg" class="img-fluid"
+              style="display: block; width: 25px; cursor: pointer;"></button>
+  
+          <!-- <span *ngIf="(usuario | filtro : pages : search).length >= pagesNumber">
+          <button class="btn btn-primary" (click)="PrevPage()">
+            Anterior
+          </button>
+          <button class="btn btn-primary m-1" (click)="NextPage()"
+            [disabled]="(usuario | filtro : pages : search).length <= 0">
+            Siguientes
+          </button>
+        </span> -->
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  

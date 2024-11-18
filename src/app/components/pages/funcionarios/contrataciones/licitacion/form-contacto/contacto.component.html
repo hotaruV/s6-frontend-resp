@@ -1,0 +1,217 @@
+<section class="contenido__general ">
+  <app-tender-header-menu></app-tender-header-menu>
+  <h2 class="titulo">Datos Fiscales del Participante</h2>
+  <p class="instrucciones mb-5">Esta es información principal del actor, manteniendose en formato legal y con toda la
+    información más importante.</p>
+
+
+  <h2 class="mb-3">PERSONAS O PARTES</h2>
+
+
+  <div class="contenedor">
+    <app-rfc [rfcSubjet]="rfc" (rfcOut)="generarRFC($event)" (NameOut)="generarName($event)"></app-rfc>
+
+    <form autocomplete="off" [formGroup]="licitacionForm">
+      <!-- //identificado -->
+      <fieldset>
+        <legend>Identificador</legend>
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>RFC</mat-label>
+                <input type="text" matInput formControlName="id" readonly="true">
+                <mat-error *ngIf="campoNoValido('id')">Formato de RFC invalido (RFC sin Homoclave)
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Nombre Legal</mat-label>
+                <input type="text" matInput formControlName="legalName" placeholder="Equipos de computo Express">
+                <mat-error *ngIf="campoNoValido('legalName')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-form p50p">
+                <mat-label>URI</mat-label>
+                <input type="text" matInput formControlName="uri" placeholder="https://minegocio.com">
+                <mat-error *ngIf="campoNoValido('uri')">URL invalida ejem(https://dominio.com/doc.pfd)
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+        </div>
+      </fieldset>
+      <!-- docimicio -->
+      <fieldset>
+        <legend>Domicilio</legend>
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Calle</mat-label>
+                <input type="text" matInput formControlName="streetAddress">
+                <mat-error *ngIf="campoNoValido('streetAddress')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Colonia</mat-label>
+                <input type="text" matInput formControlName="locality">
+                <mat-error *ngIf="campoNoValido('locality')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Región</mat-label>
+                <input type="text" matInput formControlName="region">
+                <mat-error *ngIf="campoNoValido('region')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Código Postal</mat-label>
+                <input type="text" matInput formControlName="postalCode">
+                <mat-error *ngIf="campoNoValido('postalCode')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>País</mat-label>
+                <input type="text" matInput formControlName="countryName">
+                <mat-error *ngIf="campoNoValido('countryName')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <!-- punto de contacto -->
+      <fieldset>
+        <legend>Punto De contacto</legend>
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Nombre</mat-label>
+                <input type="text" matInput formControlName="name">
+                <mat-error *ngIf="campoNoValido('name')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Teléfono Principal</mat-label>
+                <input type="tel" matInput formControlName="telephone">
+                <mat-error *ngIf="campoNoValido('telephone')">
+                  Tiene que ser un Número de Telefono Valido (Deben ser 10 nmeros incluyendo clave lada sin giones )
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Correo Electrónico</mat-label>
+                <input type="text" matInput formControlName="email">
+                <mat-error *ngIf="campoNoValido('email')">
+                  Correo electronico invalido
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Teléfono Secundario</mat-label>
+                <input type="tel" matInput formControlName="faxNumber">
+                <mat-error *ngIf="campoNoValido('faxNumber')">
+                  Tiene que ser un Número de Telefono Valido (Deben ser 10 nmeros incluyendo clave lada sin giones )
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Teléfono Secundario</mat-label>
+                <input type="tel" matInput formControlName="faxNumber">
+                <mat-error *ngIf="campoNoValido('faxNumber')">
+                  Tiene que ser un Número de Telefono Valido (Deben ser 10 nmeros incluyendo clave lada sin giones )
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>URL</mat-label>
+                <input type="text" matInput formControlName="url">
+                <mat-error *ngIf="campoNoValido('url')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+
+
+    </form>
+
+    <div class="form-group mt-3 d-flex justify-content-end">
+      <button class="btn btn-primary" *ngIf="btnAtras" (click)="forward()">
+        << </button>
+
+          <button (click)="crearIdentifier()" class="btn btn-success center-block mx-1"
+            [disabled]="licitacionForm.invalid" *ngIf="btnGuardar">Guardar</button>
+          <button (click)="cancel()" class="btn btn-danger center-block mx-1" [disabled]="licitacionForm.invalid"
+            *ngIf="btnCancelar">Cancelar</button>
+          <button (click)="updateIdentifier()" class="btn btn-warning center-block mx-1"
+            [disabled]="licitacionForm.invalid" *ngIf="btnActualizar">Actualizar</button>
+
+          <button class="btn btn-primary" *ngIf="btnSiguiente" (click)="next()">
+            >> </button>
+
+    </div>
+
+    <!-- <span>Valid</span>
+    <pre>{{licitacionForm.valid}}</pre>
+    <br>
+    <span>value</span>
+    <pre>{{licitacionForm.value | json}}</pre> -->
+
+
+  </div>
+
+
+
+
+
+</section>

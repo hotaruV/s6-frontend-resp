@@ -1,0 +1,79 @@
+<section class="contenido__general">
+  <h2 class="mb-5">Presupuesto</h2>
+  <p class="instrucciones mb-5">Es la razón por la cual se van a comprar o pedir los materiales que se describirán en
+    items, puede tener más información en documentos o en los hitos de planeación.
+    <br>
+
+    Datos que definen cuanto dinero están dispuestos a gastar, la descripción de en que y una uri a un archivo en linea
+    con los mismos datos
+  </p>
+
+  <div class="contenedor">
+    <form (ngSubmit)="crearbudget()" autocomplete="off" [formGroup]="budgetForm">
+      <div class="row completo">
+        <div class="col-md-3 mitad">
+          <div class="mb-2">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Descripcion</mat-label>
+              <input type="text" matInput formControlName="description">
+              <mat-error *ngIf="campoNoValido('description')">Este Campo Es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3 mitad">
+          <div class="mb-3">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Página Web o Url</mat-label>
+              <input type="text" matInput formControlName="uri">
+              <mat-error *ngIf="campoNoValido('uri')">El Campo Nombre es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+        <div class="col-md-3 mitad">
+          <div class="mb-3">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Monto</mat-label>
+              <input type="number" matInput formControlName="amount">
+              <mat-error *ngIf="campoNoValido('amount')">El Campo Nombre es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-md-3 mitad">
+          <div class="mb-3">
+            <mat-form-field class="example-form p50p">
+              <mat-label>Tipo de Moneda</mat-label>
+              <mat-select matNativeControl formControlName="currency">
+                <mat-option *ngFor="let moneda of monedas" [value]="moneda.value">
+                  {{moneda.viewValue}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="campoNoValido('currency')">El Campo Nombre es Obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="form-group mt-3 d-flex justify-content-end">
+      <button class="btn btn-primary" (click)="forward()"> << </button>
+      <button (click)="crearbudget()" class="btn btn-success center-block mx-3" [disabled]="budgetForm.invalid" *ngIf="btnGuardar">Guardar</button>
+      <button class="btn btn-primary" *ngIf="btnSiguiente" (click)="next()">>></button>
+    </div>
+
+    <!-- <span>Valid</span>
+    <pre>{{budgetForm.valid}}</pre>
+    <br>
+    <span>value</span>
+    <pre>{{budgetForm.value | json}}</pre> -->
+  </div>
+
+
+
+</section>

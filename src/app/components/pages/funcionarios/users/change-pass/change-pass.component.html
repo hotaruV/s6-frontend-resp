@@ -1,0 +1,30 @@
+
+<!-- <app-header></app-header> -->
+
+<section class="fondo">
+  <div class="card">
+    <!-- <img class="logo__img" src="assets/images/contratos.svg" alt=""> -->
+
+    <form (ngSubmit)="changePass()" class="card__form" [formGroup]="NewPassForm" autocomplete="off" >
+      <div class="inputBox">
+        <input class="form__inputs" type="password" name="" id="" required formControlName="lastpassword">
+        <span class="form__span">Contraseña Anterior</span>
+      </div>
+      <div class="inputBox">
+        <input class="form__inputs" type="password" name="" id="" required formControlName="newpassword">
+        <span class="form__span">Nueva Contraseña</span>
+        <small *ngIf="campoNoValido('newpassword')" class="invalid-feedback d-block">Solo Se Permiten Contraseñas Con Letras y Números De 8 a 15 Caracteres (Omitir !#$%&/*ñ y acentos)</small>
+      </div>
+      <!-- <div class="inputBox">
+        <input class="form__inputs" type="text" name="" id="" required>
+        <span class="form__span">Repita Nueva Contraseña</span>
+      </div> -->
+      <div class="btnc">
+        <button type="submit" value="Identificarse" class="btn btn-primary btn-block">Aceptar</button>
+      </div>
+    </form>
+
+  </div>
+</section>
+
+<!-- <app-footer></app-footer> -->

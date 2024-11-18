@@ -1,0 +1,96 @@
+<section class="contenido__general">
+  <h2 class="titulo">CONTRATACIÓN</h2>
+  <p class="instrucciones mb-5">En esta sección se define quienes van a participar para poder acceder a
+    proveer el material requerido, al igual que se definirá este mismo material junto con sus caracteristicas
+    y se dará a conocer todos los periodos de la licitación y sus documentos respectivos.</p>
+
+  <div class="datos" *ngIf="datosValue">
+    <!-- <h2 class="mb-3">CONTRATANTE</h2> -->
+    <h3 class="mb-5">VALOR DE LA CONTRATACIÓN</h3>
+
+    <div class="contenedor">
+      <form (ngSubmit)="crearValue()" autocomplete="off" [formGroup]="valueForm">
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Monto</mat-label>
+                <input type="number" matInput class="example-right-align" formControlName="amount">
+                <span matPrefix>$&nbsp;</span>
+                <mat-error *ngIf="campoNoValido('amount')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Moneda</mat-label>
+                <mat-select matNativeControl formControlName="currency">
+                  <mat-option *ngFor="let format of moneda" [value]="format.value">
+                    {{format.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('currency')">El Campo Nombre es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="mb-5">PERIODO DE CONTRATACIÓN</h3>
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de Inicio</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="startDate">
+                <mat-hint>YY/MM/DD</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker1">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de Termino</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="endDate">
+                <mat-hint>YY/MM/DD</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker2">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Extensión Máxima</mat-label>
+                <input matInput [matDatepicker]="picker3" formControlName="maxExtentDate">
+                <mat-hint>YY/MM/DD</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker3">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button class="btn btn-success center-block" *ngIf="botonSiguiente">Planeacion</button>
+          <button class="btn btn-success center-block" *ngIf="botonUpdate">Siguiente</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <span>Valid</span>
+  <pre>{{valueForm.valid}}</pre>
+  <br>
+  <span>value</span>
+  <pre>{{valueForm.value | json}}</pre>
+</section>

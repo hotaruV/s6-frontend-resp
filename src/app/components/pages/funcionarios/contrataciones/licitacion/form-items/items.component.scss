@@ -1,0 +1,22 @@
+.completo {
+  width: 100%;
+
+  .mitad {
+    width: 50%;
+
+    .p50p {
+      width: 100%;
+    }
+  }
+}
+
+
+.total{
+  padding-bottom: 5px;
+  font-size: 1.3em;
+  .totalNumero{
+    color: red;
+    font-weight: 600;
+    padding-left: 10px;
+  }
+}

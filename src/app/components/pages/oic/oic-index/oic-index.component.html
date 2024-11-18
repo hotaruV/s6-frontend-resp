@@ -1,0 +1,96 @@
+<div class="contenido__general texto">
+  <div class="titulo">{{ getSecretaria }}</div>
+  <p>
+    UTILICE EL BUSCADOR PARA REVISAR CONTRATOS, LA BÚSQUEDA SERÁ POR EL TÍTULO
+    DE LA LICITACIÓN.
+  </p>
+  <mat-divider class="m-4"></mat-divider>
+  <div class="buscador">
+    <mat-form-field class="formulario">
+      <mat-label>Buscar título de licitación o OCID</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Titulo de Licitación o OCID"
+        #txtSearch
+        (keyup)="onSearchContract(txtSearch.value)"
+      />
+    </mat-form-field>
+  </div>
+  <table class="table table-stripred table-responsive">
+    <thead>
+      <tr class="left">
+        <th scope="col" class="w50">#</th>
+        <th scope="col" class="w100">FECHA DE CARGA FINAL DE CONTRATO</th>
+        <th scope="col" class="w100">OCID</th>
+        <th scope="col" class="w100">TÍTULO DE LICITACIÓN</th>
+        <th scope="col" class="w100">REVISADO</th>
+        <th scope="col" class="w100">ACCIONES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let item of contratos | notifications : pages : search;
+          let i = index
+        "
+        [ngStyle]="{ height: '50px' }"
+      >
+        <td class="left">{{ i + 1 }}</td>
+        <td class="left">{{ item.date | date }}</td>
+        <td class="left">{{ item.ocid }}</td>
+        <td class="left" *ngIf="item.tender !== null; else titulo">
+          <strong>{{ item.tender.title | uppercase }}</strong>
+        </td>
+        <ng-template #titulo>
+          <td class="left">
+            <strong class="text-primary">no asignado</strong>
+          </td>
+        </ng-template>
+        <td class="left">
+          <i
+            *ngIf="item.status === 'REVISADO'; else noRevisado"
+            class="fa-solid fa-check green"
+          ></i>
+        </td>
+        <ng-template #noRevisado>
+          <td class="left"><i class="fa-solid fa-xmark red"></i></td>
+        </ng-template>
+        <td class="left">
+          <button
+            class="btn btn-primary btn-sm mx-2"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Ver Contrato"
+            (click)="verContrato(item.ocid)"
+            [disabled]="item.status === 'REVISADO'"
+          >
+            <i class="fa-solid fa-eye"></i>
+          </button>
+          <button
+            class="btn btn-blue btn-sm"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Enviar Notificaciones"
+            (click)="verNotificaciones(item.ocid, item._id)"
+          >
+            <i class="fa-regular fa-comments"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="divisorBotones">
+    <button class="btn btn-primary mx-1" (click)="PrevPages()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <button class="btn btn-primary" (click)="nextPages()">
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+  <div class="alinear__boton">
+    <button class="btn btn-primary" (click)="openmodal()">
+      VER NOTIFICACIONES
+    </button>
+  </div>
+</div>

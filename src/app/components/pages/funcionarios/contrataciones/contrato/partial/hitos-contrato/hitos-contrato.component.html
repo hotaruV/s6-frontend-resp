@@ -1,0 +1,138 @@
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="cotForm"> 
+    <input type="hidden" formControlName="id" />
+    <div class="row mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>TÍTULO DE HITO</mat-label>
+            <input type="text" matInput formControlName="milestonestitle">
+            <mat-error *ngIf="campoNoValido('milestonestitle')">Este Campo Es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-form">
+          <mat-label>TIPO</mat-label>
+          <mat-select matNativeControl formControlName="milestonesType">
+            <mat-option *ngFor="let item of tipoHito" [value]="item.value">
+              {{ item.viewValue }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoNoValido('milestonesType')">SELECCIONE UN ITEM
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>DESCRIPCION</mat-label>
+            <input type="text" matInput formControlName="milestonesdescription">
+            <mat-error *ngIf="campoNoValido('milestonesdescription')">Este Campo Es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <!-- se agrega este campó -->
+        <mat-form-field class="example-form">
+          <mat-label>CÓDIGO DE HITO</mat-label>
+          <input type="text" matInput formControlName="milestonescode">
+          <mat-error *ngIf="campoNoValido('milestonescode')">SELECCIONE UN ITEM
+          </mat-error>
+        </mat-form-field>
+        <!-- Nuevo -->
+      </div>
+    </div>
+
+
+    <div class="row mayuscula">
+      <div class="col-md-4">
+        <div class="mb-4">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha de Vencimiento</mat-label>
+            <input matInput [matDatepicker]="picker42" formControlName="milestonesdueDate" mat-raised-button
+              #tooltip="matTooltip" matTooltip="Fecha Límite para cumplimiento de hito">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker42">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker42></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mb-4">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha de Cumplimiento</mat-label>
+            <input matInput [matDatepicker]="picker41" formControlName="milestonesdateMet" mat-raised-button
+              #tooltip="matTooltip" matTooltip="Fecha en la que este hito se cumplió">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker41">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker41></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mb-4">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha de Modificación</mat-label>
+            <input matInput [matDatepicker]="picker40" formControlName="milestonesdateModified" mat-raised-button
+              #tooltip="matTooltip" matTooltip="Fecha en la que se puede llegar a modificar el Hito">
+
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker40">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker40></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row mayuscula">
+      <div class="col-md-4">
+        <div class="mb-4">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Estatus del Hito</mat-label>
+            <mat-select matNativeControl formControlName="milestonesstatus">
+              <mat-option *ngFor="let stat of status" [value]="stat.value">
+                {{stat.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('milestonesstatus')">El Campo es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    &nbsp;
+    &nbsp;
+
+        <div class="form-group mt-3 d-flex justify-content-end ">
+          <button type="submit" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonGuardaHito"
+            [disabled]="cotForm.invalid" >
+            GUARDAR HITO
+          </button>
+          &nbsp;
+          &nbsp;
+
+          <button type="button" class="btn btn-primary " style="cursor: pointer;" *ngIf="botonVerHito" (click)="VerHito()" >
+            VER HITOS
+          </button>
+        </div>
+        <div class="form-group mt-3 d-flex justify-content-end">
+
+         
+          <button type="button" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonUpdateHito" (click)="UptHito()" >
+            ACTUALIZAR
+          </button>
+          <button type="button" class="btn btn-danger mx-2" style="cursor: pointer;" *ngIf="botonUpdateHito"  (click)="cancelarHito()">
+            CANCELAR
+          </button>
+        </div>
+    </form>

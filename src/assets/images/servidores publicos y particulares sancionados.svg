@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#125DA9;}
+	.st1{fill:#6A91BF;}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:#969696;}
+	.st4{fill:#B8B8B8;}
+</style>
+<g id="GUIAS">
+</g>
+<g id="Capa_1">
+	<g>
+		<path class="st0" d="M362.31,408.05c2.95,5.11-0.74,11.5-6.64,11.5H156.32c-5.9,0-9.59-6.39-6.64-11.5l68.02-117.82l-99.36-47.25
+			v261.1c0,0.58,0.47,1.04,1.04,1.04H293.5c55.31,0,100.15-44.84,100.15-100.15V373.9l-70.38-33.47L362.31,408.05z"/>
+		<polygon class="st0" points="242.68,350.96 269.32,350.96 269.32,314.77 242.68,302.1 		"/>
+		<rect x="242.68" y="374.03" class="st0" width="26.64" height="30.02"/>
+		
+			<ellipse transform="matrix(0.7071 -0.7071 0.7071 0.7071 19.5732 203.9698)" class="st1" cx="256" cy="78.36" rx="73.23" ry="73.23"/>
+		<path class="st1" d="M352.13,188.49H160.32c-23.18,0-41.98,18.79-41.98,41.98v12.52l99.36,47.25l31.65-54.83
+			c2.95-5.11,10.33-5.11,13.28,0l60.63,105.02l70.38,33.47V230.01C393.65,207.08,375.06,188.49,352.13,188.49z"/>
+		<polygon class="st1" points="242.68,261.49 242.68,302.1 269.32,314.77 269.32,261.49 		"/>
+	</g>
+</g>
+</svg>

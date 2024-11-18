@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-light navbar-dark bg-blue">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav a_la_derecha">
+       
+        <!-- <li class="nav-item dropdown">
+          <span *ngIf="getRol === 'adminstrador_ente'">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            ADMINISTRADOR DE ENTE PÚBLICO
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item "  routerLink="/sea/funcionarios/administracion/actores">ACTORES INVOLUCRADOS</a>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+          </ul>
+        </span>
+        </li> -->
+        <!-- <li class="nav-item dropdown">
+          <span *ngIf="getRol === 'adminstrador_ente'">
+           <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            ALERTAS DE CONTRATOS
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          </ul>
+         </span>
+        </li> -->
+
+        <!-- <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/sea/funcionarios/inicio-contrato">ALERTAS DE CONTRATOS</a>
+        </li> -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            {{getNombres}}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <span *ngIf="getRol === 'seseaadmin'">
+              <!-- <li>
+                <a class="dropdown-item active" routerLink="../registro">Datos De Usuario</a>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider">
+              </li> -->
+            </span>
+            <li>
+              <a class="dropdown-item" (click)="logout()">Cerrar Sesion</a>
+            </li>
+          </ul>
+        </li>
+      
+
+
+      </ul>
+    </div>
+  </div>
+</nav>

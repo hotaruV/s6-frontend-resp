@@ -1,0 +1,155 @@
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="itemsForm">
+  <input type="hidden" formControlName="id" />
+
+  <div class="row completo mayuscula">
+    <div class="col-md-6">
+      <div class="mb-0">
+        <mat-form-field class="example-form">
+          <mat-label>ITEM</mat-label>
+          <mat-select matNativeControl formControlName="title">
+            <mat-option *ngFor="let item of itemsDesc" [value]="item.value">
+              {{ item.viewValue }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoNoValido('title')">SELECCIONE UN ITEM</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-0">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input type="text" matInput formControlName="description" placeholder="DESCRIPCION LIBRE DEL ITEM*" />
+          <mat-error *ngIf="campoNoValido('description')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <h2>II.2.1 CLASIFICACIÓN</h2>
+  <div class="row completo mayuscula">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width">
+        <mat-label>CÓDIGO</mat-label>
+        <input type="text" matInput matNativeControl formControlName="clasifscheme" [matAutocomplete]="auto8"
+          (keyup)="onChangeCucop(txtInputCod.value)" #txtInputCod />
+        <mat-autocomplete autoActiveFirstOption #auto8="matAutocomplete">
+          <mat-option *ngFor="let item of ArrayCucop" [value]="item.CLAVECUCoP" (onSelectionChange)="onSelectCucop(item)">
+            {{ item.CLAVECUCoP }} - {{ item.DESCRIPCION }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-6">
+      <div class="mb-0">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input type="text" readonly="readonly" matInput formControlName="clasifdescription" placeholder="DESCRIPCIÓN*" />
+          <mat-error *ngIf="campoNoValido('clasifdescription')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="row completo mayuscula">
+    <div class="col-md-6">
+      <div class="mb-0">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input type="text" matInput formControlName="clasifuri" placeholder="URI*" />
+          <mat-error *ngIf="campoNoValido('clasifuri')">EL CAMPO URI ES OBLIGATORIO</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-0">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input type="text" matInput formControlName="clasifquantity" placeholder="NÚMERO DE ESQUEMA*" />
+          <mat-error *ngIf="campoNoValido('clasifquantity')">EL CAMPO NÚMERO DE ESQUEMA ES OBLIGATORIO</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <h2>II.2.2 CANTIDAD</h2>
+  <div class="row completo mayuscula">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input type="number" matInput formControlName="uintscant" placeholder="NÚMERO DE UNIDADES REQUERIDAS" (input)="calcularMonto()"/>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width">
+        <mat-label>ESQUEMA</mat-label>
+        <input type="text" matInput matNativeControl formControlName="uintscheme" [matAutocomplete]="auto66"
+          (input)="onChangeEsquemaBuscar()" />
+        <mat-autocomplete autoActiveFirstOption #auto66="matAutocomplete">
+          <mat-option *ngFor="let item of ArrayEsquema" [value]="item.esquema">
+            {{ item.esquema }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row completo mayuscula">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input type="text" matInput formControlName="unitname" placeholder="NOMBRE DE LA UNIDAD DE MEDIDA*" />
+        <mat-error *ngIf="campoNoValido('unitname')">EL CAMPO NOMBRE DE LA UNIDAD DE MEDIDA ES OBLIGATORIO</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input type="number" matInput formControlName="uintvalor" placeholder="VALOR*" (input)="calcularMonto()"/>
+        <mat-error *ngIf="campoNoValido('uintvalor')">EL CAMPO VALOR ES OBLIGATORIO</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row completo mayuscula">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input type="number" matInput formControlName="uintamount" placeholder="MONTO*" />
+        <mat-error *ngIf="campoNoValido('uintamount')">EL CAMPO MONTO ES OBLIGATORIO</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="example-form">
+        <mat-label>MONEDA</mat-label>
+        <mat-select formControlName="uintcurrency">
+          <mat-option *ngFor="let item of monedas" [value]="item.value">
+            {{ item.viewValue }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoNoValido('uintcurrency')">SELECCIONE UN ITEM</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row completo mayuscula">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input type="text" matInput formControlName="uinturi" placeholder="URI*" />
+        <mat-error *ngIf="campoNoValido('uinturi')">EL CAMPO URI ES OBLIGATORIO</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  &nbsp;
+  &nbsp;
+
+  <div class="form-group mt-3 d-flex justify-content-end ">
+    <button type="submit" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonGuardaItem"
+      [disabled]="itemsForm.invalid">GUARDAR ITEMS</button>
+    &nbsp;
+    &nbsp;
+    <button type="button" class="btn btn-primary " style="cursor: pointer;" *ngIf="botonVerItem" (click)="Vercot()">
+      VER ITEMS</button>
+  </div>
+
+  <div class="form-group mt-3 d-flex justify-content-end">
+    <button type="button" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonUpdateItem"
+      (click)="UptItem()">ACTUALIZAR</button>
+    <button type="button" class="btn btn-danger mx-2" style="cursor: pointer;" *ngIf="botonUpdateItem"
+      (click)="cancelarItem()">CANCELAR</button>
+  </div>
+</form>

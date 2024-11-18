@@ -1,0 +1,120 @@
+.principal {
+  width: 100%;
+  height: 5vh;
+
+  //background-color: red;
+  .navigate {
+      padding-top: 1.3vh;
+      display: flex;
+      justify-content: center;
+      padding-bottom: 1.6vh;
+      .btn-right{
+          text-align: center;
+          background: 0 0;
+          border: 0;
+          font-size: 22px;
+          line-height: 2em;
+          position: relative;
+          width: 10em;
+          z-index: 0;
+          margin-right: 4px;
+      }
+
+      .normal{
+          color: #FFF;
+          text-decoration: none;
+          position: relative;
+          z-index: 10;
+          text-shadow: #000 2px 2px 4px;
+      }
+
+      .btn-rightpla::after,
+      .btn-rightpla::before{
+        background: #1C8CFC;
+      }
+      .btn-rightlic::after,
+      .btn-rightlic::before{
+        background: #1A85F0;
+      }
+      .btn-rightcon::after,
+      .btn-rightcon::before{
+        background: #1877D6;
+      }
+      .btn-rightadj::after,
+      .btn-rightadj::before{
+        background: #125DA9;
+      }
+      .btn-rightsel::after,
+      .btn-rightsel::before{
+        background: #0C3E70;
+      }
+
+      .btn-rightb::after,
+      .btn-rightb::before{
+          background: #fff;
+      }
+
+      .btn-right::after,
+      .btn-right::before{
+          border-radius: 2px;
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          right: 0;
+          -webkit-transition: all 1s;
+          transition: all 1s;
+          height: 1em;
+      }
+
+      .btn-right::before {
+          box-shadow: -1px 1px 0 #DDDDDD, -2px 2px 0 #DDDDDD, -3px 3px 0 #DDDDDD, -4px 4px 0 #DDDDDD;
+          -webkit-transform: skew(45deg);
+          transform: skew(45deg);
+          top: 0
+      }
+
+      .btn-right::after {
+          box-shadow: 1px 1px 0 #DDDDDD, 2px 2px 0 #DDDDDD, 3px 3px 0 #DDDDDD, 4px 4px 0 #DDDDDD;
+          -webkit-transform: skew(-45deg);
+          transform: skew(-45deg);
+          bottom: 0
+      }
+  }
+  .pla{
+      width: 100%;
+      height: 10px;
+      background: rgb(255,255,255);
+      background: linear-gradient(90deg, #1C8CFC 0%, rgba(243,231,207,1) 90%, rgba(255,255,255,1) 100%);
+  }
+  .lic{
+      width: 100%;
+      height: 10px;
+      background: rgb(255,255,255);
+      background: linear-gradient(90deg, #1A85F0 0%, rgba(243,231,207,1) 90%, rgba(255,255,255,1) 100%);
+  }
+  .con{
+      width: 100%;
+      height: 10px;
+      background: rgb(255,255,255);
+      background: linear-gradient(90deg, #1877D6 0%, rgba(243,231,207,1) 90%, rgba(255,255,255,1) 100%);
+  }
+  .adj{
+      width: 100%;
+      height: 10px;
+      background: rgb(255,255,255);
+      background: linear-gradient(90deg, #125DA9 0%, rgba(243,231,207,1) 90%, rgba(255,255,255,1) 100%);
+  }
+  .sel{
+      width: 100%;
+      height: 10px;
+      background: rgb(255,255,255);
+      background: linear-gradient(90deg, #0C3E70 0%, rgba(243,231,207,1) 90%, rgba(255,255,255,1) 100%);
+  }
+  .blanco{
+      color: #DDDDDD;
+      text-decoration: none;
+      position: relative;
+      z-index: 10;
+  }
+}

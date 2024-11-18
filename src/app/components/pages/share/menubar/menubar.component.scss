@@ -1,0 +1,22 @@
+.navbar-nav.navbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translatex(-50%);
+}
+.a_la_derecha{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 100px;
+}
+
+.bg-blue{
+  background: rgb(219, 219, 219);
+  color: rgb(118, 113, 113);
+}
+
+
+.navbar-nav .nav-link.active, .navbar-nav .show>.nav-link {
+  color: black;
+}

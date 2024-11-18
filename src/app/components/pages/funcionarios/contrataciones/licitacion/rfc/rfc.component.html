@@ -1,0 +1,80 @@
+<div class="contenedor">
+  <mat-radio-group [(ngModel)]="personaType">
+    <mat-radio-button value="Persona moral" (change)="pmoral()">Persona Moral</mat-radio-button>
+    <mat-radio-button value="Persona física" (change)="pfisica()">Persona Física</mat-radio-button>
+  </mat-radio-group>
+  <form autocomplete="off" [formGroup]="TypePersonFisic">
+    <fieldset class="fieldset mb-4">
+      <legend class="legend">{{personaType}}</legend>
+      <div *ngIf="personaType === 'Persona física'">
+        <div class="row">
+          <mat-form-field class="example-form col-md-4 ">
+            <mat-label>Nombre Legal</mat-label>
+            <input type="text" matInput formControlName="nombre_f">
+            <mat-error *ngIf="campoNoValido('nombre_f')">Este campo es Obligatorio
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="example-form col-md-4">
+            <mat-label>Apellido Paterno</mat-label>
+            <input type="text" matInput formControlName="apellido_pa_f">
+            <mat-error *ngIf="campoNoValido('apellido_pa_f')">Este campo es Obligatorio
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="example-form col-md-4">
+            <mat-label>Apellido Materno</mat-label>
+            <input type="text" matInput formControlName="apellido_a_f">
+            <mat-error *ngIf="campoNoValido('apellido_a_f')">Formato de RFC invalido (RFC sin Homoclave)
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngIf="personaType === 'Persona moral'">
+        <mat-form-field class="example-form col-md-12 ">
+          <mat-label>Nombre Legal</mat-label>
+          <input type="text" matInput formControlName="nombre_f">
+          <mat-error *ngIf="campoNoValido('nombre_f')">Este campo es Obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <fieldset class="fieldset">
+          <legend class="legend">Fecha de Nacimiento</legend>
+          <mat-form-field class="example-form col-md-4">
+            <mat-label>Año</mat-label>
+            <input type="number" matInput formControlName="nac_year_f" placeholder="AAAA">
+            <mat-error *ngIf="campoNoValido('nac_year_f')">Ingrese Formato ejem (1997)
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-form col-md-4">
+            <mat-label>Mes</mat-label>
+            <input type="number" matInput formControlName="nac_mon_f" placeholder="MM">
+            <mat-error *ngIf="campoNoValido('nac_mon_f')">Mes en numero de 1 al 12
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-form col-md-4">
+            <mat-label>Dia</mat-label>
+            <input type="number" matInput formControlName="nac_day_f" placeholder="DD">
+            <mat-error *ngIf="campoNoValido('nac_day_f')">Ingrese un dia del 1 al 31
+            </mat-error>
+          </mat-form-field>
+
+        </fieldset>
+      </div>
+
+      <div class="btn btn-success" (click)="rfcfisico()" *ngIf="personaType === 'Persona física'">Generar RFC persona Física
+      </div>
+      <div class="btn btn-success" (click)="rfcmoral()" *ngIf="personaType === 'Persona moral'">Generar RFC persona Moral</div>
+
+
+
+
+    </fieldset>
+  </form>
+</div>
+    <!-- <<span>Valid</span>
+    <pre>{{TypePersonFisic.valid}}</pre>
+    <br>
+    <span>value</span>
+    <pre>{{TypePersonFisic.value | json}}</pre> -->

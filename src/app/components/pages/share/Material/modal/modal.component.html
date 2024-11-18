@@ -1,0 +1,61 @@
+<h1 mat-dialog-title></h1>
+<div mat-dialog-content>
+    <table class="table">
+        <thead>
+
+            <tr class="left">
+                <th scope="col" class="w50">#</th>
+                <th scope="col" class="w100">FECHA DE CARGA FINAL DE CONTRATO</th>
+                <!-- <th scope="col" class="w100">MENSAJE</th> -->
+                <th scope="col" class="w100">STATUS</th>
+                <th scope="col" class="w100">TÍTULO DE LICITACIÓN</th>
+                <th scope="col" class="w100">VER</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of notificaciones let i = index">
+                <td class="left">{{i+1}}</td>
+                <td class="left">{{item.created_at | date}}</td>
+                <!-- <td class="left">{{item.notification_text}}</td> -->
+                <td *ngIf="item.status === 'no visto' " class="left text-danger"><strong>{{item.status |
+                        uppercase}}</strong>
+                </td>
+                <td *ngIf="item.status === 'visto' " class="left text-primary"><strong>{{item.status |
+                        uppercase}}</strong></td>
+                <td *ngIf="item.status === 'atendido' " class="left text-warning"><strong>{{item.status |
+                        uppercase}}</strong>
+                </td>
+                <td *ngIf="item.status === 'concluido' " class="left text-success"><strong>{{item.status |
+                        uppercase}}</strong>
+                </td>
+                <td class="left" *ngIf="item.revision_id.contrato_id.tender !== null else titulo">
+                    <strong>{{item.revision_id.contrato_id.tender.title | uppercase}}</strong>
+                </td>
+                <ng-template #titulo>
+                    <td class="left"><strong class="text-primary">no asignado</strong></td>
+                </ng-template>
+                <td class="left">
+                    <button class="btn btn-primary btn-sm" (click)="VerAlert(item._id)">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <form autocomplete="off" [formGroup]="noficationForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>MENSAJE: </mat-label>
+            <textarea matInput placeholder="Motivo por el cual se envia la alerta" formControlName="notification_text"
+                cols="30" rows="10" readonly="true"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+<div class="alinear__boton">
+    <div mat-dialog-actions>
+        <button *ngIf="btnAtendido" class="btn btn-orange" (click)="cambiarStatusAtendido()">marcar como atendido</button>
+    </div>
+    <div mat-dialog-actions>
+        <button class="btn btn-success" mat-dialog-close>Cerrar</button>
+    </div>
+</div>

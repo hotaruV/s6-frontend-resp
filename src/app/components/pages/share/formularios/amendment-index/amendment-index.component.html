@@ -1,0 +1,88 @@
+
+  <h2 class="titulo">Modificación/Enmiendas</h2>
+  <p class="instrucciones mb-5">En esta sección se define quiénes van a participar para poder acceder a
+    proveer el material requerido, al igual que se definirá este mismo material junto con sus características
+    y se dará a conocer todos los periodos de la licitación y sus documentos respectivos.</p>
+
+  <div class="datos" *ngIf="datosAmand">
+    <!-- <h2 class="mb-3">CONTRATANTE</h2> -->
+    <h3 class="mb-5">MODIFICACIONES</h3>
+
+    <div class="contenedor">
+      <form autocomplete="off" [formGroup]="amendmentForm">
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Justificación</mat-label>
+                <input type="text" matInput class="example-right-align" formControlName="rationale">
+                <mat-error *ngIf="campoNoValido('rationale')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Descripción</mat-label>
+                <input type="text" matInput class="example-right-align" formControlName="description">
+                <mat-error *ngIf="campoNoValido('description')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3 completo">
+            <div class="mb-2">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de Modificación</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="date">
+                <mat-hint>YY/MM/DD</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker1">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="form-group mt-3 d-flex justify-content-end" *ngIf="ocid != null">
+        <button class="btn btn-primary mx-1" (click)="prev()"><<</button>
+        <button class="btn btn-success" *ngIf="btnGuardar" [disabled]="amendmentForm.invalid" (click)="crearAmendments()">Guardar</button>
+        <button class="btn btn-warning mx-1" *ngIf="btnActualizar" [disabled]="amendmentForm.invalid" (click)="ActualizarAmendments()">Actualizar</button>
+        <button class="btn btn-warning mx-1" *ngIf="btnNuevo">Nuevo</button>
+        <button class="btn btn-primary mx-1" (click)="next()">{{BtnName}}</button>
+      </div>
+    </div>
+  </div>
+  <!-- <span>Valid</span>
+  <pre>{{amendmentForm.valid}}</pre>
+  <br>
+  <span>value</span>
+  <pre>{{amendmentForm.value | json}}</pre> -->
+
+  <table class="table table-striped mt-5" *ngIf="ocid != null">
+    <thead>
+      <tr>
+        <th scope="col">Fecha</th>
+        <th scope="col">Justificacion</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of amandments">
+        <td>{{item.date | date}}</td>
+        <td>{{item.rationale}}</td>
+        <td>{{item.description}}</td>
+        <td>
+          <button class="btn btn-danger btn-sm mx-1"><i class="fa fa-trash"
+              (click)="borraramandments(item._id)"></i></button>
+          <button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"
+              (click)="editaramandments(item._id)"></i></button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+

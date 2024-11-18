@@ -1,0 +1,154 @@
+<h2 class="titulo">Documentos</h2>
+<p class="instrucciones">Los Documentos que pueden explicar, dar avisos, formuarios descargables o cualquier
+  recurso que nos ayudan a entender el proceso de contratación
+</p>
+<p class="instrucciones mb-5"><strong> En esta seccion puede agregar varios Documentos:</strong></p>
+
+<div class="contenedor">
+  <form (ngSubmit)="crearDocument()" autocomplete="off" [formGroup]="documentForm">
+    <div class="row completo">
+      <div class="col-md-3 mitad">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Título de documento</mat-label>
+            <input type="text" matInput formControlName="title">
+            <mat-error *ngIf="campoNoValido('title')">El Campo Nombre es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-3 mitad">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Descripción</mat-label>
+            <input type="text" matInput formControlName="description">
+            <mat-error *ngIf="campoNoValido('description')">Este Campo Es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-3 mitad">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Página Web o URL</mat-label>
+            <input type="text" matInput formControlName="url">
+            <mat-error *ngIf="campoNoValido('url')">URL invalida ejem(https://dominio.com/doc.pfd)
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+
+
+
+
+      <div class="col-md-3 mitad">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Lenguajes</mat-label>
+            <mat-select matNativeControl formControlName="language">
+              <mat-option *ngFor="let format of lenguajes" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('language')">El Campo Nombre es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-3 mitad">
+        <div class="mb-3">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha de Publicación</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="datePublished">
+            <mat-hint>YY/MM/DD</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-3 mitad">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>Formato de documento</mat-label>
+            <mat-select matNativeControl formControlName="format">
+              <mat-option *ngFor="let format of format" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('format')">El Campo es Obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+    </div>
+  </form>
+
+  <ng-container *ngIf="ocid != null">
+    <div class="form-group mt-3 d-flex justify-content-end">
+      <button class="btn btn-primary" *ngIf="btnAtras" (click)="forward()">
+      </button>
+
+      <button (click)="crearDocument()" class="btn btn-success center-block mx-1" [disabled]="documentForm.invalid"
+        *ngIf="btnGuardar">Guardar</button>
+      <button (click)="cancel()" class="btn btn-danger center-block mx-1" [disabled]="documentForm.invalid"
+        *ngIf="btnCancelar">Cancelar</button>
+      <button (click)="updateDocument(document_id)" class="btn btn-warning center-block mx-1"
+        [disabled]="documentForm.invalid" *ngIf="btnActualizar">Actualizar</button>
+      <button (click)="crearDocument()" class="btn btn-warning center-block mx-1" [disabled]="documentForm.invalid"
+        *ngIf="btnNuevo">Nuevo</button>
+
+      <button class="btn btn-primary" *ngIf="btnSiguiente" (click)="next()">{{BtnName}}</button>
+    </div>
+
+
+    <table class="table table-striped mt-5">
+      <thead>
+        <tr>
+
+          <th scope="col">Título</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Formato</th>
+          <th scope="col">Idioma</th>
+          <th scope="col">Fecha de Publicación</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of documentos">
+
+          <td>{{item.title}}</td>
+          <td *ngIf="item.documentType === 'planning'">Planeación</td>
+          <td *ngIf="item.documentType === 'tender'">Licitación</td>
+          <td *ngIf="item.documentType === 'award'">Adjudicación</td>
+          <td *ngIf="item.documentType === 'contract'">Contrato</td>
+          <td>{{item.description}}</td>
+          <td>{{item.format}}</td>
+          <td>{{item.language }}</td>
+          <td>{{item.datePublished | date}}</td>
+          <td>
+            <button class="btn btn-danger btn-sm mx-1"><i class="fa fa-trash"
+                (click)="borrarDoc(item._id)"></i></button>
+            <button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"
+                (click)="editarDoc(item._id)"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+  <!-- <div class="my-10">
+      <span>Valid</span>
+      <pre>{{documentForm.valid}}</pre>
+      <br>
+      <span>value</span>
+      <pre>{{documentForm.value | json}}</pre>
+    </div> -->
+</div>

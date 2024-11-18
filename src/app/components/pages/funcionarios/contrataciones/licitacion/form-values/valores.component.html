@@ -1,0 +1,117 @@
+<section class="contenido__general ">
+  <app-tender-header-menu></app-tender-header-menu>
+  <h2 class="titulo">Licitación</h2>
+  <p class="instrucciones mb-5">En esta sección se da a conocer quien es la entidad contratante así como el valor económico y el valor económico mínimo que podrán ser utilizados en la licitación</p>
+
+  <div class="datos" *ngIf="datosIdentifier">
+    <div class="contenedor">
+      <form autocomplete="off" [formGroup]="procuringForm">
+        <!-- Entidad Contratante -->
+        <fieldset>
+          <legend>Entidad contratante</legend>
+          <p>Identificador privado de la entidad encargada del proceso de contratación</p>
+          <div class="row completo">
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Nombre</mat-label>
+                  <input type="text" matInput formControlName="name">
+                  <mat-error *ngIf="campoNoValido('name')">Este Campo Es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>RFC</mat-label>
+                  <input type="text" matInput formControlName="id">
+                  <mat-error *ngIf="campoNoValido('id')">Este Campo Es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <!-- Valor de la Licitacion -->
+        <fieldset>
+          <legend>Valor de la licitación</legend>
+          <p>Valor económico que se puede gastar en toda la licitación</p>
+          <div class="row completo">
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Monto</mat-label>
+                  <input type="number" matInput class="example-right-align" formControlName="amount">
+                  <span matPrefix>$&nbsp;</span>
+                  <mat-error *ngIf="campoNoValido('amount')">Este Campo Es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 mitad">
+              <div class="mb-3">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Moneda</mat-label>
+                  <mat-select matNativeControl formControlName="currency">
+                    <mat-option *ngFor="let format of moneda" [value]="format.value">
+                      {{format.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="campoNoValido('currency')">El Campo Nombre es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <!-- Valor minimo de la licitacion -->
+        <fieldset>
+          <legend>Valor mínimo de la licitación</legend>
+          <p>Valor económico mínimo que se puede gastar en toda la licitación</p>
+          <div class="row completo">
+            <div class="col-md-3 mitad">
+              <div class="mb-2">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Monto</mat-label>
+                  <input type="number" matInput formControlName="amountmin">
+                  <mat-error *ngIf="campoNoValido('amount')">Este Campo Es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 mitad">
+              <div class="mb-3">
+                <mat-form-field class="example-form p50p">
+                  <mat-label>Moneda</mat-label>
+                  <mat-select matNativeControl formControlName="currencymin">
+                    <mat-option *ngFor="let format of moneda" [value]="format.value">
+                      {{format.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="campoNoValido('currency')">El Campo Nombre es Obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="form-group mt-3 d-flex justify-content-end" *ngIf="ocid != null">
+        <button class="btn btn-primary" (click)="prev()">
+          << </button>
+            <button (click)="crearProEntity()" class="btn btn-success center-block mx-1" [disabled]="procuringForm.invalid"
+              *ngIf="btnGuardar">Guardar</button>
+            <button (click)="ActualizarProc()" class="btn btn-warning center-block mx-1"
+              [disabled]="procuringForm.invalid" *ngIf="btnActualizar">Actualizar</button>
+            <button class="btn btn-primary" *ngIf="btnSiguiente" (click)="next()">>></button>
+      </div>
+    </div>
+  </div>
+  <!-- <span>Valid</span>
+  <pre>{{procuringForm.valid}}</pre>
+  <br>
+  <span>value</span>
+  <pre>{{procuringForm.value | json}}</pre> -->
+</section>

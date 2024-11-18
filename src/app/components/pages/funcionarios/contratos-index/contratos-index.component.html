@@ -1,0 +1,232 @@
+<!-- <app-funcionarios-index></app-funcionarios-index> -->
+<!-- <app-administracionente-index></app-administracionente-index> -->
+<app-ente-publico></app-ente-publico>
+
+<!-- aqui es lo de del procedimiento -->
+<div class="contenido__general texto">
+
+  <!-- <mat-tab-group animationDuration="0ms">
+    <mat-tab label="MÓDULO DE ADMINISTRADOR DE ENTE PÚBLICO"> -->
+
+  <p>
+    Utilice el buscador para revisar contratos, la búsqueda puede ser por ocid o por el título de la licitación
+  </p>
+  <span *ngIf="getRol !== 'seseaadmin'">
+    <p>Presione el botón de <span class="text-success "><b>"nuevo contrato" </b></span>para iniciar la captura; el
+      sistema
+      registrará su nuevo contrato, a éste se le asignará un <b> OCID </b>que se registrará en la tabla. Si el
+      sistema
+      detecta que no
+      ha generado alguno de los pasos de creación de contrato no te permitirá avanzar.
+      <br><br>
+    </p>
+
+    <fieldset>
+      <legend>Iconografía</legend>
+
+      <ul class="list-group mb-3">
+        <li class="list-group-item">
+          [<mat-icon>start</mat-icon>]<b> Indica la sección a la cual debe iniciarse captura</b>
+        </li>
+        <li class="list-group-item">[<i class="fa-solid fa-check green"></i>]<b> Indica que la sección a sido
+            completada
+            la captura y puede editarse</b>
+        <li class="list-group-item">[ <i class="fa-solid fa-xmark red"></i> ]<b> Indica que en la sección no se han
+            capturado
+            datos </b></li>
+      </ul>
+      <mat-divider class="m-4"></mat-divider>
+    </fieldset>
+
+    <button class="btn btn-success mt-4" (click)="crearContrato()" [disabled]="btnActive">
+      Nuevo contrato
+    </button>
+
+    <mat-divider class="m-4"></mat-divider>
+
+    <div class="buscador">
+      <mat-form-field class="formulario">
+        <mat-label>Buscar título de licitación o OCID</mat-label>
+        <input type="text" matInput placeholder="Titulo de Licitación o OCID" #txtSearch
+          (keyup)="onSearchContract(txtSearch.value)">
+      </mat-form-field>
+
+    </div>
+    <span *ngIf="getRol !== 'seseaadmin'">
+      <table class="table table-stripred table-responsive">
+        <thead>
+          <tr class="left">
+            <th scope="col" class="w200">ID</th>
+            <th scope="col" class="w100">FECHA DEL PROYECTO</th>
+            <th scope="col" class="w200">TÍTULO DE LICITACIÓN</th>
+            <th scope="col" class="w100">FECHA DE ADJUDICACIÓN</th>
+            <th scope="col" class="w200">OCID</th>
+            <th scope="col" class="w100">PLANEACIÓN</th>
+            <th scope="col" class="w100">LICITACIÓN</th>
+            <th scope="col" class="w100">ADJUDICACIÓN</th>
+            <th scope="col" class="w100">CONTRATO</th>
+            <th scope="col" class="w100">EJECUCIÓN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of contratos | release: pages:search" [ngStyle]="{'height': '100px'}">
+            <td class="left">{{item.id}}</td>
+            <td class="left">{{item.date | date }}</td>
+            <td class="left" *ngIf="item.tender !== null else  titulo"><strong> {{item.tender.title | uppercase}}
+              </strong>
+            </td>
+            <td class="left">{{item.date | date }}</td>
+            <td class="left">{{item.ocid}}</td>
+            <ng-template #titulo>
+              <td class="left"><strong class="text-primary">no asignado</strong></td>
+            </ng-template>
+            <td *ngIf="item.planning !== null && item.buyer !== null else planning">
+              <a (click)="guardarOCID(item.ocid)" [routerLink]="[Rplanning, item.ocid]" class="link">
+                <i class="fa-solid fa-check green"></i>
+              </a>
+            </td>
+            <td
+              *ngIf="item.planning !== null && item.buyer !== null && item.tender !== null  &&  item.parties !== null else tender">
+              <a (click)="guardarOCID(item.ocid)" [routerLink]="[Rtender, item.ocid]" class="link"><i
+                  class="fa-solid fa-check green"></i>
+              </a>
+            </td>
+
+            <td
+              *ngIf="item.planning !== null && item.buyer !== null && item.tender !== null &&  item.parties !== null && item.awards !== null && item.awards.length !== 0 else adward">
+              <a (click)="guardarOCID(item.ocid)" [routerLink]="[RAward , item.ocid]" class="link"><i
+                  class="fa-solid fa-check green"></i>
+              </a>
+            </td>
+            <td
+              *ngIf="item.planning !== null && item.buyer !== null && item.tender !== null &&  item.parties !== null && item.awards.length !== 0  && item.contracts.length !== 0 else contract">
+              <a (click)="guardarOCID(item.ocid)" [routerLink]="[RContract , item.ocid]" class="link"><i
+                  class="fa-solid fa-check green"></i>
+              </a>
+            </td>
+
+            <td
+              *ngIf="item.planning !== null && item.buyer !== null && item.tender !== null &&  item.parties !== null && item.awards !== null && item.awards.length !== 0  && item.contracts.length !== 0 && item.active === true else contract else ejec">
+              <a (click)="guardarOCID(item.ocid)" [routerLink]="[Rejec , item.ocid]" class="link"><i
+                  class="fa-solid fa-check green"></i>
+              </a>
+            </td>
+            <ng-template #cont>
+              <td><i class="fa-solid fa-xmark red"></i></td>
+
+            </ng-template>
+
+
+            <ng-template #planning>
+              <td class="center" *ngIf="item.planning == null && item.buyer == null else cont">
+                <a (click)="guardarOCID(item.ocid)" [routerLink]="[Rplanning , item.ocid]" class="link">
+                  <mat-icon>start</mat-icon>
+                </a>
+              </td>
+            </ng-template>
+
+
+            <ng-template #tender>
+              <!-- <td *ngIf="item.planning != null && item.buyer != null  else cont"> -->
+              <td>
+                <a (click)="guardarOCID(item.ocid)" [routerLink]="[Rtender, item.ocid]" class="link">
+                  <mat-icon>start</mat-icon>
+                </a>
+              </td>
+            </ng-template>
+
+
+            <ng-template #adward>
+              <td>
+                <!-- <td
+                    *ngIf="item.planning !== null && item.buyer !== null && item.tender !== null  &&  item.parties !== null else cont"> -->
+                <a (click)="guardarOCID(item.ocid)" [routerLink]="[RAward, item.ocid]" class="link">
+                  <mat-icon>start</mat-icon>
+                </a>
+              </td>
+            </ng-template>
+
+            <ng-template #contract>
+              <td>
+                <!-- <td
+                    *ngIf="item.planning !== null && item.buyer !== null && item.tender !== null &&  item.parties !== null && item.awards !== null && item.awards.length !== 0 else cont"> -->
+                <a (click)="guardarOCID(item.ocid)" [routerLink]="[RContract, item.ocid]" class="link">
+                  <mat-icon>start</mat-icon>
+                </a>
+              </td>
+            </ng-template>
+
+            <ng-template #ejec>
+              <td class="center">
+                <!-- <td class="center"
+                    *ngIf="item.planning !== null && item.buyer !== null && item.tender !== null &&  item.parties !== null && item.awards !== null && item.awards.length !== 0  && item.contracts.length !== 0 && item.active === false else cont"> -->
+                <a (click)="guardarOCID(item.ocid)" [routerLink]="[Rejec, item.ocid]" class="link">
+                  <mat-icon>start</mat-icon>
+                </a>
+              </td>
+            </ng-template>
+          </tr>
+          <div *ngIf="contratos.length === 0">
+            <span class="text-danger">{{mensaje}}</span>
+          </div>
+        </tbody>
+
+      </table>
+      <!-- <div class="divisorBotones">
+            <button class="btn btn-primary mx-1" (click)="PrevPages()"><i
+                class="fa-solid fa-arrow-left"></i>Anterior</button>
+            <button class="btn btn-primary" (click)="nextPages()"
+              [disabled]="(contratos | release: pages:search).length === 0">Siguiente <i
+                class="fa-solid fa-arrow-right"></i></button>
+          </div> -->
+    </span>
+
+    <span *ngIf="getRol === 'seseaadmin'">
+      <table class="table table-stripred table-responsive">
+        <thead>
+          <tr class="left">
+            <th scope="col" class="w200">OCID</th>
+            <th scope="col" class="w100">Ente</th>
+            <th scope="col" class="w100">Fecha</th>
+            <th scope="col" class="w200">Título de Licitación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of contratos | release: pages:search" [ngStyle]="{'height': '100px'}">
+            <td class="left">{{item.ocid}}</td>
+            <td class="left">
+              <a (click)="guardarOCID(item.ocid)" [routerLink]="[Rejec , item.ocid]"
+                class="link">{{item.buyer.name}}</a>
+            </td>
+            <td class="left">{{item.date | date }}</td>
+            <td class="left" *ngIf="item.tender !== null else  titulo"><strong> {{item.tender.title | uppercase}}
+              </strong>
+            </td>
+            <ng-template #titulo>
+              <td class="left"><strong class="text-primary">no asignado</strong></td>
+            </ng-template>
+
+          </tr>
+        </tbody>
+      </table>
+    </span>
+
+    <div class="row" *ngIf="loading">
+      <div class="alert alert-info text-center" role="alert">
+        <h4 class="alert-heading">Cargando..</h4>
+        <i class="fa fa-spin fa-refresh fa-2x"></i>
+        <p class="mb-0">porfavor espere</p>
+      </div>
+    </div>
+
+  </span>
+  <!-- </mat-tab>
+    <mat-tab label="ACTORES INVOLUCRADOS">
+      <app-actores></app-actores>
+    </mat-tab>
+
+  </mat-tab-group> -->
+
+
+
+</div>

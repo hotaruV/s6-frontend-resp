@@ -1,0 +1,495 @@
+<section class="contenido__general">
+  <app-planning-header-menu></app-planning-header-menu>
+
+  <p class="instrucciones mb-5">INFORMACIÓN SOBRE LA ETAPA DE PLANEACIÓN DEL PROCESO DE CONTRATACIÓN. ESTO INCLUYE
+    INFORMACIÓN RELACIONADA CON EL PROCESO DE DECIR QUE CONTRATAR,
+    CUÁNDO Y CÓMO. <br>
+  </p>
+  <form (ngSubmit)="guardarPlanning()" autocomplete="off" [formGroup]="PlanningForm">
+    <input type="hidden" formControlName="_id" />
+    <!--GENERALES-->
+    <h2>JUSTIFICACIÓN DE LA CONTRATACIÓN</h2>
+
+    <div class="row completo mayuscula">
+      <mat-form-field class="example-form p100p">
+        <mat-label>JUSTIFICACIÓN</mat-label>
+        <div class="mb-3">
+          <label for="" class="form-label"></label>
+          <input type="text" matInput formControlName="rationale"
+            placeholder="EJEMPLO: COMPRA DE MUEBLES Y ELECTRONICOS PARA USO DE SECRETARIA DE FINANZA" appearance="fill">
+        </div>
+        <mat-error *ngIf="campoNoValido('rationale')">Describa los Objetivos o razones por las que este contrato fué
+          elaborado
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <hr>
+    <h2>¿TIENEN COTIZACIONES?</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-radio-group aria-label="SELECCIONE UNA OPCIÓN" formControlName="hasQuotes">
+          <mat-radio-button class="example-form" value="SI" (change)="hasQuotessi()">SI</mat-radio-button>
+          &nbsp;
+          &nbsp;
+          <mat-radio-button class="example-form" value="NO" (change)="hasQuotesno()">NO</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+
+    </div>
+    <div *ngIf="why">
+      <div class="row completo mayuscula">
+        <mat-form-field class="example-form p100p">
+
+          <div class="mb-3">
+            <label for="" class="form-label"></label>
+            <input type="text" matInput formControlName="cotizacion_no" placeholder="¿POR QUÉ?" appearance="fill">
+          </div>
+          <mat-error *ngIf="campoNoValido('cotizacion_no')">
+
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr>
+    <!--UNIDADES ADMINISTRATIVAS- ACTORES-->
+    <h2>I. UNIDADES ADMINISTRATIVAS QUE PARTICIPAN EN LA CONTRATACIÓN</h2>
+    <div class="row completo mayuscula">
+      <mat-form-field>
+        <mat-select placeholder="NOMBRE DEL REQUIRIENTE*" formControlName="requestingUnitname">
+          <mat-option *ngFor="let op of servReq" [value]="op.uid">
+            {{ op.nombres_servidor| uppercase }}
+            {{ op.primer_apellido_servidor| uppercase }}
+            {{ op.segundo_apellido_servidor | uppercase }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoNoValido('requestingUnitname')">
+          EL CAMPO NOMBRE DE REQUIRIENTE ES REQUERIDO
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <div class="row completo mayuscula">
+      <mat-form-field>
+        <mat-select placeholder="NOMBRE DEL CONTRATANTE*" formControlName="contractingUnitname">
+          <mat-option *ngFor="let op of servCon" [value]="op.uid">
+
+            {{ op.nombres_servidor| uppercase }}
+            {{ op.primer_apellido_servidor| uppercase }}
+            {{ op.segundo_apellido_servidor | uppercase }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoNoValido('contractingUnitname')">
+          EL CAMPO NOMBRE DEL CONTRATANTE ES REQUERIDO
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+    <div class="row completo mayuscula">
+      <mat-form-field>
+        <mat-select placeholder="NOMBRE DEL RESPONSABLE DE LA EJECUCIÓN DEL CONTRATO*"
+          formControlName="responsibleUnitname">
+          <mat-option *ngFor="let op of servRes" [value]="op.uid">
+            {{ op.nombres_servidor| uppercase }}
+            {{ op.primer_apellido_servidor| uppercase }}
+            {{ op.segundo_apellido_servidor | uppercase }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoNoValido('responsibleUnitname')">
+          EL CAMPO NOMBRE DE RESPONSABLE ES REQUERIDO
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+    <hr>
+    <!--COTIZACIONES-->
+    <h2>II. SOLICITUD DE COTIZACIONES</h2>
+    <app-sol-cotizaciones [_id]="ocid"></app-sol-cotizaciones>
+
+    &nbsp;
+    &nbsp;
+
+
+    <hr>
+    <!--COTIZACIONES PERIDODO-->
+    <h2>II.1 PERÍODO PARA RECIBIR COTIZACIONES</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6 ">
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de Inicio</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="startDate" (dateChange)="precibirchange($event)">
+          <mat-hint>YY/MM/DD</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker1">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-error *ngIf="campoNoValido('startDate')">CAMPO FECHA INICIO REQUERIDO</mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-6 ">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de Termino</mat-label>
+          <input matInput [matDatepicker]="picker2" formControlName="endDate" (dateChange)="precibirchange($event)">
+          <mat-hint>YY/MM/DD</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker2">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+          <mat-error *ngIf="campoNoValido('endDate')">CAMPO FECHA TERMINO REQUERIDO</mat-error>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6 ">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Extensión Máxima</mat-label>
+          <input matInput [matDatepicker]="picker3" formControlName="maxExtentDate">
+          <mat-hint>YY/MM/DD</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker3">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+          <mat-error *ngIf="campoNoValido('maxExtentDate')">CAMPO EXTENSIÓN MÁXIMA REQUERIDO</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 ">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <label for="" class="form-label"></label>
+          <!-- se modifica para que diga planeacion en dias -->
+          <input type="text" matInput formControlName="durationInDays" placeholder="DURACIÓN EN DÍAS" appearance="fill">
+          <mat-error *ngIf="campoNoValido('durationInDays')">CAMPO DURACIÓN EN DÍAS REQUERIDO</mat-error>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <hr>
+    <!--COTIZACIONES ITEMS-->
+    <h2>II.2 BIENES, SERVICIOS U OBRA PÚBLICA A SER COTIZADOS (ITEMS)</h2>
+    <p>LOS ITEMS NO SE DEBEN DE DUPLICAR, EN SU LUGAR SE DEBERÁN ESPECIFICAR LA CANTIDAD, EJEMPLO: 2.</p>
+    <app-items></app-items>
+
+    &nbsp;
+    &nbsp;
+
+    <!--COTIZACIONES PROVEEDORES-->
+    <h2>II.3 PROVEEDORES INVITADOS</h2>
+    <p>UNA LISTA DE LOS PROVEEDORES INVITADOS A LOS QUE SE LES ENVIÓ UNA SOLICITUD DE COTIZACIÓN.</p>
+    <app-proveedores-invitados></app-proveedores-invitados>
+
+    <hr>
+    <!--COTIZACIONES COTIZACION-->
+    <h2> II.4 COTIZACIONES</h2>
+    <app-cotizaciones-rec></app-cotizaciones-rec>
+
+    <hr>
+    <!--COTIZACIONES COTIZACION ITEMS-->
+    <h2> II.4.1 BIENES, SERVICIOS U OBRA PÚBLICA COTIZADOS (ITEMS)</h2>
+    <p>LOS ITEMS NO SE DEBEN DE DUPLICAR, EN SU LUGAR SE DEBERÁN ESPECIFICAR LA CANTIDAD, EJEMPLO: 2.</p>
+    <app-items-cotizados></app-items-cotizados>
+
+    <hr>
+    <!--PRESUPUESTO-->
+    <h2> III. PRESUPUESTO</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>CAPÍTULO, CONCEPTO Y PARTIDAS GENÉRICAS</mat-label>
+            <mat-select matNativeControl formControlName="budgetdescription">
+              <mat-option *ngFor="let item of partidas" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('budgetdescription')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgeturl" placeholder="URL DE LA CLAVE PRESUPUESTAL*" />
+            <mat-error *ngIf="campoNoValido('budgeturl')">EL CAMPO URL ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgetamount" placeholder="MONTO AUTORIZADO*" />
+            <mat-error *ngIf="campoNoValido('budgetamount')">EL CAMPO MONTO AUTORIZADO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>MONEDA</mat-label>
+            <mat-select matNativeControl formControlName="budgetcurrency">
+              <mat-option *ngFor="let item of monedas" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('budgetcurrency')">EL CAMPO MONEDA ES REQUERIDO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgetproject" placeholder="TÍTULO DEL PROYECTO*" />
+            <mat-error *ngIf="campoNoValido('budgetproject')">EL CAMPO TÍTULO DEL PROYECTO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgetprojectID" placeholder="IDENTIFICADOR AL PROYECTO*" />
+            <mat-error *ngIf="campoNoValido('budgetprojectID')">EL CAMPO IDENTIFICADOR ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgeturi" placeholder="URL*" />
+            <mat-error *ngIf="campoNoValido('budgeturi')">EL CAMPO URL ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <h2>III.1 DESGLOSE AL PRESUPUESTO</h2>
+    <div class="row completo mayuscula">
+      <mat-form-field class="example-form p100p">
+        <mat-label>DESCRIPCIÓN DEL PRESUPUESTO</mat-label>
+        <div class="mb-3">
+          <label for="" class="form-label"></label>
+          <input type="text" matInput formControlName="budgetBreakdowndescription"
+            placeholder="DESCRIPCIÓN DEL PRESUPUESTO*" appearance="fill">
+        </div>
+        <mat-error *ngIf="campoNoValido('budgetBreakdowndescription')">EL CAMPO DESCRICIÓN ES REQUERIDO
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgetBreakdownamount" placeholder="MONTO" />
+            <mat-error *ngIf="campoNoValido('budgetBreakdownamount')">EL CAMPO MONTO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>MONEDA</mat-label>
+            <mat-select matNativeControl formControlName="budgetBreakdowncurrency">
+              <mat-option *ngFor="let item of monedas" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('budgetBreakdowncurrency')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <mat-form-field class="example-form p100p">
+        <mat-label>URI DE DOCUMENTO DEL PRESUPUESTO AUTORIZADO</mat-label>
+        <div class="mb-3">
+          <label for="" class="form-label"></label>
+          <input type="text" matInput formControlName="budgetBreakdownuri"
+            placeholder="URI DE DOCUMENTO DEL PRESUPUESTO AUTORIZADO*" appearance="fill">
+        </div>
+        <mat-error *ngIf="campoNoValido('budgetBreakdownuri')">EL CAMPO URI ES REQUERIDO
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <h2>III.2 PERIODO</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6 ">
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de Inicio</mat-label>
+          <input matInput [matDatepicker]="picker21" formControlName="budgetBreakdownstartDate"
+            (dateChange)="precibirchangeDesgloce($event)">
+          <mat-hint>YY/MM/DD</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker21">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker21></mat-datepicker>
+          <mat-error *ngIf="campoNoValido('budgetBreakdownstartDate')">CAMPO FECHA INICIO ES REQUERIDO</mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-6 ">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de Termino</mat-label>
+          <input matInput [matDatepicker]="picker22" formControlName="budgetBreakdownendDate"
+            (dateChange)="precibirchangeDesgloce($event)">
+          <mat-hint>YY/MM/DD</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker22">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker22></mat-datepicker>
+          <mat-error *ngIf="campoNoValido('budgetBreakdownendDate')">CAMPO FECHA TERMINO ES REQUERIDO</mat-error>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6 ">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Extensión Máxima</mat-label>
+          <input matInput [matDatepicker]="picker23" formControlName="budgetBreakdownmaxExtentDate">
+          <mat-hint>YY/MM/DD</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker23">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker23></mat-datepicker>
+          <mat-error *ngIf="campoNoValido('budgetBreakdownmaxExtentDate')">CAMPO EXTENSIÓN MÁXIMA ES
+            REQUERIDO</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 ">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <label for="" class="form-label"></label>
+          <input type="text" matInput formControlName="budgetBreakdownmaxdurationInDays" placeholder="DURACIÓN EN DÍAS*"
+            appearance="fill">
+          <mat-error *ngIf="campoNoValido('budgetBreakdownmaxdurationInDays')">CAMPO EDURACIÓN EN DÍAS ES
+            REQUERIDO</mat-error>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <hr>
+    <h2>III.3 LÍNEAS PRESUPUESTARIAS</h2>
+    <div class="row completo mayuscula">
+      <mat-form-field class="example-form p100p">
+        <mat-label>ORIGEN DEL RECURSO PÚBLICO</mat-label>
+        <div class="mb-3">
+          <label for="" class="form-label"></label>
+          <input type="text" matInput formControlName="budgetLinesorigin" placeholder="ORIGEN DEL RECURSO PÚBLICO*"
+            appearance="fill">
+        </div>
+        <mat-error *ngIf="campoNoValido('budgetLinesorigin')">Describa el origen de los recursos
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <hr>
+    <h2>III.3.1 COMPONENTES</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgetLinescomponentsname"
+              placeholder="NOMBRE DEL COMPONENTE" />
+
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgetLinescomponentslevel" placeholder="NIVEL" />
+
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgetLinescomponentscode" placeholder="CÓDIGO" />
+
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="budgetLinescomponentsdescription" placeholder="DESCRIPCIÓN*" />
+            <mat-error *ngIf="campoNoValido('budgetLinescomponentsdescription')">CAMPO DESCRI´CIÓN ES
+              REQUERIDO</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <h2>III.4 ACTOR FUENTE</h2>
+    <div class="row completo mayuscula">
+      <mat-form-field class="example-form p100p">
+
+        <mat-select placeholder="NOMBRE DEL ACTOR" formControlName="budgetBreakdownsourcePartyname">
+          <mat-option *ngFor="let op of proveedoresParty" [value]="op.uid">
+            {{ op.razonsocialProv| uppercase }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoNoValido('budgetBreakdownsourcePartyname')">
+          EL CAMPO NOMBRE DEL ACTOR ES REQUERIDO
+        </mat-error>
+      </mat-form-field>
+
+
+    </div>
+    <hr>
+    <!--DOCUMENTOS-->
+    <h2>IV. DOCUMENTOS PREVIOS A LA CONTRATACIÓN</h2>
+    <app-documentos></app-documentos>
+
+    <hr>
+    <!--ACCIONES-->
+    <h2>V. ACCIONES PREVIAS A LA CONTRATACIÓN (HITOS)</h2>
+    <app-hitos></app-hitos>
+
+    <hr>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+
+    <div class="form-group mt-3 d-flex justify-content-end ">
+      <button type="submit" class="btn btn-warning center-block" style="cursor: pointer;" *ngIf="botonEditarPlaneacion">
+        EDITAR PLANEACIÓN
+      </button>
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      <button type="submit" class="btn btn-success center-block" style="cursor: pointer;">
+        GUARDAR PLANEACIÓN
+      </button>
+      &nbsp;
+      &nbsp;
+
+    </div>
+  </form>
+
+</section>

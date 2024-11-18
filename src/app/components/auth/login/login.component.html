@@ -1,0 +1,26 @@
+<section class="contenedor__formulario">
+  <form class="form__content" (ngSubmit)="login()" autocomplete="off" [formGroup]="LoginForm">
+    <img class="logo__img" src="assets/images/contratos.svg" alt="">
+    <div class="titulo__texto">USUARIOS S6</div>
+    <div class="inputBox">
+      <input class="form__inputs" type="text" required formControlName="email">
+      <span class="form__span">Usuario</span>
+      <small *ngIf="campoNoValido('email')" class="invalid-feedback d-block">Inserte Un USuario Valido</small>
+    </div>
+    <div class="inputBox">
+      <input class="form__inputs" type="password" required formControlName="password">
+      <span class="form__span">password</span>
+      <small *ngIf="campoNoValido('password')" class="invalid-feedback d-block">El Password Es Obligatorio</small>
+    </div>
+    <div class="form-group  d-flex justify-content-end">
+      <button type="submit" value="Identificarse" class="btn btn-primary center-block" >INGRESAR</button>
+    </div>
+    <p class="texto">
+      En caso de perder su contraseña deberá ponerse en contacto a la siguiente direccion de correo electrónico:
+      <br>
+      <span class="texto__span">
+        sistemas@plataformadigitalestatalslp.org.
+      </span>
+    </p>
+  </form>
+</section>

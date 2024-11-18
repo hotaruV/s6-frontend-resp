@@ -1,0 +1,60 @@
+
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="FormProvInv"> 
+    <input type="hidden" formControlName="id" />
+    <div class="row completo mayuscula">
+        <div class="col-md-6">
+            <div class="mb-2">
+        <mat-form-field>
+          <mat-select  placeholder="NOMBRE DEL ACTOR*"  formControlName="invitedSuppliersname">
+            <mat-option *ngFor="let op of proveedoresInvitado" [value]="op.uid">
+              {{ op.razonsocialProv| uppercase }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoNoValido('invitedSuppliersname')">
+  
+          </mat-error>
+        </mat-form-field>
+    </div>
+       </div>
+        <div class="col-md-6">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>IDENTIFICADOR DEL ACTOR</mat-label>
+                <input type="text" matInput formControlName="licitanteid">
+                <mat-error *ngIf="campoNoValido('licitanteid')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+      </div>
+      &nbsp;
+    &nbsp;
+
+    <div class="form-group mt-3 d-flex justify-content-end ">
+      <button type="submit" class="btn btn-success center-block" style="cursor: pointer;"
+        *ngIf="botonGuardaProvInv" [disabled]="FormProvInv.invalid">
+        GUARDAR PROVEEDOR INVITADO
+      </button>
+      &nbsp;
+      &nbsp;
+      <button type="submit" class="btn btn-primary center-block" style="cursor: pointer;"
+      *ngIf="botonVerProvInv" (click)="VerProv()" >
+        VER PROVEEDORES INVITADOS
+      </button>
+    </div>
+
+          &nbsp;
+        &nbsp;
+
+        <div class="form-group mt-3 d-flex justify-content-end">
+
+         
+          <button type="button" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonUpdateProvInv" (click)="UptProv()" >
+            ACTUALIZAR
+          </button>
+          <button type="button" class="btn btn-danger mx-2" style="cursor: pointer;" *ngIf="botonUpdateProvInv"  (click)="cancelarProv()">
+            CANCELAR
+          </button>
+        </div>
+    </form>
+

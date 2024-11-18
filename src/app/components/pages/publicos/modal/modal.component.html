@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Detalle de la contratación</h2>
+<div class="row" *ngIf="loading">
+  <div class="col-12">
+    <div class="alert alert-info text-center" role="alert">
+      <h4 class="alert-heading">Cargando..</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">porfavor espere</p>
+    </div>
+  </div>
+</div>
+<mat-dialog-content *ngIf="bandera == false" class="mat-typography" >
+  <h3><b>{{all.title | uppercase}}</b></h3>
+  <h3>{{all.description}}</h3>
+  <h3>Institución: <b>{{all.institucion}}</b></h3>
+  <h3>Tipo de contratación: <b>{{all.method}}</b></h3>
+  <h3>Número de contratos: <b>{{all.numCont}}</b></h3>
+  <h3>Monto total: <b>{{all.price | currency}}</b></h3>
+  <h3>Participantes:</h3>
+  <ul *ngFor="let items of all.list">
+    <li>{{items}}</li>
+  </ul>
+
+    <app-formatter  [data]="contrato.releases"></app-formatter>
+ 
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="downloadObjectAsJson(contrato,all.ocid)"><i class="fa-solid fa-file-arrow-down"></i></button>
+  <button mat-button [mat-dialog-close]="true">Cerrar</button>
+</mat-dialog-actions>

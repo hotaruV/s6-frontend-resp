@@ -1,0 +1,21 @@
+.completo{
+  width: 100%;
+  .mitad{
+      width: 50%;
+      .p50p{
+          width: 100%;
+      }
+  }
+}
+
+.alerta{
+  font-size: 1.2em;
+  color: white;
+  background: rgb(244, 74, 74);
+  padding: 15px;
+  display: inline-block;
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 15px;
+}

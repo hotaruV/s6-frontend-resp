@@ -1,0 +1,322 @@
+<section class="contenido__general">
+  <app-adwards-header-menu></app-adwards-header-menu>
+
+  <p class="instrucciones mb-5">PUEDE HABER MÁS DE UNA ADJUDICACIÓN POR PROCESO DE CONTRATACIÓN, POR EJEMPLO, PORQUE EL
+    CONTRATO ESTÁ DIVIDIDO ENTRE DISTINTOS PROVEEDORES O
+    PORQUE ES UNA OFERTA EN PIE.<br>
+
+
+  </p>
+  <form (ngSubmit)="guardarAdjudicacion()" autocomplete="off" [formGroup]="AdjudicacionForm">
+    <!--GENERALES-->
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-form p50p">
+          <mat-label>Título</mat-label>
+          <input type="text" matInput formControlName="title">
+          <mat-error *ngIf="campoNoValido('title')">EL CAMPO TÍTULO ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-form p50p">
+          <mat-label>Descripción</mat-label>
+          <input type="text" matInput formControlName="description">
+          <mat-error *ngIf="campoNoValido('description')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+    <div class="row completo mayuscula">
+
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>JUSTIFICACIÓN</mat-label>
+            <input type="text" matInput formControlName="rationale">
+            <mat-error *ngIf="campoNoValido('rationale')">EL CAMPO JUSTIFICACIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form p50p">
+            <mat-label>ESTATUS DE ADJUDICACIÓN</mat-label>
+            <mat-select matNativeControl formControlName="status">
+              <mat-option *ngFor="let format of awardsStatus" [value]="format.value">
+                {{format.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('status')">EL CAMPO ESTATUS ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de ajudicación</mat-label>
+          <input matInput [matDatepicker]="picker42" formControlName="date" mat-raised-button #tooltip="matTooltip"
+            matTooltip="Fecha de la adjudicación">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker42">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker42></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+
+
+    </div>
+    <hr>
+    <h2>I. VALOR</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="amount" placeholder="MONTO*" />
+            <mat-error *ngIf="campoNoValido('amount')">EL CAMPO MONTO ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-form">
+            <mat-label>MONEDA</mat-label>
+            <mat-select matNativeControl formControlName="currency">
+              <mat-option *ngFor="let item of monedas" [value]="item.value">
+                {{ item.viewValue }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('currency')">SELECCIONE UN ITEM
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <h2>II. PROVEEDOR</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field>
+            <mat-select placeholder="NOMBRE DE PROVEEDOR*" formControlName="suppliersid"
+              (ngModelChange)="onChangeActor()">
+              <mat-option *ngFor="let op of proveedoressuppliers" [value]="op.uid">
+                {{ op.razonsocialProv| uppercase }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('suppliersid')">EL CAMPO PROVEEDOR ES OBLIGATORIO
+
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-0">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text" matInput formControlName="suppliersidentificador"
+              placeholder="IDENTIFICADOR DE PROVEEDOR" />
+            <mat-error *ngIf="campoNoValido('suppliersidentificador')">EL CAMPO IDENTIFICADOR ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <hr>
+
+    <h2>III. ITEMS ADJUDICADOS</h2>
+    <p>BIENES, SERVICIOS U OBRA PÚBLICA DE LA LICITACIÓN. LOS ÍTEMS NO SE DEBEN DUPLICAR, EN SU LUGAR SE DEBERÁ
+      ESPECIFICAR LA CANTIDAD, EJEMPLO: 3.</p>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-form p50p">
+          <mat-label>IDENTIFICADOR</mat-label>
+          <input type="text" matInput formControlName="itemid">
+          <mat-error *ngIf="campoNoValido('itemid')">EL CAMPO IDENTIFICADOR ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-form p50p">
+          <mat-label>DESCRIPCIÓN</mat-label>
+          <input type="text" matInput formControlName="itemdescription">
+          <mat-error *ngIf="campoNoValido('itemdescription')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr>
+    <h2>III.1 BIENES, SERVICIOS U OBRA PÚBLICA LICITADOS (ITEMS LICITADOS)</h2>
+    <app-items-adjudicacion></app-items-adjudicacion>
+
+
+
+    <hr>
+
+
+    <h2>IV. PERIODO DEL CONTRATO</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de inicio</mat-label>
+          <input matInput [matDatepicker]="picker4" formControlName="startDate" (dateChange)="duracionEnDias($event)">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker4">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker4></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('startDate')">EL CAMPO FECHA INICIO ES OBLIGATORIO
+        </mat-error>
+
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de término</mat-label>
+          <input matInput [matDatepicker]="picker5" formControlName="endDate" (dateChange)="duracionEnDias($event)">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker5">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker5></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('endDate')">EL CAMPO FECHA DE TERMINO ES OBLIGATORIO
+        </mat-error>
+
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Extensión máxima</mat-label>
+          <input matInput [matDatepicker]="picker6" formControlName="maxExtentDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker6">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker6></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('maxExtentDate')">EL CAMPO EXTENSIÓN MÁXIMA ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+      <div class="col-md-6">
+        <!-- <mat-form-field class="example-full-width" appearance="fill" *ngIf="btnActualizar"> -->
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>DURACIÓN EN DÍAS</mat-label>
+          <input matInput formControlName="durationInDays">
+        </mat-form-field>
+        <mat-error *ngIf="campoNoValido('durationInDays')">EL CAMPO DURACIÓN DÍAS ES OBLIGATORIO
+        </mat-error>
+      </div>
+
+    </div>
+    <hr>
+
+
+    <h2>V. DOCUMENTOS</h2>
+    <app-documentos-adjudicacion></app-documentos-adjudicacion>
+
+    <hr>
+
+    <h2> VI. MODIFICACIONES</h2>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de Modificación</mat-label>
+          <input matInput [matDatepicker]="picker70" formControlName="amendmentsdate" mat-raised-button
+            #tooltip="matTooltip" matTooltip="Fecha en la que se puede llegar a modificar">
+
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker70">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker70></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <mat-form-field class="example-form p50p">
+            <mat-label>JUSTIFICACIÓN</mat-label>
+            <input type="text" matInput formControlName="mendmentsrationale">
+            <mat-error *ngIf="campoNoValido('mendmentsrationale')">EL CAMPO JUSTIFICACIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>IDENTIFICADOR</mat-label>
+            <input type="text" matInput formControlName="amendmentsid">
+            <mat-error *ngIf="campoNoValido('amendmentsid')">EL CAMPO IDENTIFICADOR ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>DESCRIPCIÓN</mat-label>
+            <input type="text" matInput formControlName="amendmentsdescription">
+            <mat-error *ngIf="campoNoValido('amendmentsdescription')">EL CAMPO DESCRIPCIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row completo mayuscula">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>LIBERACIÓN MODIFICADA ANTES (IDENTIFICADOR)</mat-label>
+            <input type="text" matInput formControlName="amendsReleaseID">
+            <mat-error *ngIf="campoNoValido('amendsReleaseID')">EL CAMPO LIBRERACIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2">
+          <mat-form-field class="example-form p50p">
+            <mat-label>DIFUSIÓN DE LA MODIFICACIÓN DESPUÉS (IDENTIFICADOR)</mat-label>
+            <input type="text" matInput formControlName="releaseID">
+            <mat-error *ngIf="campoNoValido('releaseID')">EL CAMPO DIFUSIÓN ES OBLIGATORIO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    &nbsp;
+    &nbsp;
+
+    <div class="form-group mt-3 d-flex justify-content-end ">
+      <button type="submit" class="btn btn-warning center-block" style="cursor: pointer;" *ngIf="botonEditarLicitacion">
+        EDITAR ADJUDICACIÓN
+      </button>
+      &nbsp;
+      &nbsp;
+      <button type="submit" class="btn btn-success center-block" style="cursor: pointer;" *ngIf="botonLicitacion"
+        [disabled]="AdjudicacionForm.invalid">
+        GUARDAR ADJUDICACIÓN
+      </button>
+    </div>
+    <hr>
+  </form>

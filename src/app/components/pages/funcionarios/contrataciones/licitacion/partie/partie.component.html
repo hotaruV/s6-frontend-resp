@@ -1,0 +1,126 @@
+<section class="contenido__general">
+  <app-tender-header-menu></app-tender-header-menu>
+  <h2 class="titulo">{{titulo}}</h2>
+  <p class="instrucciones">En esta sección se define quiénes van a participar para poder acceder a proveer el material
+    requerido, al igual que se definirá este mismo material junto con sus características y se dará a conocer todos los
+    periodos de la licitación y sus documentos respectivos.</p>
+  <p class="instrucciones mb-5">El sistema generará una nueva parte, se pueden agregar todas las partes que incluya el
+    contrato para ello da click en el botón <span class="text-warning"><strong>"nuevo"</strong></span></p>
+
+
+
+  <div class="contenedor">
+    <ng-container *ngIf="key != null || key != undefined">
+      <h2 class="mb-3">PERSONAS O PARTES</h2>
+      <form autocomplete="off" [formGroup]="partieForm">
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-2">
+              <mat-form-field class="example-form p50p">
+                <mat-label>Nombre común</mat-label>
+                <input type="text" matInput formControlName="name">
+                <mat-error *ngIf="campoNoValido('name')">Este Campo Es Obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mitad">
+          <div class="px-6">
+            <h2 class="mb-3">ROLES</h2>
+            <mat-error *ngIf="campoNoValido('roles')">Seleccione Rol</mat-error>
+            <mat-label>Roles:</mat-label>
+            <mat-select matNativeControl formControlName="roles" multiple>
+              <mat-option *ngFor="let format of roles" [value]="format.value">
+                {{format.name}}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+
+      </form>
+
+
+      <ng-container *ngIf="ocid != null">
+
+        <div class="form-group my-3 d-flex justify-content-end">
+          <button class="btn btn-primary" *ngIf="btnPrev" (click)="revw()">
+          </button>
+          <button (click)="crearPartie()" class="btn btn-success center-block mx-1" [disabled]="partieForm.invalid"
+            *ngIf="btnGuardar">Guardar</button>
+          <button (click)="cancel()" class="btn btn-danger center-block mx-1" [disabled]="partieForm.invalid"
+            *ngIf="btnCancelar">Cancelar</button>
+          <button (click)="updatePartie()" class="btn btn-warning center-block mx-1" [disabled]="partieForm.invalid"
+            *ngIf="btnActualizar">Actualizar</button>
+          <button (click)="next()" class="btn btn-success center-block mx-1" *ngIf="btnSiguiente">Siguiente</button>
+          <button class="btn btn-primary" *ngIf="btnPrev" (click)="next()">
+            >> </button>
+        </div>
+
+      </ng-container>
+    </ng-container>
+
+    <fieldset class="fieldset" *ngIf="mostrarTabla">
+      <legend class="legend">Participantes</legend>
+      <div *ngIf="botones" class="form-group mt-3 d-flex justify-content-start">
+        <button class="btn btn-primary" (click)="licitacion()">
+          Agregar participante
+        </button>
+      </div>
+      <table class="table table-striped mt-5">
+        <thead>
+          <tr>
+            <th scope="col" class="w200">Identificador</th>
+            <th scope="col">Nombre del Participante</th>
+            <th scope="col">Roles</th>
+            <th scope="col">Nombre Legal</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of parties">
+            <td>{{item.address.key}}</td>
+            <td>{{item.name}}</td>
+            <td>
+              <ng-container *ngFor="let rol of item.roles">
+                <li *ngIf="rol === 'buyer'" class="item">Comprador</li>
+                <li *ngIf="rol === 'procuringEntity'" class="item">Entidad Contratante</li>
+                <li *ngIf="rol === 'supplier'" class="item">Proveedor</li>
+                <li *ngIf="rol === 'tenderer'" class="item">Licitador</li>
+                <li *ngIf="rol === 'funder'" class="item">Financiador</li>
+                <li *ngIf="rol === 'enquirer'" class="item">Investigador</li>
+                <li *ngIf="rol === 'payer'" class="item">Pagador</li>
+                <li *ngIf="rol === 'payee'" class="item">Beneficiario</li>
+                <li *ngIf="rol === 'reviewBody'" class="item">Cuerpo de Revisión</li>
+                <li *ngIf="rol === 'interestedParty'" class="item">Parte interesada</li>
+              </ng-container>
+            </td>
+            <td>{{item.identifier.legalName}}</td>
+
+            <td>
+              <button class="btn btn-danger btn-sm mx-1"><i class="fa fa-trash"
+                  (click)="borrarPartie(item._id)"></i></button>
+              <button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"
+                  (click)="editarPartie(item._id)"></i></button>
+            </td>
+
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </fieldset>
+
+
+  </div>
+  <div class="form-group mt-3 d-flex justify-content-end" *ngIf="botones">
+    <button class="btn btn-success mx-1" (click)="revw()" *ngIf="btnEdicion">
+      Items
+    </button>
+
+  </div>
+
+
+</section>

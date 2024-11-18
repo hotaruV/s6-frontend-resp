@@ -1,0 +1,256 @@
+<div class="contenedor">
+    <form (ngSubmit)="crearUsuario()" autocomplete="off" [formGroup]="registerForm">
+        <input type="hidden" formControlName="uid" />
+        <div class="row mayuscula">
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <mat-form-field class="example-form">
+                        <mat-label>NOMBRES</mat-label>
+                        <input type="text" matInput formControlName="nombres" />
+                        <mat-error *ngIf="campoNoValido('nombres')">El Campo Nombre es Obligatorio
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <mat-form-field class="example-form">
+                        <mat-label>PRIMER APELLIDO</mat-label>
+                        <input type="text" matInput formControlName="primer_apellido" />
+                        <mat-error *ngIf="campoNoValido('primer_apellido')">El Campo Primer Apellido es Obligatorio
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <mat-form-field class="example-form">
+                        <mat-label>SEGUNDO APELLIDO</mat-label>
+                        <input type="text" matInput formControlName="segundo_apellido" />
+                        <mat-error *ngIf="campoNoValido('segundo_apellido')">El Solo se permiten Letras
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <mat-form-field class="example-form">
+                        <mat-label>EMAIL</mat-label>
+                        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com" />
+                        <mat-error *ngIf="campoNoValido('email')">
+                            Ingrese un email válido
+                        </mat-error>
+                        <mat-error *ngIf="campoNoValido('email')">
+                            El Email es un campo <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mayuscula">
+            <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                    <mat-label>ENTE PÚBLICO</mat-label>
+                    <input type="text" placeholder="Seleccione Un Ente" matInput formControlName="ente_publico"
+                        [matAutocomplete]="auto3" />
+                    <input type="hidden" formControlName="ente_id" class="form-control" />
+                    <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn"
+                        (optionSelected)="onOptionSelected($event.option.value)">
+                        <mat-option *ngFor="let item of filteredEntes | async" [value]="item">
+                            {{ item.ente }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+                <mat-form-field class="example-form">
+                    <mat-label>ROL</mat-label>
+                    <mat-select matNativeControl formControlName="role">
+                        <mat-option *ngFor="let rol of roles" [value]="rol.value">
+                            {{ rol.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="campoNoValido('role')">Seleccione un Rol
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mayuscula">
+            <div class="col-md-6">
+                <mat-form-field class="example-form">
+                    <mat-label>CARGO</mat-label>
+                    <input type="text" matInput formControlName="cargo_publico" />
+                    <mat-error *ngIf="campoNoValido('cargo_publico')">Este campo no debe contener números
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <mat-form-field class="example-form">
+                        <mat-label>CURP</mat-label>
+                        <input type="text" matInput formControlName="curp" />
+                        <mat-error *ngIf="campoNoValido('curp')">Curp Invalido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row mayuscula">
+            <div class="col-md-6">
+                <mat-form-field class="example-form">
+                    <mat-label>RFC</mat-label>
+                    <input type="text" matInput formControlName="rfc" />
+                    <mat-error *ngIf="campoNoValido('rfc')">El RFC es obligatorio, debe ser un rfc valido, no debe
+                        incluir homoclave
+                    </mat-error>
+                    <pre id="resultado"></pre>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="example-form">
+                    <mat-label>HOMOCLAVE</mat-label>
+                    <input type="text" matInput formControlName="rfc_homoclave" />
+                    <pre id="resultado"></pre>
+                    <mat-error *ngIf="campoNoValido('rfc_homoclave')">Solo se requieren 3 letras o números
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+            <!-- <div class="col-md-4">
+          <div class="mb-3">
+            <mat-form-field class="example-form">
+              <mat-label>CURP</mat-label>
+              <input type="text" matInput formControlName="curp" />
+              <mat-error *ngIf="campoNoValido('curp')">Curp Invalido
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div> -->
+        </div>
+
+        <div class="form-group mt-3 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary center-block" style="cursor: pointer;" *ngIf="botonRegister"
+                [disabled]="registerForm.invalid">
+                REGISTRAR USUARIO
+            </button>
+        </div>
+    </form>
+    <div class="form-group mt-3 d-flex justify-content-end">
+
+        <button type="button" class="btn btn-danger mx-2" *ngIf="botonUpdate" (click)="cancelar()">
+            CANCELAR
+        </button>
+        <button type="button" class="btn btn-primary center-block" *ngIf="botonUpdate" (click)="updateUser()">
+            ACTUALIZAR
+        </button>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <h3 class="card-title" *ngIf="!loading">
+                TOTAL DE USUARIOS ({{ totalUsuarios }})
+            </h3>
+
+            <mat-form-field class="example-form">
+                <mat-label>BUSCAR USUARIO</mat-label>
+                <input type="text" matInput placeholder="Buscar por ENTE, nombre de usuario o RFC" #txtSearch
+                    (keyup)="SearchUsuario(txtSearch.value)" />
+            </mat-form-field>
+            <table class="table table-hover mt-5 table-sm table-Secondary table-responsive  tabla__formato">
+                <thead>
+                    <tr>
+                        <th scope="col" class="w300">NOMBRE</th>
+                        <th scope="col" class="w300">USUARIO</th>
+                        <th scope="col" class="w300">ENTE</th>
+                        <th scope="col" class="w300">RFC</th>
+                        <th scope="col">LOGIN</th>
+                        <th scope="col">ROL</th>
+                        <th scope="col" class="w300">FECHA DE REGISTRO</th>
+                        <th scope="col" class="w300">ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="!loading">
+
+                    <!-- <tr *ngFor="let item of usuario | filtro : pages : search">
+            se elimina el filtro para que se puedan ver los usuarios. hay que revisar el filtro porque esta chocando -->
+
+                    <tr *ngFor="let item of usuario">
+                        <td>
+                            <span class=" span__link" (click)="editUser(item.uid)">
+                                {{ item.nombres | uppercase }}
+                                {{ item.primer_apellido | uppercase }}
+                                {{ item.segundo_apellido | uppercase }}</span>
+                        </td>
+                        <td>{{ item.userName }}</td>
+                        <td>{{ item.ente_publico | slice:0:30}}</td>
+                        <td>{{ item.rfc }}{{ item.rfc_homoclave }}</td>
+                        <td>
+                            <span *ngIf="item.fist_login == false">Si</span>
+                            <span *ngIf="item.fist_login == true">No</span>
+                        </td>
+                        <td>{{ item.role }}</td>
+                        <td>{{ item.created_at }}</td>
+                        <td>
+                            <button type="submit"
+                                style="padding: 1px; padding-right: 1px; border:none; padding-left: 1px; cursor: pointer;">
+                                <img src="../assets/images/editar.png" class="img-fluid"
+                                    style="display: block; width: 25px; cursor: pointer;"
+                                    (click)="editUser(item.uid)"></button>
+
+                            <button type="submit"
+                                style="padding: 1px; padding-right: 1px; border:none; padding-left: 1px; cursor: pointer;">
+                                <img src="../assets/images/reset.svg" class="img-fluid"
+                                    style="display: block; width: 25px; cursor: pointer;" (click)="resetPass(item.uid)">
+                            </button>
+                            <span style="padding: 5px;"></span>
+                            <button type="submit"
+                                style="padding: 1px; padding-right: 1px; padding-left: 1px; border:none; cursor: pointer;">
+                                <img src="../assets/images/eliminar.svg" class="img-fluid"
+                                    style="display: block; width: 25px; cursor: pointer;"
+                                    (click)="deleteUsuario(item.uid)"></button>
+
+                            <!-- <button class="btn btn-primary text-center btn-sm mt-3" (click)="resetPass(item.uid)">
+                  RESET
+                </button> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row" *ngIf="loading">
+                <div class="col-12">
+                    <div class="alert alert-info text-center" role="alert">
+                        <h4 class="alert-heading">Cargando..</h4>
+                        <i class="fa fa-spin fa-refresh fa-2x"></i>
+                        <p class="mb-0">porfavor espere</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button type="button"
+                    style="padding: 1px; padding-right: 1px; border:none; padding-left: 1px; cursor: pointer;">
+                    <img src="../assets/images/izquierda.svg" class="img-fluid"
+                        style="display: block; width: 25px; cursor: pointer;" (click)="PrevPage()"></button>
+
+                &nbsp; &nbsp;
+                <button type="button"
+                    style="padding: 1px; padding-right: 1px; border:none; padding-left: 1px; cursor: pointer;"
+                    disabled="(usuario | filtro : pages : search).length  <= 0">
+                    <img src="../assets/images/derecha.svg" class="img-fluid"
+                        style="display: block; width: 25px; cursor: pointer;" (click)="NextPage()"></button>
+
+                <!-- <span *ngIf="(usuario | filtro : pages : search).length >= pagesNumber">
+          <button class="btn btn-primary" (click)="PrevPage()">
+            Anterior
+          </button>
+          <button class="btn btn-primary m-1" (click)="NextPage()"
+            [disabled]="(usuario | filtro : pages : search).length <= 0">
+            Siguientes
+          </button>
+        </span> -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,164 @@
+<form (ngSubmit)="crearMilestone()" autocomplete="off" [formGroup]="milestoreForm">
+  <div class="row completo">
+    <div class="col-md-3 mitad">
+      <div class="mb-2">
+        <mat-form-field class="example-form p50p">
+          <mat-label>Título</mat-label>
+          <input type="text" matInput formControlName="title">
+          <mat-error *ngIf="campoNoValido('title')">Este Campo Es Obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3 mitad">
+      <div class="mb-3">
+        <mat-form-field class="example-form p50p">
+          <mat-label>Descripción</mat-label>
+          <input type="text" matInput formControlName="description">
+          <mat-error *ngIf="campoNoValido('description')">El Campo Nombre es Obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-3 mitad">
+      <div class="mb-3">
+        <mat-form-field class="example-form p50p">
+          <mat-label>Tipo de Hito</mat-label>
+          <mat-select matNativeControl formControlName="type"  mat-raised-button #tooltip="matTooltip"
+          matTooltip="Hitos previos a la contratación">
+            <mat-option *ngFor="let stat of type" [value]="stat.value">
+              {{stat.viewValue}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoNoValido('type')">El Campo es Obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-3 mitad">
+      <div class="mb-3">
+        <mat-form-field class="example-form p50p">
+          <mat-label>Estatus del Hito</mat-label>
+          <mat-select matNativeControl formControlName="status">
+            <mat-option *ngFor="let stat of status" [value]="stat.value">
+              {{stat.viewValue}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoNoValido('status')">El Campo es Obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+
+
+    <div class="col-md-3 ">
+      <div class="mb-4">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de Vencimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dueDate" mat-raised-button #tooltip="matTooltip"
+            matTooltip="Fecha Límite para cumplimiento de hito">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="col-md-3 ">
+      <div class="mb-4">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de Cumplimiento</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="dateMet" mat-raised-button #tooltip="matTooltip"
+            matTooltip="Fecha en la que este hito se cumplió">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker1">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="col-md-4 ">
+      <div class="mb-3">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Fecha de Modificación</mat-label>
+          <input matInput [matDatepicker]="picker3" formControlName="dateModified" mat-raised-button
+            #tooltip="matTooltip" matTooltip="Fecha en la que se puede llegar a modificar el Hito">
+
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker3">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+<ng-container *ngIf="ocid != null">
+  <div class="form-group mt-3 d-flex justify-content-end">
+    <button (click)="crearMilestone()" class="btn btn-success center-block mx-1" [disabled]="milestoreForm.invalid"
+      *ngIf="btnGuardar">Guardar</button>
+    <button (click)="cancel()" class="btn btn-danger center-block mx-1" [disabled]="milestoreForm.invalid"
+      *ngIf="btnCancelar">Cancelar</button>
+    <button (click)="updateMilestone()" class="btn btn-warning center-block mx-1" [disabled]="milestoreForm.invalid"
+      *ngIf="btnActualizar">Actualizar</button>
+    <button (click)="crearMilestone()" class="btn btn-warning center-block mx-1" [disabled]="milestoreForm.invalid"
+      *ngIf="btnNuevo">Nuevo</button>
+
+    <button class="btn btn-primary" *ngIf="btnSiguiente" (click)="next()">{{BtnName}}</button>
+    <button class="btn btn-success" *ngIf="btnTerminar" (click)="terminar()">Terminar Edición</button>
+  </div>
+
+
+  <hr>
+  <table class="table table-striped mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Título del Hito</th>
+        <th scope="col">Estatus</th>
+        <th scope="col">Tipo de Hito</th>
+        <th scope="col">Fecha Limite</th>
+        <th scope="col">Fecha de Cumplimiento</th>
+        <th scope="col">Fecha de Modificación</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of milestones">
+        <td>{{item.title}}</td>
+        <td *ngIf="item.status == 'scheduled'">Programado</td>
+        <td *ngIf="item.status == 'met'">Completado</td>
+        <td *ngIf="item.status == 'notMet'">No Completado</td>
+        <td *ngIf="item.status == 'partiallyMet'">Parcialmente Completado</td>
+        <td *ngIf="item.type == 'publicNotices'">Avisos a la población</td>
+        <td *ngIf="item.type == 'approval'">De aprobación</td>
+        <td *ngIf="item.type == 'delivery'">De entrega</td>
+        <td *ngIf="item.type == 'assessment'">De evaluación</td>
+        <td *ngIf="item.type == 'financing'">De financiamiento</td>
+        <td *ngIf="item.type == 'engagement'">De involucramiento</td>
+        <td *ngIf="item.type == 'reporting'">De reporte</td>
+        <td *ngIf="item.type == 'preProcurement'">Previos a la contratación</td>
+        <td>{{item.dueDate | date}}</td>
+        <td>{{item.dateMet | date}}</td>
+        <td>{{item.dateModified | date}}</td>
+        <td>
+          <button class="btn btn-danger btn-sm mx-1"><i class="fa fa-trash" (click)="borrarMile(item._id)"></i></button>
+          <button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"
+              (click)="ActualizarMile(item._id)"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>

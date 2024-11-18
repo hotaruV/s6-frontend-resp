@@ -1,0 +1,166 @@
+<div class="contenedor">
+  <form (ngSubmit)="crearEnte()" autocomplete="off" [formGroup]="enteForm">
+    <div class="row mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-form">
+          <mat-label>ENTE PÚBLICO</mat-label>
+          <input type="text" matInput formControlName="ente" />
+          <mat-error *ngIf="campoNoValidoEnte('ente')">El Campo Ente Público es Obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-form">
+          <mat-label>SIGLAS</mat-label>
+          <div class="mayuscula">
+            <input type="text" matInput formControlName="siglas" />
+          </div>
+          <mat-error *ngIf="campoNoValidoEnte('siglas')">El Campo Siglas es Obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mayuscula">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>ESTADO</mat-label>
+          <input type="text" matInput matNativeControl formControlName="estado" [matAutocomplete]="auto"
+            (input)="getEstados()" (ngModelChange)="onChangeEstado()" />
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let item of arrayEstado" [value]="item.nombre">
+              {{ item.nombre}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>MUNICIPIO</mat-label>
+          <input type="text" matInput matNativeControl formControlName="municipio" [matAutocomplete]="auto2" />
+          <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+            <mat-option *ngFor="let item of arrayMunicipio" [value]="item.nombre_municipio">
+              {{ item.nombre_municipio }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div></div>
+    </div>
+    <div class="form-group mt-3 d-flex justify-content-end ">
+      <button type="submit" class="btn btn-primary center-block" style="cursor: pointer;" *ngIf="botonEnte"
+        [disabled]="enteForm.invalid">
+        REGISTRAR ENTE PÚBLICO
+      </button>
+    </div>
+    <div class="form-group mt-3 d-flex justify-content-end">
+      <button type="button" class="btn btn-danger mx-2" style="cursor: pointer;" *ngIf="botonUpdateEnte"
+        (click)="cancelarEnte()">
+        CANCELAR
+      </button>
+      <button type="button" class="btn btn-primary center-block" style="cursor: pointer;" *ngIf="botonUpdateEnte"
+        (click)="UptEnteGuardar()">
+        ACTUALIZAR
+      </button>
+    </div>
+  </form>
+  <div class="row mt-3">
+    <div class="col-12">
+      <h3 class="card-title" *ngIf="!loading2">
+        TOTAL DE ENTES PÚBLICOS ({{ totalEntes }})
+      </h3>
+
+      <mat-form-field class="example-form">
+        <mat-label>BUSCAR POR ENTE</mat-label>
+        <input type="text" matInput placeholder="Buscar por nombre de ENTE" #txtSearchEnte
+          (keyup)="SearchEnte(txtSearchEnte.value)" />
+      </mat-form-field>
+      <table class="table table-hover mt-5 table-sm table-Secondary table-responsive  tabla__formato">
+        <thead>
+          <tr>
+            <th scope="col" class="w300">ENTE PÚBLICO</th>
+            <th scope="col" class="w300">SIGLAS</th>
+            <th scope="col" class="w300">ESTADO</th>
+            <th scope="col" class="w300">MUNICIPIO</th>
+            <th scope="col" class="w300">FECHA DE REGISTRO</th>
+            <th scope="col" class="w300">ACTIVAR</th>
+            <th scope="col" class="w300">ACCIONES</th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="!loading2">
+          <tr *ngFor="let item of entes | filtroE : pagesEnte : searchE"
+            [ngClass]="{'table-danger': item.estatus !== '1'}">
+            <td>
+              {{ item.ente | uppercase }}
+            </td>
+            <td>{{ item.siglas | uppercase }}</td>
+            <td>{{ item.estado | uppercase }}</td>
+            <td>{{ item.municipio }}</td>
+            <td>{{ item.created_at }}</td>
+            <td *ngIf="item.estatus == '1'; else status"></td>
+            <ng-template #status>
+              <td>
+                <button style="padding: 2px; cursor: pointer;" class="btn btn-success">
+                  <i class="fa-solid fa-check" (click)="cambiarStatus(item.ente_id)"></i>
+                </button>
+              </td>
+            </ng-template>
+
+            <ng-template #noboton>
+              <td>
+
+              </td>
+            </ng-template>
+
+            <td *ngIf="item.estatus == '1'; else noboton">
+              <button type="submit"
+                style="padding: 1px; padding-right: 1px; border: none; padding-left: 1px; cursor: pointer;">
+                <img src="../assets/images/editar.png" class="img-fluid"
+                  style="display: block; width: 25px; cursor: pointer;" (click)="updateEnteBtabla(item.ente_id)">
+              </button>
+              <span style="padding: 5px;"></span>
+              <button type="submit"
+                style="padding: 1px; padding-right: 1px; padding-left: 1px; border: none; cursor: pointer;">
+                <img src="../assets/images/eliminar.png" class="img-fluid"
+                  style="display: block; width: 25px; cursor: pointer;" (click)="deleteEnte(item.ente_id)">
+              </button>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+      <div class="row" *ngIf="loading2">
+        <div class="col-12">
+          <div class="alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">Cargando..</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">porfavor espere</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <!-- <span *ngIf="(entes  | filtroE : pagesEnte : searchE).length >= pagesNumberEnte">  -->
+        <button type="button"
+          style="padding: 1px; padding-right: 1px; border:none; padding-left: 1px; cursor: pointer;">
+          <img src="../assets/images/izquierda.svg" class="img-fluid"
+            style="display: block; width: 25px; cursor: pointer;" (click)="PrevPageEnte()"></button>
+        &nbsp; &nbsp;
+        <button type="button" style="padding: 1px; padding-right: 1px; border:none; padding-left: 1px; cursor: pointer;"
+          disabled="(entes | filtroE : pagesEnte : searchE).length <= 0">
+          <img src="../assets/images/derecha.svg" class="img-fluid"
+            style="display: block; width: 25px; cursor: pointer;" (click)="NextPageEnte()"></button>
+
+        <!-- <button class="btn btn-primary" (click)="PrevPageEnte()">
+        Anterior
+      </button>
+      <button class="btn btn-primary m-1" (click)="NextPageEnte()"
+        [disabled]="(ente | filtroE : pagesente : searchE).length <= 0">
+        Siguientes
+      </button> -->
+        <!-- </span>  -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,198 @@
+<section class="contenido__general">
+  <!-- <app-release></app-release> -->
+  <button class="btn btn-primary m-3" (click)="downloadPDF()"><i class="fa-solid fa-file-pdf"></i> Generar PDF</button>
+  <div class="mt-4 guardado">
+    <div id="reportContract" class="">
+      <div class="degradado">
+        <div class="header">
+          <!-- <a class="logoInicio">  SE AGREGO EL LIN A INICIO CONTRATO-->
+          <a routerLink="/sea/funcionarios/inicio-contrato" class="logoInicio">
+            <img src="../../../assets/images/logo-16.png" alt="" class="imgLogo">
+          </a>
+        </div>
+      </div>
+      <br>
+      <fieldset class="fieldset guardado">
+        <legend class="titulo center">I Planeación</legend>
+        <fieldset class="fieldset">
+          <legend class="legend center">Justificación</legend>
+          <p class="center">
+            {{ rationale }}
+          </p>
+          <!-- <p class="center">{{rationale}}</p> -->
+          <div class="row">
+            <div class="col-md-12">
+              <fieldset class="fieldset">
+                <legend class="legend">Descripción</legend>
+                <div class="input-group mb-6">
+                  {{ description }}
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-12">
+              <fieldset class="fieldset">
+                <legend class="legend">URL a la clave presupuestal</legend>
+                <div class="input-group mb-6">
+                  {{ uri }}
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-6">
+              <fieldset class="fieldset">
+                <legend class="legend">Monto</legend>
+                <div class="input-group mb-6">
+                  {{ budgeAmount }}
+                  <!-- {{tenderObj.id}} -->
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-6">
+              <fieldset class="fieldset">
+                <legend class="legend">Moneda</legend>
+                <div class="input-group mb-6">
+                  {{ budgeCurrency }}
+                  <!-- {{tenderObj.id}} -->
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+        </fieldset>
+
+        <!--licitacopm-->
+        <fieldset class="fieldset">
+          <legend class="titulo center">II Licitación</legend>
+          <!-- <div *ngIf="tenderObj.status === 'planning'">Estatus: En planeación</div>
+        <div *ngIf="tenderObj.status === 'planned'">Estatus: Planeada</div>
+        <div *ngIf="tenderObj.status === 'active'">Estatus: Activa</div>
+        <div *ngIf="tenderObj.status === 'cancelled'">Estatus: Cancelada</div>
+        <div *ngIf="tenderObj.status === 'unsuccessful'">Estatus: No exitosa</div>
+        <div *ngIf="tenderObj.status === 'complete'">Estatus: Concluida</div>
+        <div *ngIf="tenderObj.status === 'withdrawn'">Estatus: Retirada</div> -->
+          <br>
+          <p>Estatus:</p>
+          <div class="row mb-2">
+            <div class="col-md-6 mb-2">
+              <fieldset class="fieldset">
+                <legend class="legend"> Identificador de la contratación pública</legend>
+                <div class="input-group mb-6">
+                  {{ ocid }}
+                  <!-- {{tenderObj.id}} -->
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-6">
+              <fieldset class="fieldset">
+                <legend class="legend">
+                  Denominación de la contratación pública</legend>
+                <div class="input-group mb-6">
+                  {{ tender_title }}
+                  <!-- {{tenderObj.title}} -->
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <fieldset class="fieldset mb-2">
+            <div class="row pt-2">
+              <div class="col-sm-12">
+                <label class="document__title">
+                  Objeto de la contratación pública
+                </label><br><br>
+                <!-- <p class="">{{ ITender.description }}</p> -->
+                <p class="parrafo">{{tender_description}}</p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset mb-2">
+            <legend class="legend">Valor</legend>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <label class="document__title">Monto</label>
+                <p>{{this.totalAmount }}</p>
+                <!-- <p class="parrafo">{{tenderValue.amount}}</p> -->
+              </div>
+              <div class="col-sm-6">
+                <label class="document__title">Moneda</label>
+                <p>{{ this.currency}}</p>
+                <!-- <p class="parrafo">{{tenderValue.currency}}</p> -->
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset mb-2">
+            <legend class="legend">Valor mínimo del procedimiento de contratación pública</legend>
+            <div class="row">
+              <div class="col-sm-3">
+                <label class="document__title" data-original-title="Monto como número.">Monto</label>
+                <!-- <p>{{ ITenderMinValue.amount }}</p> -->
+                <!-- <p class="parrafo">{{tenderMinValue.amount}}</p> -->
+              </div>
+              <div class="col-sm-2">
+                <label class="document__title"
+                  data-original-title="La moneda en el formato ISO 4217 de 3 letras.">Moneda</label>
+                <!-- <p>{{ ITenderMinValue.currency }}</p> -->
+                <!-- <p class="parrafo">{{tenderMinValue.currency}}</p> -->
+
+              </div>
+              <br>
+              <div class="col-sm-3">
+                <br>
+                <label class="document__title">
+                  Método de contratación
+                </label>
+                <p>{{ metododecontrato }}</p>
+                <!-- <p value="selective">{{tenderObj.procurementMethod}}</p> -->
+              </div>
+
+              <div class="col-sm-4">
+                <br>
+                <label class="document__title">
+                  Detalles del método de contratación
+                </label>
+                <p>{{ detalledecontrato }}</p>
+                <!-- <p class="parrafo">{{tenderObj.procurementMethodDetails}}</p> -->
+              </div>
+            </div>
+
+            <div class="row pt-2">
+
+              <div class="col-sm-12">
+                <label class="document__title"
+                  data-original-title="Denominación del ente público que realiza el procedimiento de contratación.">
+                  Entidad que realiza la contratación
+                </label>
+                <p>{{ contratatante }}</p>
+                <!-- <p class="parrafo">{{procuringEntity.name}}</p> -->
+              </div>
+            </div>
+            <label class="document__title pt-2">
+              Justificación del método de contratación
+            </label>
+            <p class="parrafo">
+              {{ razon }}
+              <!-- {{tenderObj.procurementMethodRationale}} -->
+            </p>
+          </fieldset>
+
+          <fieldset class="fieldset mb-2">
+            <label class="document__title pt-2">
+              Detalles sobre el criterio de evaluación de proposiciones
+            </label>
+            <p class="parrafo">
+              {{ criterio }}
+              <!-- {{tenderObj.awardCriteriaDetails}} -->
+            </p>
+          </fieldset>
+        </fieldset>
+      </fieldset>
+    </div>
+  </div>
+  <div class="form-group mt-5 d-flex justify-content-end">
+    <!-- <button class="btn btn-success center-block prrp mx-2" (click)="revisar()">Revisar Contrato</button> -->
+    <button class="btn btn-success center-block prrp" (click)="metodo()">{{tituloBtn}}</button>
+
+  </div>
+</section>

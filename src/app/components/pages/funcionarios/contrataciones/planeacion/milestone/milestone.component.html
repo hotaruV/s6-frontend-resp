@@ -1,0 +1,105 @@
+<section class="contenido__general">
+  <app-planning-header-menu></app-planning-header-menu>
+  <h2 class="titulo">Creando Planeacion</h2>
+  <p class="instrucciones mb-5">Por ultimo describa la razón por la cual se van a comprar o pedir los materiales que se
+    describirán en items, puede tener más información en documentos o en los Hitos de planeación <br>
+    Ejem: <span class="texto">"COMPRA DE MUEBLES Y ELECTRONICOS para uso de secretaria de finanzas"</span>
+    <br><br>
+    Pueden representar eventos durante el proceso de contratación, fuera de lo previsto o
+    que son muy importantes.
+    <strong> En esta sección puede agregar varios Hitos. </strong><br> Estos campos son
+    opcionales si no desea agregar Hitos. Presione el boton de
+    <span class="text-primary"><strong>" {{BtnName}}"</strong></span>
+  </p>
+  <h2>JUSTIFICACIÓN</h2>
+  <form autocomplete="off" [formGroup]="PlanningForm">
+    <div class="row completo">
+      <mat-form-field class="example-form p100p">
+        <mat-label>JÚSTIFICACIÓN</mat-label>
+        <div class="mb-3">
+          <label for="" class="form-label" ></label>
+          <input type="text" matInput formControlName="rationale"
+            placeholder="COMPRA DE MUEBLES Y ELECTRONICOS PARA USO DE SECRETARIA DE FINANZA" appearance="fill">
+        </div>
+        <mat-error *ngIf="campoNoValido('rationale')">Describa los Objetivos o razones por las que este contrato fué
+          elaborado
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <button class="btn btn-warning" *ngIf="btnActualizarRazon" (click)="actualizarRationale()">ACTUALIZAR JUSTIFICACIÓN</button>
+  </form>
+  <hr>
+  <h2>¿TIENEN COTIZACIONES?</h2>
+  <div class="row mayuscula">
+    <div class="col-md-6"> 
+        <mat-radio-group aria-label="SELECCIONE UNA OPCIÓN"   formControlName="hasQuotes" >
+          <mat-radio-button class="example-form" value="SI">SÍ</mat-radio-button>
+          &nbsp; 
+          &nbsp; 
+          <mat-radio-button class="example-form" value="NO">NO</mat-radio-button>
+          </mat-radio-group>
+     </div>
+    
+     
+  </div>
+  <div class="row completo">
+    <mat-form-field class="example-form p100p">
+      
+      <div class="mb-3">
+        <label for="" class="form-label" ></label>
+        <input type="text" matInput formControlName="cotizacion_no"
+          placeholder="¿POR QUÉ?" appearance="fill">
+      </div>
+      <mat-error *ngIf="campoNoValido('cotizacion_no')">
+      
+      </mat-error>
+    </mat-form-field>
+  </div>
+  
+  <hr>
+  <h2>I. UNIDADES ADMINISTRATIVAS QUE PARTICIPAN EN LA CONTRATACIÓN</h2>
+  <div class="row completo">
+    <mat-form-field class="example-form p100p">
+      
+      <div class="mb-3">
+        <label for="" class="form-label" ></label>
+        <input type="text" matInput formControlName="nom_requiriente"
+          placeholder="NOMBRE DEL REQUIRIENTE*" appearance="fill">
+      </div>
+      <mat-error *ngIf="campoNoValido('nom_requiriente')">
+      
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="row completo">
+    <mat-form-field class="example-form p100p">
+      
+      <div class="mb-3">
+        <label for="" class="form-label" ></label>
+        <input type="text" matInput formControlName="nom_contratante"
+          placeholder="NOMBRE DEL CONTRATANTE*" appearance="fill">
+      </div>
+      <mat-error *ngIf="campoNoValido('nom_contratante')">
+      
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="row completo">
+    <mat-form-field class="example-form p100p">
+      
+      <div class="mb-3">
+        <label for="" class="form-label" ></label>
+        <input type="text" matInput formControlName="nom_representante"
+          placeholder="NOMBRE DEL RESPONSABLE DE LA EJECUCIÓN DEL CONTRATO*" appearance="fill">
+      </div>
+      <mat-error *ngIf="campoNoValido('nom_representante')">
+      
+      </mat-error>
+    </mat-form-field>
+  </div>
+ 
+  <hr>
+  <h2>Hitos</h2>
+  <app-mileston milestoneType="planning" BtnName="{{BtnName}}" (Radelante)="Radelante" (Ratras)="Ratras"  (redireccionA)="CrearPlanning($event)">
+  </app-mileston>
+</section>

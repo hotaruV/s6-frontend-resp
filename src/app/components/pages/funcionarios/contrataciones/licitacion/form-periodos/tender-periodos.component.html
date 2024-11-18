@@ -1,0 +1,227 @@
+<section class="contenido__general">
+  <app-tender-header-menu></app-tender-header-menu>
+  <h2 class="titulo">Licitación</h2>
+  <p class="instrucciones mb-5">En esta sección se define quiénes van a participar para poder acceder a
+    proveer el material requerido, al igual que se definirá este mismo material junto con sus características
+    y se dará a conocer todos los periodos de la licitación y sus documentos respectivos.</p>
+
+  <h3 class="mb-3">CONTRATANTE</h3>
+
+  <div class="contenedor">
+    <form autocomplete="off" [formGroup]="periodForm">
+      <fieldset>
+        <legend style="text-transform: uppercase;">Período de entrega de Preposiciones</legend>
+        <div class="row completo">
+          <div class="col-md-6 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de inicio</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="startDate">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker1">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('startDate')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-md-6 mitad">
+            <div class="mb-6">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de término</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="endDate">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker2">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('endDate')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Extensión máxima</mat-label>
+                <input matInput [matDatepicker]="picker3" formControlName="maxExtentDate">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker3">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('maxExtentDate')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-md-6 mitad">
+            <div class="mb-6">
+              <mat-form-field class="example-full-width" appearance="fill" *ngIf="btnActualizar">
+                <mat-label>Número En días</mat-label>
+                <input matInput formControlName="durationInDays">
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('endDate')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+        </div>
+
+      </fieldset>
+
+      <fieldset>
+        <legend style="text-transform: uppercase;">Período para presentar solicitudes de aclaración</legend>
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de inicio</mat-label>
+                <input matInput [matDatepicker]="picker4" formControlName="startDateEnquincy">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker4">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker4></mat-datepicker>
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('startDateEnquincy')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de término</mat-label>
+                <input matInput [matDatepicker]="picker5" formControlName="endDateEnquincy">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker5">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker5></mat-datepicker>
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('endDateEnquincy')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Extensión máxima</mat-label>
+                <input matInput [matDatepicker]="picker6" formControlName="maxExtentDateEnquincy">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker6">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker6></mat-datepicker>
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('maxExtentDateEnquincy')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-md-6 mitad">
+            <div class="mb-6">
+              <mat-form-field class="example-full-width" appearance="fill" *ngIf="btnActualizar">
+                <mat-label>Número en días</mat-label>
+                <input matInput formControlName="durationInDaysEnquincy" readonly="true">
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('endDate')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend style="text-transform: uppercase;">Período de evaluación adjudicación</legend>
+        <div class="row completo">
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de Inicio</mat-label>
+                <input matInput [matDatepicker]="picker7" formControlName="startDateAward">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker7">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker7></mat-datepicker>
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('startDateAward')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Fecha de Termino</mat-label>
+                <input matInput [matDatepicker]="picker8" formControlName="endDateAward">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker8">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker8></mat-datepicker>
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('endDateAward')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-md-3 mitad">
+            <div class="mb-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Extensión Máxima</mat-label>
+                <input matInput [matDatepicker]="picker9" formControlName="maxExtentDateAward">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker9">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker9></mat-datepicker>
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('maxExtentDateAward')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+
+
+          </div>
+          <div class="col-md-6 mitad">
+            <div class="mb-6">
+              <mat-form-field class="example-full-width" appearance="fill" *ngIf="btnActualizar">
+                <mat-label>Número En dias</mat-label>
+                <input matInput formControlName="durationInDaysAward">
+              </mat-form-field>
+              <mat-error *ngIf="campoNoValido('endDate')">Este Campo Es Obligatorio
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+
+
+
+
+
+
+
+    </form>
+
+
+    <div class="form-group mt-3 d-flex justify-content-end" *ngIf="ocid != null">
+      <button class="btn btn-primary" (click)="forward()">
+        << </button>
+          <button (click)="crearTenderP()" class="btn btn-success center-block mx-1" [disabled]="periodForm.invalid"
+            *ngIf="btnGuardar">Guardar</button>
+          <button (click)="ActualizarTenderp()" class="btn btn-warning center-block mx-1"
+            [disabled]="periodForm.invalid" *ngIf="btnActualizar">Actualizar</button>
+          <button class="btn btn-primary" *ngIf="btnSiguiente" (click)="next()">>></button>
+    </div>
+
+    <!-- <span>Valid</span>
+    <pre>{{periodForm.valid}}</pre>
+    <br>
+    <span>value</span>
+    <pre>{{periodForm.value | json}}</pre> -->
+  </div>
+
+
+
+</section>

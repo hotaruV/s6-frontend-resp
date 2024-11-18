@@ -1,0 +1,31 @@
+<app-header [title]=title></app-header>
+<div class="info">
+  <p>Aquí encontrarás la siguiente información:</p>
+  <ul>
+    <li>Cuánto gasta el gobierno estatal</li>
+    <li>Qué tipos de procedimientos</li>
+    <li>Información sobre los proveedores que participan</li>
+  </ul>
+</div>
+<div class="row" *ngIf="loading">
+  <div class="col-12">
+    <div class="alert alert-info text-center" role="alert">
+      <h4 class="alert-heading">Cargando..</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">porfavor espere</p>
+    </div>
+  </div>
+</div>
+<div class="graph" *ngIf="bandera == true">
+  <div class="data">
+    <h2 class="data__title">Procesos de contratación</h2>
+    <p class="data_text">{{graphs[0].numCont}}</p>
+    <h2 class="data__title">Instituciones</h2>
+    <p class="data_text">{{graphs[0].numBuyer}}</p>
+    <h2 class="data__title">Gasto total</h2>
+    <p class="data_text">{{sumaTot | currency}}</p>
+ </div>
+ <div class="draw">
+    <app-grafica></app-grafica>
+ </div>
+</div>

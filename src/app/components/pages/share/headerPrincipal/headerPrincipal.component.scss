@@ -1,0 +1,15 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.degradado{
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(213,205,62,1) 100%);
+  .imgLogo{
+    height: 100px;
+    padding-left: 15px;
+    padding-top: 1px;
+  }
+}
+
