@@ -1,0 +1,19 @@
+<section class="contenido__general">
+    <app-planning-header-menu></app-planning-header-menu>
+    <form (ngSubmit)="guardarPresupuesto()" autocomplete="off" [formGroup]="presupuestoForm">
+        <div class="row completo mayuscula">
+            <mat-form-field>
+                <mat-select placeholder="NOMBRE DEL REQUIRIENTE*" formControlName="requestingUnitname">
+                    <mat-option *ngFor="let op of servReq" [value]="op.uid">
+                        {{ op.nombres_servidor| uppercase }}
+                        {{ op.primer_apellido_servidor| uppercase }}
+                        {{ op.segundo_apellido_servidor | uppercase }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('requestingUnitname')">
+                    EL CAMPO NOMBRE DE REQUIRIENTE ES REQUERIDO
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</section>

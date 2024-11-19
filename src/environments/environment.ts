@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  _url2: "http://localhost:3221/api/seaslp/",
+  _url2: "https://www.plataformadigitalestatalslp.org/api/seaslp/",
+  //_url2: "http://localhost:3221/api/seaslp/",
   _url: "http://192.168.100.250:3221/api/seaslp/"
 };
 

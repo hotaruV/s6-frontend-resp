@@ -27,6 +27,8 @@ import { ListDocumentosComponent } from './partial/documentos/list-documentos/li
 import { ListItemsCotizadosComponent } from './partial/items-cotizados/list-items-cotizados/list-items-cotizados.component';
 import { CotizacionesRecComponent } from './partial/cotizaciones-rec/cotizaciones-rec.component';
 import { ListCotizacionesRecComponent } from './partial/cotizaciones-rec/list-cotizaciones-rec/list-cotizaciones-rec.component';
+import { PresupuestoComponent } from './presupuesto/presupuesto.component';
+
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { ListCotizacionesRecComponent } from './partial/cotizaciones-rec/list-co
     ListItemsCotizadosComponent,
     CotizacionesRecComponent,
     ListCotizacionesRecComponent,
-    
+    PresupuestoComponent,
+
   ],
   imports: [
     CommonModule,

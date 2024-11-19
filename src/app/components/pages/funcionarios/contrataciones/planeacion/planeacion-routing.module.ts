@@ -12,6 +12,7 @@ import { DocumentsComponent } from './documents/documents.component';
 import { ContratPassUserGuard } from 'src/app/guard/contrat-pass-user.guard';
 
 import { inicioPlaneacionComponent } from './inicio/inicio.component';
+import { PresupuestoComponent } from './presupuesto/presupuesto.component';
 
 const routes: Routes = [
 
@@ -57,7 +58,8 @@ const routes: Routes = [
       },
       {
         path: 'inicio/:ocid',
-        component: inicioPlaneacionComponent,
+        //component: inicioPlaneacionComponent,
+        component: PresupuestoComponent
       },
     ]
   },
