@@ -28,6 +28,10 @@ import { ListItemsCotizadosComponent } from './partial/items-cotizados/list-item
 import { CotizacionesRecComponent } from './partial/cotizaciones-rec/cotizaciones-rec.component';
 import { ListCotizacionesRecComponent } from './partial/cotizaciones-rec/list-cotizaciones-rec/list-cotizaciones-rec.component';
 import { PresupuestoComponent } from './presupuesto/presupuesto.component';
+import { InicioComponent } from './planning/inicio/inicio.component';
+import { PlantillaComponent } from './planning/plantilla/plantilla.component';
+import { AccionesComponent } from './planning/acciones/acciones.component';
+import { PlannigDocsComponent } from './planning/plannig-docs/plannig-docs.component';
 
 
 @NgModule({
@@ -54,6 +58,10 @@ import { PresupuestoComponent } from './presupuesto/presupuesto.component';
     CotizacionesRecComponent,
     ListCotizacionesRecComponent,
     PresupuestoComponent,
+    InicioComponent,
+    PlantillaComponent,
+    AccionesComponent,
+    PlannigDocsComponent,
 
   ],
   imports: [
