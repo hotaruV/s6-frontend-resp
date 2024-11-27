@@ -146,24 +146,24 @@ export class InicioComponentPlanning {
       planning: planning_id
     }
 
-    this.tenderSvc.actulizarRelease(data, this.ocid).subscribe((resp: any) => {
+    // this.tenderSvc.actulizarRelease(data, this.ocid).subscribe((resp: any) => {
 
 
-      Swal.fire({
-        icon: 'success',
-        title: "<h5 style='color:#125DA9; font-size: 20px !important;'> PLANEACIÓN  </h5>",
-        text: "SE HA GUARDADO LA PLANEACIÓN CON ÉXITO ",
-        confirmButtonText: "ACEPTAR",
-        confirmButtonColor: '#125DA9',
-        showConfirmButton: true,
-        //timer: 1500
-      })
+    //   Swal.fire({
+    //     icon: 'success',
+    //     title: "<h5 style='color:#125DA9; font-size: 20px !important;'> PLANEACIÓN  </h5>",
+    //     text: "SE HA GUARDADO LA PLANEACIÓN CON ÉXITO ",
+    //     confirmButtonText: "ACEPTAR",
+    //     confirmButtonColor: '#125DA9',
+    //     showConfirmButton: true,
+    //     //timer: 1500
+    //   })
 
 
-      this.router.navigate(['/sea/funcionarios/inicio-contrato'])
-      localStorage.removeItem("planning_id")
-      localStorage.removeItem("buyer_id")
-    })
+    //   this.router.navigate(['/sea/funcionarios/inicio-contrato'])
+    //   localStorage.removeItem("planning_id")
+    //   localStorage.removeItem("buyer_id")
+    // })
 
   }
 }
