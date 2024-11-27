@@ -1,1 +1,117 @@
-<p>inicio works!</p>
+<section class="contenido__general">
+    <app-planning-header-menu></app-planning-header-menu>
+
+    <form autocomplete="off" [formGroup]="presupuestoForm">
+        <hr>
+        <h2>JUSTIFICACIÓN DE LA CONTRATACIÓN</h2>
+
+        <div class="row completo mayuscula">
+            <mat-form-field class="example-form p100p">
+                <mat-label>JUSTIFICACIÓN</mat-label>
+                <div class="mb-3">
+                    <label for="" class="form-label"></label>
+                    <input type="text" matInput formControlName="rationale"
+                        placeholder="EJEMPLO: COMPRA DE MUEBLES Y ELECTRONICOS PARA USO DE SECRETARIA DE FINANZA"
+                        appearance="fill">
+                </div>
+                <mat-error *ngIf="campoNoValido('rationale')">Describa los Objetivos o razones por las que este contrato
+                    fué
+                    elaborado
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <h2>¿TIENEN COTIZACIONES?</h2>
+        <div class="row completo mayuscula">
+            <div class="col-md-6">
+                <mat-radio-group aria-label="SELECCIONE UNA OPCIÓN" formControlName="hasQuotes">
+                    <mat-radio-button class="example-form" value="SI" (change)="hasQuotessi()">SI</mat-radio-button>
+                    &nbsp;
+                    &nbsp;
+                    <mat-radio-button class="example-form" value="NO" (change)="hasQuotesno()">NO</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+
+        </div>
+        <div *ngIf="why">
+            <div class="row completo mayuscula">
+                <mat-form-field class="example-form p100p">
+
+                    <div class="mb-3">
+                        <label for="" class="form-label"></label>
+                        <input type="text" matInput formControlName="cotizacion_no" placeholder="¿POR QUÉ?"
+                            appearance="fill">
+                    </div>
+                    <mat-error *ngIf="campoNoValido('cotizacion_no')">
+
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <hr>
+
+
+        <h2>SERVIDORES PÚBLICOS QUE PARTICIPAN EN LA CONTRATACIÓN</h2>
+        <div class="row completo mayuscula">
+            <mat-form-field>
+                <mat-select placeholder="NOMBRE DEL REQUIRIENTE*" formControlName="requestingUnitname">
+                    <mat-option *ngFor="let op of servReq" [value]="op.uid">
+                        {{ op.nombres_servidor| uppercase }}
+                        {{ op.primer_apellido_servidor| uppercase }}
+                        {{ op.segundo_apellido_servidor | uppercase }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('requestingUnitname')">
+                    EL CAMPO NOMBRE DE REQUIRIENTE ES REQUERIDO
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+        <div class="row completo mayuscula">
+            <mat-form-field>
+                <mat-select placeholder="NOMBRE DEL CONTRATANTE*" formControlName="contractingUnitname">
+                    <mat-option *ngFor="let op of servCon" [value]="op.uid">
+
+                        {{ op.nombres_servidor| uppercase }}
+                        {{ op.primer_apellido_servidor| uppercase }}
+                        {{ op.segundo_apellido_servidor | uppercase }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('contractingUnitname')">
+                    EL CAMPO NOMBRE DEL CONTRATANTE ES REQUERIDO
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+        <div class="row completo mayuscula">
+            <mat-form-field>
+                <mat-select placeholder="NOMBRE DEL RESPONSABLE DE LA EJECUCIÓN DEL CONTRATO*"
+                    formControlName="responsibleUnitname">
+                    <mat-option *ngFor="let op of servRes" [value]="op.uid">
+                        {{ op.nombres_servidor| uppercase }}
+                        {{ op.primer_apellido_servidor| uppercase }}
+                        {{ op.segundo_apellido_servidor | uppercase }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('responsibleUnitname')">
+                    EL CAMPO NOMBRE DE RESPONSABLE ES REQUERIDO
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+
+    </form>
+
+
+    <button *ngIf="showEditButton" type="submit" class="btn btn-warning btn-sm center-block mx-2"
+        style="cursor: pointer;">
+        EDITAR PLANEACIÓN
+    </button>
+    <button *ngIf="!showEditButton" type="submit" class="btn btn-success btn-sm center-block mx-2"
+        style="cursor: pointer;" (click)="guardarInicio()">
+        GUARDAR PLANEACIÓN
+    </button>
+    <button type="submit" class="btn btn-warning btn-sm center-block" style="cursor: pointer;">
+        IR A PRESUPUESTO
+    </button>
+</section>

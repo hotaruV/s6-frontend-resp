@@ -13,6 +13,7 @@ import { ContratPassUserGuard } from 'src/app/guard/contrat-pass-user.guard';
 
 
 import { PlantillaComponent } from './planning/plantilla/plantilla.component';
+import { PresupuestoComponent } from './presupuesto/presupuesto.component';
 
 
 const routes: Routes = [
@@ -61,6 +62,11 @@ const routes: Routes = [
         path: 'inicio/:ocid',
         //component: inicioPlaneacionComponent,
         component: PlantillaComponent
+      },
+      {
+        path: 'presupuesto/:ocid',
+        //component: inicioPlaneacionComponent,
+        component: PresupuestoComponent
       },
     ]
   },

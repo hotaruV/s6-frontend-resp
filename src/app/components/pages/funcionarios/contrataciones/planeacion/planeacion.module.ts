@@ -31,7 +31,7 @@ import { ListCotizacionesRecComponent } from './partial/cotizaciones-rec/list-co
 import { PlantillaComponent } from './planning/plantilla/plantilla.component';
 import { AccionesComponent } from './planning/acciones/acciones.component';
 import { PlannigDocsComponent } from './planning/plannig-docs/plannig-docs.component';
-import { PresupuestoComponent } from './planning/presupuesto/presupuesto.component';
+import { PresupuestoComponent } from './presupuesto/presupuesto.component';
 import { InicioComponentPlanning } from './planning/inicio/inicio.component';
 import { CotizacionesPlanningComponent } from './planning/cotizaciones/cotizaciones.component';
 

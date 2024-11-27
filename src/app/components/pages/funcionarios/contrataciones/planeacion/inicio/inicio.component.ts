@@ -346,7 +346,7 @@ export class inicioPlaneacionComponent implements OnInit {
         })))
       .subscribe();
   }
-  
+
   getplanning() {
     let periodo;
     //obtener planning guardado
@@ -1150,7 +1150,7 @@ export class inicioPlaneacionComponent implements OnInit {
     let fechaFin = form.endDate;
     if (fechaInicio != null && fechaFin != null && fechaInicio != "" && fechaFin != "") {
       let diff = fechaFin - fechaInicio;
-      
+
       duracuion = diff / (1000 * 60 * 60 * 24);
       this.PlanningForm.patchValue({
         durationInDays: duracuion,
@@ -1482,6 +1482,10 @@ export class inicioPlaneacionComponent implements OnInit {
       milestones: this.hitos.hitos,
     }
 
+
+
+
+    // aqui se esta guardando el formulario en la api (backend)
     this.planingService.CrearPlanning(_newPlanning)
       .subscribe((resp: any) => {
         if (resp.ok) {
