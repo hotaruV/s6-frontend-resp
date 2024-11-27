@@ -27,11 +27,13 @@ import { ListDocumentosComponent } from './partial/documentos/list-documentos/li
 import { ListItemsCotizadosComponent } from './partial/items-cotizados/list-items-cotizados/list-items-cotizados.component';
 import { CotizacionesRecComponent } from './partial/cotizaciones-rec/cotizaciones-rec.component';
 import { ListCotizacionesRecComponent } from './partial/cotizaciones-rec/list-cotizaciones-rec/list-cotizaciones-rec.component';
-import { PresupuestoComponent } from './presupuesto/presupuesto.component';
-import { InicioComponent } from './planning/inicio/inicio.component';
+
 import { PlantillaComponent } from './planning/plantilla/plantilla.component';
 import { AccionesComponent } from './planning/acciones/acciones.component';
 import { PlannigDocsComponent } from './planning/plannig-docs/plannig-docs.component';
+import { PresupuestoComponent } from './planning/presupuesto/presupuesto.component';
+import { InicioComponentPlanning } from './planning/inicio/inicio.component';
+import { CotizacionesPlanningComponent } from './planning/cotizaciones/cotizaciones.component';
 
 
 @NgModule({
@@ -58,10 +60,11 @@ import { PlannigDocsComponent } from './planning/plannig-docs/plannig-docs.compo
     CotizacionesRecComponent,
     ListCotizacionesRecComponent,
     PresupuestoComponent,
-    InicioComponent,
+    InicioComponentPlanning,
     PlantillaComponent,
     AccionesComponent,
     PlannigDocsComponent,
+    CotizacionesPlanningComponent
 
   ],
   imports: [
